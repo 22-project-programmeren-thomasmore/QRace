@@ -1,2 +1,3 @@
 # Team_5
-race your rivals
+
+Soufiane Ahalli, Aminata Diop, Gilles Rousseaux, Houssam Aberzak & Kai Ekkart 
