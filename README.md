@@ -21,4 +21,4 @@ Commits worden samengevoegd met de master branch na goedkeuring van de pull requ
 
 ## Rule 4
 
-VRAAG? Stel ze via de Discord!
+VRAAG? Stel ze via Discord!
