@@ -4,7 +4,7 @@
 
 Houssam, Soufiane, Aminata Diop, Kai en Gilles. 
 De scrum master is Gilles.
-DE product owner is Aminata.
+De product owner is Aminata.
 
 ## Rule 1
 
