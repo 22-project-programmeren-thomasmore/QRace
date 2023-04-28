@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Qrace</title>
+    <style>
+        body {
+            background-color: lightblue;
+        }
+
+        #title {
+            position: absolute;
+            top: 0;
+            left:40%;
+            font-size: 5rem;
+            color: #333;
+            animation: slide-down 1s ease-out forwards;
+        }
+
+        #start-button {
+            margin-top: 25rem;
+            text-align: center;
+        }
+
+        button {
+            background-color: purple;
+            color: #fff;
+            font-size: 2rem;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #993399;
+        }
+
+        @keyframes slide-down {
+            0% {
+                top: -10rem;
+            }
+            100% {
+                top: 0;
+            }
+        }
+
+        @keyframes slide-right {
+            0% {
+                left: 45%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<h1 id="title">Qrace</h1>
+<div id="start-button">
+    <button onclick="startGame()">Start</button>
+</div>
+<script>
+    function startGame() {
+        // Redirect to the host/join page
+        window.location.href = "/host-join";
+    }
+
+    // Animate the title
+    setTimeout(() => {
+        document.getElementById("title").style.animation = "slide-right 1s ease-out forwards";
+    }, 1500);
+</script>
+</body>
+</html>
