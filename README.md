@@ -2,7 +2,7 @@
 
 ## Team & Functies
 
-Houssam, Soufiane, Aminata Diop, Kai en Gilles. 
+Houssam, Soufiane, Aminata, Kai en Gilles. 
 De scrum master is Gilles.
 De product owner is Aminata.
 
