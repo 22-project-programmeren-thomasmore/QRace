@@ -49,7 +49,9 @@
     position: relative;
     display: inline-block;
 }
-
+.dropbtn:hover{
+    color: royalblue;
+}
 .dropbtn {
     margin-left: 5px;
     padding: 3px;
@@ -78,7 +80,59 @@
     text-align: center;
 }
 
+/*-------------------------------------------NAVBAR-----------------------------------------------*/
 
 body {
     background: linear-gradient(90deg, rgb(40, 186, 220) 20%, rgb(0, 255, 16) 92%);
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.left {
+    text-align: center;
+    padding-bottom: 100px;
+}
+
+.right {
+    border-radius: 70px;
+    width: 40%;
+}
+
+.right img {
+    border-radius: 20px;
+    width: 100%;
+}
+
+h1 {
+    font-weight: bold;
+    font-family: "Audiowide", sans-serif;
+    font-size: 70px;
+    color: lime;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.startbtn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 30px;
+    background-color: #68b0ab;
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.button a {
+    background-color: lime;
+    color: royalblue;
+    font-family: "Audiowide", sans-serif;
+}
+
+.button a:hover {
+    background-color: royalblue;
+    color: lime;
 }
