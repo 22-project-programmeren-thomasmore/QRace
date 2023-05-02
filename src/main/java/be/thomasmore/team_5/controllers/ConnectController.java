@@ -11,4 +11,8 @@ public class ConnectController {
         return "join";
     }
 
+    @GetMapping("/host")
+    public String host() {
+        return "host";
+    }
 }
