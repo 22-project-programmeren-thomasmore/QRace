@@ -1,16 +1,18 @@
-FROM ubuntu:latest AS build
+# Use an official OpenJDK runtime as a parent image
+FROM openjdk:17-jdk-alpine3.14
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
-COPY . .
+# Set the working directory to /app
+WORKDIR /app
 
-RUN chmod +x ./gradlew
-RUN ./gradlew bootJar --no-daemon
+# Copy the executable jar file and the application.properties file to the container
+COPY target/Team_5-0.0.1-SNAPSHOT.jar app.jar
+COPY src/main/resources/application.properties application.properties
 
-FROM openjdk:17-jdk-slim
+# Set the environment variables for the application
+ENV SPRING_PROFILES_ACTIVE=prod
 
+# Expose the port that the application will run on
 EXPOSE 8080
 
-COPY --from=build /build/libs/demo-1.jar app.jar
-
+# Run the jar file when the container starts
 ENTRYPOINT ["java", "-jar", "app.jar"]
