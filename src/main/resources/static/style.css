@@ -1,0 +1,77 @@
+
+.navbar {
+    position: fixed;
+    top: 0;
+    right: 8%;
+    padding-top: 30px;
+    padding-bottom: 15px;
+    inline-size: 500px;
+}
+
+.navbar a {
+    padding: 20px;
+    color: green;
+    text-decoration: none;
+    /*padding: 20px;*/
+    font-size: 20px;
+    font-family: "Audiowide", sans-serif;
+}
+
+.active {
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    color: royalblue;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
+
+.navbar-links {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.navbar-link {
+    color: black;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    margin-left: 5px;
+    padding: 3px;
+    background-color: lime;
+    color: green;
+    border-radius: 30%;
+    font-size: 20px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+}
+
+.dropdown-content a {
+    display: block;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none
+}
+
+
+body {
+    background: linear-gradient(90deg, rgb(40, 186, 220) 20%, rgb(0, 255, 16) 92%);
+}
