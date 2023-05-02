@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Race Your Rivals</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Achtergrondkleur -->
+    <style th:replace="common-elements :: background"></style>
+    <!-- Bootstrap en Font Awesome toe -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <!-- Help-knop en popup -->
+    <div th:replace="common-elements :: help(helpText=${'Vul hier je gebruikersnaam in.'})"></div>
+
+    <!-- Taal-knop -->
+    <div th:replace="common-elements :: language"></div>
+
+    <h1>Naam</h1>
+    <form action="/name" method="post">
+        <label for="name">Naam:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Next</button>
+    </form>
+
+    <!-- Importeer het scripts.js bestand -->
+    <script src="name.js"></script>
+    <!-- Bootstrap en Font Awesome JavaScript toe -->
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
