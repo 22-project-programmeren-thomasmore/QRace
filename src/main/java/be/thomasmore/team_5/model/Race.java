@@ -8,7 +8,8 @@ import jakarta.persistence.Id;
 public class Race {
     @Id
     private Integer id;
-    private String raceName;
+    private String raceTrack;
+
 
     public Integer getId() {
         return id;
