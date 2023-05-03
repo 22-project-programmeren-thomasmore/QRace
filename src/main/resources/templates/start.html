@@ -1,145 +1,15 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="nl">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Qrace</title>-->
-<!--    <style>-->
-<!--        body {-->
-<!--            background-color: lightblue;-->
-<!--        }-->
 
-<!--        #title {-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left:40%;-->
-<!--            font-size: 5rem;-->
-<!--            color: #333;-->
-<!--            animation: slide-down 1s ease-out forwards;-->
-<!--        }-->
-
-<!--        #start-button {-->
-<!--            margin-top: 25rem;-->
-<!--            text-align: center;-->
-<!--        }-->
-
-<!--        button {-->
-<!--            background-color: purple;-->
-<!--            color: #fff;-->
-<!--            font-size: 2rem;-->
-<!--            padding: 1rem 2rem;-->
-<!--            border: none;-->
-<!--            border-radius: 0.5rem;-->
-<!--            cursor: pointer;-->
-<!--            transition: background-color 0.3s ease-in-out;-->
-<!--        }-->
-
-<!--        button:hover {-->
-<!--            background-color: #993399;-->
-<!--        }-->
-
-<!--        @keyframes slide-down {-->
-<!--            0% {-->
-<!--                top: -10rem;-->
-<!--            }-->
-<!--            100% {-->
-<!--                top: 0;-->
-<!--            }-->
-<!--        }-->
-
-<!--        @keyframes slide-right {-->
-<!--            0% {-->
-<!--                left: 45%;-->
-<!--            }-->
-<!--            100% {-->
-<!--                left: 100%;-->
-<!--            }-->
-<!--        }-->
-
-
-<!--    </style>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div th:replace="fragments/navbar :: navbar"></div>-->
-
-<!--<h1 id="title">Qrace</h1>-->
-<!--<div id="start-button">-->
-<!--    <button onclick="startGame()">Start</button>-->
-<!--</div>-->
-<!--<script>-->
-<!--    function startGame() {-->
-<!--        // Redirect to the host/join page-->
-<!--        window.location.href = "/host-join";-->
-<!--    }-->
-
-<!--    // Animate the title-->
-<!--    setTimeout(() => {-->
-<!--        document.getElementById("title").style.animation = "slide-right 1s ease-out forwards";-->
-<!--    }, 1500);-->
-<!--</script>-->
-<!--</body>-->
-<!--</html>-->
-
-<!-- --------------------------------------------------------------------------------------------------------- -->
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <meta http-equiv="X-UA-Compatible" content="ie=edge">-->
-<!--    <title>QRace</title>-->
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"-->
-<!--          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fyi7gJzo2nElbdqnEJT0AZzcM6EVoB4OflQ5f" crossorigin="anonymous">-->
-<!--    <style>-->
-<!--        body {-->
-<!--            background: linear-gradient(to bottom right, #008000, #00bfff);-->
-<!--        }-->
-
-<!--        .button {-->
-<!--            background-color: #2E8B57;-->
-<!--            border: none;-->
-<!--            color: white;-->
-<!--            padding: 10px 25px;-->
-<!--            text-align: center;-->
-<!--            text-decoration: none;-->
-<!--            display: inline-block;-->
-<!--            font-size: 16px;-->
-<!--            margin: 4px 2px;-->
-<!--            cursor: pointer;-->
-<!--            border-radius: 50px;-->
-<!--        }-->
-
-<!--        .button:hover {-->
-<!--            background-color: #3CB371;-->
-<!--            color: white;-->
-<!--        }-->
-<!--    </style>-->
-<!--</head>-->
-
-<!--<body>-->
-<!--&lt;!&ndash; navbar fragment included here &ndash;&gt;-->
-<!--<div th:replace="navbar :: navbar"></div>-->
-
-<!--<div class="container">-->
-<!--    <div class="row">-->
-<!--        <div class="col-md-6">-->
-<!--            <h1 style="color: lime;">QRace</h1>-->
-<!--            <h2>Voltooi de zoektocht & race tegen de mascottes!</h2>-->
-<!--            <button class="button">Start de race!</button>-->
-<!--        </div>-->
-<!--        <div class="col-->
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
     <title>QRace</title>
-    <link rel="stylesheet" type="text/css" href="../static/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../public/css/style.css"/>
 
 
 </head>
 <body>
-<img src="../img/speelgoedLogo.png" alt="Logo Speelgoed Museum">
+<img src="../public/img/speelgoedLogo.png" alt="Logo Speelgoed Museum">
 <div class="navbar">
     <a class="active" href="#">HOME</a>
     <a href="#">WAT IS QRACE</a>
@@ -162,7 +32,7 @@
         </div>
     </div>
 
-    <img class="right" src="../img/homePic.png" alt="kinderen op zoek">
+    <img class="right" src="../public/img/homePic.png" alt="kinderen op zoek">
 </div>
 
 <!--<div id="popup" class="popup">-->
