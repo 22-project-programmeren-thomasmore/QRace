@@ -44,3 +44,44 @@ body {
   background-color: transparent;
   cursor: pointer;
 }
+
+.flex-container-game-right {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+  padding-right: 20rem;
+  max-width: 50%;
+  height: 100%;
+  box-sizing: border-box;
+  float: right;
+}
+/* Timer */
+#timer {
+  display: block;
+  font-size: 5rem;
+  padding-right: 15rem;
+  padding-top: 1rem;
+}
+/* All different scans */
+.allScans {
+  background-color: #FF0000;
+  margin: 0.2rem;
+  text-align: center;
+}
+
+/* Scan Button */
+#scanButton {
+  background-color: #4681FF;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  width: 50%;
+  align-self: center;
+  margin: 1rem;
+}
