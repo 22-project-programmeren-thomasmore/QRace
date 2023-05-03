@@ -1,18 +1,21 @@
 const translations = {
   en: {
-    title: "Enter Name",
-    nameLabel: "Name:",
-    popupText: "Enter your username here.",
+    title: "Race your rivals",
+    hostLabel: "host",
+    joinLabel: "host",
+    tooltip: "Enter your username here.",
   },
   fr: {
-    title: "Entrez le nom",
-    nameLabel: "Nom:",
-    popupText: "Entrez votre nom d'utilisateur ici.",
+    title: "Race your rivals",
+    hostLabel: "host",
+    joinLabel: "host",
+    tooltip: "Enter your username here.",
   },
   nl: {
-    title: "Naam invoeren",
-    nameLabel: "Naam:",
-    popupText: "Vul hier je gebruikersnaam in.",
+    title: "Race your rivals",
+    hostLabel: "host",
+    joinLabel: "host",
+    tooltip: "Enter your username here.",
   },
 };
 
@@ -27,7 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   var languageBtn = document.querySelector(".language-btn");
   var pageTitle = document.querySelector("title");
-  var nameLabel = document.querySelector('label[for="name"]');
+  var hostLabel = document.querySelector('label[for="name"]');
+  var joinLabel = document.querySelector('label[for="name"]');
   var helpPopupText = document.querySelector(".help-popup p");
 
   languageBtn.addEventListener("click", function () {
@@ -48,7 +52,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updateLanguage(lang) {
     pageTitle.textContent = translations[lang].title;
-    nameLabel.textContent = translations[lang].nameLabel;
-    helpPopupText.textContent = translations[lang].popupText;
+    hostLabel.textContent = translations[lang].hostLabel;
+    joinLabel.textContent = translations[lang].joinLabel;
+    helpPopupText.textContent = translations[lang].tooltip;
   }
 });
