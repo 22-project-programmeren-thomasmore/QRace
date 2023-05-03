@@ -2,17 +2,17 @@ const translations = {
   en: {
     title: "Enter Name",
     nameLabel: "Name:",
-    popupText: "Enter your username here.",
+    tooltip: "Enter your username here.",
   },
   fr: {
     title: "Entrez le nom",
     nameLabel: "Nom:",
-    popupText: "Entrez votre nom d'utilisateur ici.",
+    tooltip: "Entrez votre nom d'utilisateur ici.",
   },
   nl: {
     title: "Naam invoeren",
     nameLabel: "Naam:",
-    popupText: "Vul hier je gebruikersnaam in.",
+    tooltip: "Vul hier je gebruikersnaam in.",
   },
 };
 
@@ -49,6 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateLanguage(lang) {
     pageTitle.textContent = translations[lang].title;
     nameLabel.textContent = translations[lang].nameLabel;
-    helpPopupText.textContent = translations[lang].popupText;
+    helpPopupText.textContent = translations[lang].tooltip;
   }
 });
