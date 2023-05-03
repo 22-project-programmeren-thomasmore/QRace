@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+    <!-- Achtergrondkleur -->
+    <style th:fragment="background">
+        body {
+            background-image: linear-gradient(to right, blue, green);
+        }
+    </style>
+
+    <!-- Help-knop en popup -->
+    <div th:fragment="help" class="help-container">
+        <button class="help-btn">?</button>
+        <div class="help-popup">
+            <p th:text="${helpText}">Vul hier je gebruikersnaam in.</p>
+        </div>
+    </div>
+
+    <!-- Taal-knop -->
+    <div th:fragment="language" class="language-container">
+        <button class="language-btn btn btn-light" data-lang="en">
+            <i class="fas fa-globe"></i>
+        </button>
+    </div>
+
+</body>
+
+</html>
