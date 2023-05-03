@@ -12,18 +12,23 @@
 </head>
 
 <body>
-    <!-- Help-knop en popup -->
-    <div th:replace="common/common-elements :: help(helpText=${'Vul hier je gebruikersnaam in.'})"></div>
+    <!-- Help-knop met popup -->
+    <div th:replace="fragments\help-language :: help(helpText=${'tooltip.nl'})"></div>
 
     <!-- Taal-knop -->
-    <div th:replace="common/common-elements :: language"></div>
+    <div th:replace="fragments\help-language :: language"></div>
 
-    <h1>Naam</h1>
-    <form action="/name" method="post">
-        <label for="name">Naam:</label>
-        <input type="text" id="name" name="name" required>
-        <button type="submit">Next</button>
-    </form>
+    <h1></h1>
+    <div class="container">
+        <div class="left">
+            <form action="/name" method="post">
+                <input type="text" id="name" name="name" required>
+        </div>
+        <div class="right">
+            <button for="next" type="submit"></button>
+            </form>
+        </div>
+    </div>
 
     <!-- Importeer het scripts.js bestand -->
     <script src="../public/js/name.js"></script>

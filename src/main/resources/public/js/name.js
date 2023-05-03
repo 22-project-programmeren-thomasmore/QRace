@@ -1,18 +1,18 @@
 const translations = {
   en: {
     title: "Enter Name",
-    nameLabel: "Name:",
     tooltip: "Enter your username here.",
+    nextLabel: "next",
   },
   fr: {
     title: "Entrez le nom",
-    nameLabel: "Nom:",
     tooltip: "Entrez votre nom d'utilisateur ici.",
+    nextLabel: "prochaine",
   },
   nl: {
     title: "Naam invoeren",
-    nameLabel: "Naam:",
     tooltip: "Vul hier je gebruikersnaam in.",
+    nextLabel: "volgende",
   },
 };
 
@@ -26,8 +26,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   var languageBtn = document.querySelector(".language-btn");
-  var pageTitle = document.querySelector("title");
-  var nameLabel = document.querySelector('label[for="name"]');
+  var pageTitle = document.querySelector("h1");
+  var btnLabel = document.querySelector('button[for="next"]');
   var helpPopupText = document.querySelector(".help-popup p");
 
   languageBtn.addEventListener("click", function () {
@@ -48,7 +48,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updateLanguage(lang) {
     pageTitle.textContent = translations[lang].title;
-    nameLabel.textContent = translations[lang].nameLabel;
     helpPopupText.textContent = translations[lang].tooltip;
+    btnLabel.textContent = translations[lang].nextLabel;
   }
+
+  // Roep updateLanguage op met de standaardtaal "nl" om de tekst meteen in het Nederlands te laten verschijnen
+  updateLanguage("nl");
 });

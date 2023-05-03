@@ -7,16 +7,9 @@
 
 <body>
 
-    <!-- Achtergrondkleur -->
-    <style th:fragment="background">
-        body {
-            background-image: linear-gradient(to right, blue, green);
-        }
-    </style>
-
-    <!-- Help-knop en popup -->
+    <!-- Help-knop met popup -->
     <div th:fragment="help" class="help-container">
-        <button class="help-btn">?</button>
+        <button class="help-btn"><i class="fas fa-question"></i></button>
         <div class="help-popup">
             <p th:text="${helpText}"></p>
         </div>
