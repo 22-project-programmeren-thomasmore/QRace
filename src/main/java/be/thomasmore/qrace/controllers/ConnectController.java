@@ -1,4 +1,4 @@
-package be.thomasmore.team_5.controllers;
+package be.thomasmore.qrace.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package be.thomasmore.team_5.model;
+package be.thomasmore.qrace.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
