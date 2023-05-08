@@ -11,19 +11,20 @@
 
 <body>
   <h1>Test for game</h1>
-  <img id="track" src="../public/img/raceTrack.png" alt="Race Track">
+  <!-- <img id="track" src="../public/img/raceTrack.png" alt="Race Track"> -->
   <div class="flex-container-game-right">
-    <div id="timer">⏱ 00:00</div>
+    <div id="timer">⏱ 00:00</div> <!-- <i class="fas fa-stopwatch"></i> -->
     <script src="../public/js/timer.js"></script>
     <div class="allScans">Scan 1 --:--</div>
     <div class="allScans">Scan 2 --:--</div>
     <div class="allScans">Scan 3 --:--</div>
-    <button id="scanButton">SCAN</button>
+    <button id="scanButton" type="button" onclick="scanner.start();"><i class="fas fa-camera"></i></button>
   </div>
-  <div class="button">
-    <a href="scoreboard" class="nextbtn">stop</a>
-  </div>
-  <script type="module" src="../public/js/qrScanner.js"></script>
+  <video id="preview"></video>
+
+  <!-- Importeer qr reader -->
+  <script src="../public/js/qrScanner.js"></script>
+
 </body>
 
 </html>
