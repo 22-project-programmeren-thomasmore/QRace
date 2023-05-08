@@ -5,7 +5,7 @@ import jakarta.persistence.Id;
 
 
 @Entity
-public class Race {
+public class RaceModel {
     @Id
     private Integer id;
     private String raceTrack;
