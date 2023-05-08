@@ -1,0 +1,1 @@
+// qr code camera scanner
