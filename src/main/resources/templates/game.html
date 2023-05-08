@@ -6,38 +6,25 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../public/css/style.css">
-  <script src="https://unpkg.com/qr-scanner"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta-3/css/all.min.css">
   <title>Mijn Spring-applicatie</title>
 </head>
 
 <body>
   <h1>Test for game</h1>
-  <!-- <img id="track" src="../public/img/raceTrack.png" alt="Race Track"> -->
   <div class="flex-container-game-right">
-    <div id="timer">⏱ 00:00</div> <!-- <i class="fas fa-stopwatch"></i> -->
+    <div id="timer">⏱ 00:00</div>
     <script src="../public/js/timer.js"></script>
     <div class="allScans">Scan 1 --:--</div>
     <div class="allScans">Scan 2 --:--</div>
     <div class="allScans">Scan 3 --:--</div>
-    <button id="scanButton" type="button" onclick=""><i class="fas fa-camera"></i></button>
+    <button id="openScannerBtn"><i class="fa fa-camera"></i></button>
   </div>
-  <!-- <video id="preview"></video> -->
-  <div id="video-container">
-    <video id="qr-video"></video>
-  </div>
-  <br>
-  <b>Detected QR code: </b>
-  <span id="cam-qr-result">None</span>
-  <br>
-  <b>Last detected at: </b>
-  <span id="cam-qr-result-timestamp"></span>
-  <br>
-  <button id="start-button">Start</button>
-  <button id="stop-button">Stop</button>
-  <!-- Importeer qr reader -->
-  <script type="module" src="../public/js/qrScanner.js"></script>
+  <h2 id="scanResult"></h2>
 
+  <!-- Scanner fragment -->
+  <div id="scannerFragment" style="display:none;"></div>
+  <script type="module" src="../public/js/qrScanner.js"></script>
 </body>
 
 </html>
