@@ -13,8 +13,7 @@
 
 <body>
     <!-- Help-knop en popup -->
-    <div
-        th:replace="fragments\help-language :: help(helpText=${helpText})">
+    <div th:replace="fragments\help-language :: help(helpText=${helpText})">
     </div>
 
     <!-- Taal-knop -->
@@ -22,8 +21,8 @@
 
     <h1>Race Your Rivals</h1>
     <div class="button-container">
-        <button type="button" class="btn btn-primary">Host</button>
-        <button type="button" class="btn btn-secondary">Join</button>
+        <button type="button" onclick="location.href='/host'" class="btn btn-primary">Host</button>
+        <button type="button" onclick="location.href='/join'" class="btn btn-secondary">Join</button>
     </div>
 
     <!-- Importeer het scripts.js bestand -->
