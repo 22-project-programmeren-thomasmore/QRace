@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "jsqr": "^1.4.0"
+    "html5-qrcode": "^2.3.8",
+    "jsqr": "^1.4.0",
+    "qr-scanner": "^1.4.2"
   }
 }
