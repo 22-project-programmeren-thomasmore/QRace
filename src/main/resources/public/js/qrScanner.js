@@ -1,67 +1,31 @@
-const loadScript = (src) => {
-  return new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = src;
-    script.onload = resolve;
-    script.onerror = reject;
-    document.head.appendChild(script);
-  });
-};
+const video = document.getElementById('qr-video');
+const videoContainer = document.getElementById('video-container');
+const openScannerBtn = document.getElementById('openScannerBtn');
+const closeScannerBtn = document.getElementById('closeScannerBtn');
+const scannerContainer = document.getElementById('scannerContainer');
+const scanResult = document.getElementById('scanResult');
 
-const initQrScanner = async (
-  openScannerBtnId,
-  closeScannerBtnId,
-  scannerFragmentId,
-  scanResultId
-) => {
-  await loadScript("https://unpkg.com/qr-scanner");
+function setResult(label, result) {
+  console.log(result.data);
+  scanResult.textContent = result.data;
+  label.style.color = 'teal';
+  clearTimeout(label.highlightTimeout);
+  label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
+}
 
-  const openScannerBtn = document.getElementById(openScannerBtnId);
-  const closeScannerBtn = document.getElementById(closeScannerBtnId);
-  const scannerFragment = document.getElementById(scannerFragmentId);
-  const scanResult = document.getElementById(scanResultId);
+// ####### Web Cam Scanning #######
 
-  // Load scanner fragment
-  fetch("src/main/resources/templates/fragments/qrScanner.html")
-    .then((response) => response.text())
-    .then((html) => {
-      scannerFragment.innerHTML = html;
+const scanner = new QrScanner(video, result => setResult(scanResult, result), { returnDetailedScanResult: true });
 
-      const video = document.getElementById("qr-video");
+openScannerBtn.addEventListener('click', () => {
+  scanner.start();
+  scannerContainer.style.display = 'block';
+});
 
-      function setResult(label, result) {
-        console.log(result.data);
-        scanResult.textContent = result.data;
-        label.style.color = "teal";
-        clearTimeout(label.highlightTimeout);
-        label.highlightTimeout = setTimeout(
-          () => (label.style.color = "inherit"),
-          100
-        );
-      }
+closeScannerBtn.addEventListener('click', () => {
+  scanner.stop();
+  scannerContainer.style.display = 'none';
+});
 
-      const scanner = new QrScanner(video, (result) =>
-        setResult(scanResult, result)
-      );
-
-      openScannerBtn.addEventListener("click", () => {
-        scanner.start();
-        scannerFragment.style.display = "block";
-      });
-
-      closeScannerBtn.addEventListener("click", () => {
-        scanner.stop();
-        scannerFragment.style.display = "none";
-      });
-
-      // for debugging
-      window.scanner = scanner;
-    });
-};
-
-initQrScanner(
-  "openScannerBtn",
-  "closeScannerBtn",
-  "scannerFragment",
-  "scanResult"
-);
+// for debugging
+window.scanner = scanner;
