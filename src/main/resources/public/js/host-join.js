@@ -1,3 +1,4 @@
+// Object met vertalingen voor verschillende talen
 const translations = {
   en: {
     title: "Race your rivals",
@@ -62,4 +63,3 @@ document.addEventListener("DOMContentLoaded", function () {
     helpPopupText.textContent = translations[lang].tooltip;
   }
 });
-
