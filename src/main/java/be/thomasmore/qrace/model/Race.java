@@ -1,19 +1,20 @@
 package be.thomasmore.qrace.model;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
-@Entity
+@AllArgsConstructor
+@Data
+@Builder // Lombok
 public class Race {
 
-  @Id
-  private Integer id;
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
+    @Id
+    private String id;
+    private Player firstPlayer;
+    private Player secondPlayer;
+    private Player thirdPlayer;
+    private Player fourthPlayer;
+    private Player winner;
 }

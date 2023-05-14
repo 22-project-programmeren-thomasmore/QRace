@@ -1,4 +1,6 @@
 package be.thomasmore.qrace.model;
 
-public class GameModel {
+public class Timer {
+
 }
+
