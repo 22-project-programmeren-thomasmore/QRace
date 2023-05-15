@@ -8,12 +8,8 @@ import lombok.Data;
 @Data
 @Builder
 // de structuur van de vragen binnen de Quiz
-
 public class Question {
-    String url; //url van qr-code linken aan een vraag
-    Player player; //player die de vraag moet beantwoorden
     String prompt;
-    String firstAnswer;
-    String secondAnswer;
+    String answer;
 }
 
