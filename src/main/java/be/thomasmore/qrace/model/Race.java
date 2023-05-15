@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Random;
+
 @AllArgsConstructor
 @Data
 @Builder
@@ -18,11 +20,14 @@ public class Race {
   private Player fourthPlayer;
   private Player winner;
 
-  public Race(String raceId) {
+  public Race(String raceID) {
     this.raceID = raceID;
   }
   public String getRaceID() {
     return raceID;
+  }
+  public void setRaceID(String raceID) {
+    this.raceID = raceID;
   }
 
   public Race(Player hostPlayer){
