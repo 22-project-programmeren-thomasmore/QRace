@@ -1,0 +1,45 @@
+<header class="header" th:fragment="header">
+    <div class="logo">
+        <a href="/#"></a><img src="../public/img/SPMlogo.png" alt="Speelgoed Museum logo" title="SM logo">
+    </div>
+    <nav class="nav">
+        <ul>
+            <li class="info">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#infoModal">
+                    <i class="fas fa-info"></i>
+                </a>
+            </li>
+            <li class="user">
+                <a href="user">
+                    <i class="fas fa-user"></i>
+                </a>
+            </li>
+            <li class="globe">
+                <a href="globe">
+                    <i class="fas fa-globe"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<!-- The Modal for info -->
+<div class="modal fade" id="infoModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Information</h4>
+                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- The information about the page goes here -->
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus laborum sequi officia neque ipsum unde
+                obcaecati fugit cumque esse quis!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
