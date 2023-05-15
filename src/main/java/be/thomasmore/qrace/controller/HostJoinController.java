@@ -1,7 +1,7 @@
-package be.thomasmore.qrace.controllers;
+package be.thomasmore.qrace.controller;
 
-import be.thomasmore.qrace.model.GameModel;
-import be.thomasmore.qrace.services.GameService;
+import be.thomasmore.qrace.model.Game;
+import be.thomasmore.qrace.service.GameService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,13 +16,13 @@ public class HostJoinController {
     }
 
     @PostMapping("/host")
-    public GameModel startGame() {
+    public Game startGame() {
         return gameService.createGame();
     }
 
     @GetMapping("/join/{raceId}")
-    public GameModel joinGame(@PathVariable String raceId) {
-        GameModel game = gameService.findGameByRaceId(raceId);
+    public Game joinGame(@PathVariable String raceId) {
+        Game game = gameService.findGameByRaceId(raceId);
         if (game != null) {
             return game;
         } else {

@@ -1,9 +1,9 @@
 package be.thomasmore.qrace.model;
 
-public class GameModel {
+public class Game {
     private String raceId;
 
-    public GameModel(String raceId) {
+    public Game(String raceId) {
         this.raceId = raceId;
     }
     public String getRaceId() {
