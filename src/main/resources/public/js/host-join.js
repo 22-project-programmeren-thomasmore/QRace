@@ -1,27 +1,28 @@
 // Object met vertalingen voor verschillende talen
 const translations = {
-  en: {
-    title: "Race your rivals",
-    hostLabel: "host",
-    joinLabel: "host",
-    tooltip: "Enter your username here.",
-  },
-  fr: {
-    title: "Race your rivals",
-    hostLabel: "host",
-    joinLabel: "host",
-    tooltip: "Enter your username here.",
-  },
-  nl: {
-    title: "Race your rivals",
-    hostLabel: "host",
-    joinLabel: "host",
-    tooltip: "Enter your username here.",
-  },
+    en: {
+        title: "Race your rivals",
+        hostLabel: "host",
+        joinLabel: "host",
+        tooltip: "Enter your username here.",
+    },
+    fr: {
+        title: "Race your rivals",
+        hostLabel: "host",
+        joinLabel: "host",
+        tooltip: "Enter your username here.",
+    },
+    nl: {
+        title: "Race your rivals",
+        hostLabel: "host",
+        joinLabel: "host",
+        tooltip: "Enter your username here.",
+    },
 };
 
 // Wait for the DOM to load
 document.addEventListener("DOMContentLoaded", function () {
+
   // Get references to the help button and popup
   var helpBtn = document.querySelector(".help-btn");
   var helpPopup = document.querySelector(".help-popup");
@@ -63,3 +64,4 @@ document.addEventListener("DOMContentLoaded", function () {
     helpPopupText.textContent = translations[lang].tooltip;
   }
 });
+

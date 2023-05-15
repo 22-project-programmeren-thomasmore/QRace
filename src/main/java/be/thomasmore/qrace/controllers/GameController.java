@@ -12,4 +12,5 @@ public class GameController {
         ModelAndView modelAndView = new ModelAndView("game");
         return modelAndView;
     }
+
 }
