@@ -3,14 +3,19 @@
 <body>
     <!-- Help-knop met popup -->
     <div th:fragment="help" class="help-container">
-        <button class="help-btn"><i class="fas fa-question"></i></button>
+        <!-- Help-knop met icoon -->
+        <button class="help-btn"><i class="fas fa-info"></i></button>
+        
+        <!-- Help-popup -->
         <div class="help-popup">
+            <!-- Help-tekst -->
             <p th:text="${helpText}"></p>
         </div>
     </div>
 
     <!-- Taal-knop -->
     <div th:fragment="language" class="language-container">
+        <!-- Taal-knop met icoon en data-attribuut -->
         <button class="language-btn btn btn-light" data-lang="en">
             <i class="fas fa-globe"></i>
         </button>

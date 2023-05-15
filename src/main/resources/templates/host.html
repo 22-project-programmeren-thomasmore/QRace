@@ -18,14 +18,15 @@
   <div class="container-fluid">
     <div class="row d-flex justify-content-center text-center">
       <div class="title col-xl-4 vstack gap-3">
-        <h1># RaceID</h1>
+        <h1 id="raceIdDisplay"># <span id="raceId"></span></h1>
+        <script src="../public/js/gameID.js"></script>
         <h2>Wacht op jouw vrienden en start de race eens ze er zijn!</h2>
       </div>
 
       <div class="col-xl-4 text-center vstack gap-3">
         <button type="button" class="btn btn-secondary btn-success" data-toggle="tooltip" data-placement="bottom"
           title="Dit ben jij!">
-          Eigen naam
+          <span th:text="${session.userName}"></span>
         </button>
         <button type="button" class="btn btn-secondary btn-success" data-toggle="tooltip" data-placement="bottom"
           title="#Naam is klaar voor de race!">
@@ -39,9 +40,9 @@
           title="Er kan nog iemand online komen!">
           Member #4
         </button>
-        
+
         <a class="btn btn-block btn-dark" type="button" href="game" role="button">Start de race!</a>
-        
+
       </div>
     </div>
   </div>
