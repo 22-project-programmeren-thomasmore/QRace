@@ -6,10 +6,10 @@ import jakarta.persistence.*;
 public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String raceId;
+    private int raceId;
 
 
-    public Game(String raceId) {
+    public Game(int raceId) {
         this.raceId = raceId;
     }
 
