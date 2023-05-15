@@ -26,7 +26,7 @@
       <div class="col-xl-4 text-center vstack gap-3">
         <button type="button" class="btn btn-secondary btn-success" data-toggle="tooltip" data-placement="bottom"
           title="Dit ben jij!">
-          Eigen naam
+          <span th:text="${session.userName}"></span>
         </button>
         <button type="button" class="btn btn-secondary btn-success" data-toggle="tooltip" data-placement="bottom"
           title="#Naam is klaar voor de race!">
@@ -40,9 +40,9 @@
           title="Er kan nog iemand online komen!">
           Member #4
         </button>
-        
+
         <a class="btn btn-block btn-dark" type="button" href="game" role="button">Start de race!</a>
-        
+
       </div>
     </div>
   </div>
