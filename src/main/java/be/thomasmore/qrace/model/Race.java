@@ -10,13 +10,20 @@ import lombok.Data;
 @Builder
 public class Race {
   @Id
-  private String id;
+  private String raceID;
   private RaceStatusEnum status;
   private Player hostPlayer;
   private Player secondPlayer;
   private Player thirdPlayer;
   private Player fourthPlayer;
   private Player winner;
+
+  public Race(String raceId) {
+    this.raceID = raceID;
+  }
+  public String getRaceID() {
+    return raceID;
+  }
 
   public Race(Player hostPlayer){
     this.hostPlayer = hostPlayer;
