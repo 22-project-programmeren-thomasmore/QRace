@@ -11,30 +11,42 @@ import java.util.ArrayList;
 // de galleries zijn de verschillende afdelingen van het museum
 public class Gallery {
     @Id
-    private String id;
+    private int galleryID;
     private String name;
     private String description;
     private String image;
 
-    public Gallery(String id, String name, String description, String image) {
-        this.id = id;
+    public Gallery (int galleryID) {
+        this.galleryID = galleryID;
+    }
+
+    public Gallery(int galleryID, String name, String description, String image) {
+        this.galleryID = galleryID;
         this.name = name;
         this.description = description;
         this.image = image;
     }
 
+    public int getGalleryID() {
+        return galleryID;
+    }
+
+    public void setGalleryID(int galleryID) {
+        this.galleryID = galleryID;
+    }
+
     public static void setGalleries() {
         ArrayList<Gallery> galleries = new ArrayList<Gallery>();
-        galleries.add(new Gallery("01", "Dolls", "Gallery 1 description", "www.google.com"));
-        galleries.add(new Gallery("02", "Playmobil", "Gallery 2 description", "www.google.com"));
-        galleries.add(new Gallery("03", "Mechanical toys, robots and space", "Gallery 3 description", "www.google.com"));
-        galleries.add(new Gallery("04", "Fun fair and circus", "Gallery 4 description", "www.google.com"));
-        galleries.add(new Gallery("05", "Constructive toys", "Gallery 5 description", "www.google.com"));
-        galleries.add(new Gallery("06", "Teddy bears and stuffed animals", "Gallery 6 description", "www.google.com"));
-        galleries.add(new Gallery("07", "Trains", "Gallery 7 description", "www.google.com"));
-        galleries.add(new Gallery("08", "Board games", "Gallery 8 description", "www.google.com"));
-        galleries.add(new Gallery("09", "Traditional children's games: Breughel's children's games", "Gallery 9 description", "www.google.com"));
-        galleries.add(new Gallery("10", "International toys", "Gallery 10 description", "www.google.com"));
-        galleries.add(new Gallery("11", "Temporary exhibition", "Gallery 11 description", "www.google.com"));
+        galleries.add(new Gallery(1, "Dolls", "Gallery 1 description", "www.google.com"));
+        galleries.add(new Gallery(2, "Playmobil", "Gallery 2 description", "www.google.com"));
+        galleries.add(new Gallery(3, "Mechanical toys, robots and space", "Gallery 3 description", "www.google.com"));
+        galleries.add(new Gallery(4, "Fun fair and circus", "Gallery 4 description", "www.google.com"));
+        galleries.add(new Gallery(5, "Constructive toys", "Gallery 5 description", "www.google.com"));
+        galleries.add(new Gallery(6, "Teddy bears and stuffed animals", "Gallery 6 description", "www.google.com"));
+        galleries.add(new Gallery(7, "Trains", "Gallery 7 description", "www.google.com"));
+        galleries.add(new Gallery(8, "Board games", "Gallery 8 description", "www.google.com"));
+        galleries.add(new Gallery(9, "Traditional children's games: Breughel's children's games", "Gallery 9 description", "www.google.com"));
+        galleries.add(new Gallery(10, "International toys", "Gallery 10 description", "www.google.com"));
+        galleries.add(new Gallery(11, "Temporary exhibition", "Gallery 11 description", "www.google.com"));
     }
 }
