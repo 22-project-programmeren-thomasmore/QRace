@@ -1,4 +1,4 @@
-package be.thomasmore.qrace.controllers;
+package be.thomasmore.qrace.repository;
 
 
 import be.thomasmore.qrace.model.User;

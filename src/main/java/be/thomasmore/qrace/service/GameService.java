@@ -1,6 +1,6 @@
-package be.thomasmore.qrace.services;
+package be.thomasmore.qrace.service;
 
-import be.thomasmore.qrace.model.GameModel;
+import be.thomasmore.qrace.model.Game;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -9,15 +9,15 @@ import java.util.Random;
 @Service
 public class GameService {
 
-    private final Map<String, GameModel> games = new ConcurrentHashMap<>();
+    private final Map<String, Game> games = new ConcurrentHashMap<>();
 
-    public GameModel createGame() {
-        GameModel game = new GameModel(generateRaceId());
+    public Game createGame() {
+        Game game = new Game(generateRaceId());
         games.put(game.getRaceId(), game);
         return game;
     }
 
-    public GameModel findGameByRaceId(String raceId) {
+    public Game findGameByRaceId(String raceId) {
         return games.get(raceId);
     }
 
