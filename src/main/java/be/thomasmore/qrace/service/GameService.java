@@ -22,6 +22,8 @@ public class GameService {
     }
 
     private String generateRaceId() {
-        return String.format("%04d", new Random().nextInt(10000));
+        int randomId = new Random().nextInt(10000);
+        String sql = "INSERT INTO GAMES values  (" + randomId + ", 1, 2, 3, 4)";
+        return String.format("%04d", randomId);
     }
 }
