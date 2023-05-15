@@ -1,108 +1,126 @@
+/* --- body --- */
 
-
-
-
-
-
-
-
-
-
-
-
-
-/*-------------------------------------------NAVBAR-----------------------------------------------*/
-.navbar {
-  position: fixed;
-  top: 0;
-  right: 8%;
-  padding-top: 30px;
-  padding-bottom: 15px;
-  inline-size: 500px;
-}
-
-.navbar a {
-  padding: 20px;
-  color: green;
-  text-decoration: none;
-  /*padding: 20px;*/
-  font-size: 20px;
-  font-family: "Audiowide", sans-serif;
-}
-
-.active {
-  font-weight: bold;
-}
-
-.navbar a:hover {
-  color: royalblue;
-}
-
-.navbar-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 60px;
-}
-
-.navbar-links {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-right: 20px;
-}
-
-.navbar-link {
-  color: black;
-  text-decoration: none;
-  margin-left: 20px;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-.dropbtn:hover {
-  color: royalblue;
-}
-.dropbtn {
-  margin-left: 5px;
-  padding: 3px;
-  background-color: lime;
-  color: green;
-  border-radius: 30%;
-  font-size: 20px;
-}
-
-.dropdown-content {
-  list-style-type: none;
-  display: none;
-  position: absolute;
-}
-
-.dropdown-content a {
-  margin-left: -80px;
-  margin-bottom: 10px;
-  display: block;
-  color: black;
-  padding: 5px 5px;
-  text-decoration: none;
-  border-radius: 20px;
-  background-color: lightblue;
-  width: 150px;
-  text-align: center;
-}
-
-/*-------------------------------------------BODY-----------------------------------------------*/
-
-body {
+body,
+html {
   background: linear-gradient(
     90deg,
     rgb(40, 186, 220) 20%,
     rgb(0, 255, 16) 92%
   );
+  margin: 0;
+  padding-top: 5%;
+  height: 100%;
+  scroll-snap-type: y mandatory; /* This will make sure to snap at each container */
+  overflow-y: scroll; /* Enable vertical scrolling */
+}
+/* --- navbar --- */
+
+/* Make the header always visible at the top of the page */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1%;
+  background: linear-gradient(
+    90deg,
+    rgb(40, 186, 220) 20%,
+    rgb(0, 255, 16) 92%
+  ); /* or any other color */
 }
 
+/* Adjust the logo size and give it some margin */
+.header .logo img {
+  display: flex;
+  justify-content: center;
+  height: 20%;
+  width: 25%;
+  padding: 0;
+  margin: 1%;
+}
+
+/* Remove the bullets from the list items and display them in a row */
+#nav ul {
+  justify-content: flex-end;
+  list-style: none;
+  display: flex;
+  margin: 1;
+  padding: 0;
+}
+
+/* Add margin to the list items (icons) */
+#nav ul li {
+  right: 0;
+  padding-right: 30%;
+}
+
+/* Adjust the size of the icons */
+#nav ul li a i {
+  font-size: 2rem; /* adjust this value as needed */
+}
+
+/* --- start --- */
+
+.homePage1,
+.homePage2 {
+  width: 100%;
+  height: 100vh; /* 100% of the viewport height */
+  scroll-snap-align: start end; /* This will start the snap at the start of the container */
+  display: flex;
+  flex-direction: row; /* This makes the content of this container side by side */
+}
+
+.homePage1 .left,
+.homePage1 .right,
+.homePage2 .left,
+.homePage2 .right {
+  flex: 1; /* This gives the left and right sections equal width */
+  padding: 5%; /* Add some padding to the left and right sections */
+}
+
+.homePage1 .left,
+.homePage2 .right {
+  /* padding: 5%; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.homePage1 .left button,
+.homePage2 .right button {
+  margin: 5%;
+}
+
+.homePage1 .right,
+.homePage2 .left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.homePage1 .right img,
+.homePage2 .left img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 25%;
+}
+
+#slogan,
+#play {
+  font-size: large;
+  background-color: green;
+  color: white;
+  border-radius: 10%;
+  text-align: center;
+}
+
+/*-------------------------------------------BODY-----------------------------------------------*/
+
+/* 
 .container {
   display: flex;
   justify-content: space-around;
@@ -152,96 +170,7 @@ h1 {
 .button a:hover {
   background-color: royalblue;
   color: lime;
-}
-
-/*-------------------------------------------POPUP-----------------------------------------------*/
-
-/*#popup-container {*/
-/*    display: none;*/
-/*    position: fixed;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*    background-color: rgba(0, 0, 0, .5);*/
-/*}*/
-
-/*#popup {*/
-/*    position: absolute;*/
-/*    top: 50%;*/
-/*    left: 50%;*/
-/*    transform: translate(-50%, -50%);*/
-/*    padding: 20px;*/
-/*    background-color: lightgreen;*/
-/*    border-radius: 10px;*/
-/*    text-align: center;*/
-/*}*/
-
-/*#popup h2 {*/
-/*    margin-top: 0;*/
-/*}*/
-
-/*#close-popup {*/
-/*    margin-top: 20px;*/
-/*    padding: 10px 20px;*/
-/*    border-radius: 5px;*/
-/*    background-color: white;*/
-/*    border: none;*/
-/*    cursor: pointer;*/
-/*}*/
-
-/* Help knop */
-.help-container {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 1000;
-}
-
-.help-btn {
-  font-size: 1.2rem;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-.help-popup {
-  display: none;
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  width: 250px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 0;
-}
-
-/* Taal knop */
-.language-container {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  z-index: 1000;
-}
-
-.language-btn {
-  font-size: 1.2rem;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-.flex-container-game-right {
-  display: flex;
-  flex-direction: column;
-  padding-top: 1rem;
-  padding-right: 20rem;
-  max-width: 50%;
-  height: 100%;
-  box-sizing: border-box;
-  float: right;
-}
+} */
 
 /* Timer */
 #timer {
