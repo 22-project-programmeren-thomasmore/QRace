@@ -1,89 +1,32 @@
 <!DOCTYPE html>
-<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<html lang="nl-BE" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="fragments\head :: head"></head>
+<header th:replace="fragments\header :: header"></header>
 
 <body>
-    <img src="../public/img/speelgoedLogo.png" alt="Logo Speelgoed Museum">
-    <div class="navbar">
-        <a class="active" href="#">HOME</a>
-        <a href="watqrace">WAT IS QRACE</a>
-        <a href="#">INLOGGEN</a>
-        <div class="dropdown">
-            <button class="dropbtn" id="btn">TAAL</button>
-            <ul id="list" class="dropdown-content">
-                <li><a href="#">NEDERLANDS</a></li>
-                <li><a href="#">FRANÇAIS</a></li>
-                <li><a href="#">ENGLISH</a></li>
-            </ul>
-        </div>
-    </div>
+    <container class="homePage1">
+        <section class="left">
+            <div id="title"></div>
+            <div id="slogan"></div>
+        </section>
+        <section class="right">
+            <img class="homeImg" src="../public/img/SPMkind.png" alt="kinderen op zoek">
+        </section>
+    </container>
+    <container class="homePage2">
+        <section class="left">
+            <img class="homeImg" src="../public/img/drex.png" alt="Drex">
 
-    <div class="container">
-        <div class="left">
-            <h1>qRace</h1>
-            <div class="button">
-                <a href="#" class="startbtn">Voltooi de zoektocht &<br>race tegen de mascottes!</a>
-            </div>
-        </div>
-
-        <img class="right" src="../public/img/homePic.png" alt="kinderen op zoek">
-    </div>
-
-    <!--<div id="popup" class="popup">-->
-    <!--    <div class="popup-content">-->
-    <!--        <h2>Wat is QRace?</h2>-->
-    <!--        <p>-->
-    <!--            QRace is a fun game where you search for hidden mascots and race against them!-->
-    <!--        </p>-->
-    <!--        <button class="popup-close-btn">OK</button>-->
-    <!--    </div>-->
-    <!--</div>-->
-
-    <script>
-        /*-------------------------------------------TAALKNOP-----------------------------------------------*/
-
-        const button = document.getElementById("btn");
-        const list = document.getElementById("list");
-        list.style.display = "none"
-
-        button.addEventListener("click", (event) => {
-            if (list.style.display === "none") {
-                list.style.display = "block";
-            } else {
-                list.style.display = "none";
-            }
-        });
-
-        // Hide dropdown content when user clicks outside of it
-        document.addEventListener("click", (event) => {
-            const isClickInside = list.contains(event.target) || button.contains(event.target);
-            if (!isClickInside) {
-                list.style.display = "none";
-            }
-        });
-
-        /*-------------------------------------------POPUP-----------------------------------------------*/
-    // const popupContainer = document.getElementById("popup");
-    // const closePopupButton = document.getElementById("popup");
-    //
-    // // Show popup when user clicks on "Wat is QRace" link
-    // document.querySelector("a[href= '#popup']").addEventListener("click", () => {
-    //     popupContainer.style.display = "block";
-    // });
-    //
-    // // Hide popup when user clicks on "OK" button
-    // closePopupButton.addEventListener("click", () => {
-    //     popupContainer.style.display = "none";
-    // });
-
-    </script>
-
-    <!-- button next that goes to the next page -->
-    <div class="button">
-        <a href="name" class="nextbtn">SPEEL NU!</a>
-    </div>
-
-
+        </section>
+        <section class="right">
+            <div id="intertitle"></div>
+            <div id="article"></div>
+            <a href="name" class="nextbtn">
+                <div id="play"></div>
+            </a>
+        </section>
+    </container>
 </body>
 
 </html>
