@@ -10,7 +10,7 @@ import lombok.Data;
 // de structuur van de vragen binnen de Quiz
 
 public class Question {
-    String url; //url van qrcode linken aan een vraag
+    String url; //url van qr-code linken aan een vraag
     Player player; //player die de vraag moet beantwoorden
     String prompt;
     String firstAnswer;
