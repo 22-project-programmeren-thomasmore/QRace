@@ -11,23 +11,23 @@ import java.util.ArrayList;
 // de galleries zijn de verschillende afdelingen van het museum
 public class Gallery {
     @Id
-    private int galleryID;
+    private Integer galleryID;
     private String name;
     private String description;
-    private String image;
+    private String qrCode;
 
-    public Gallery (int galleryID) {
+    public Gallery (Integer galleryID) {
         this.galleryID = galleryID;
     }
 
-    public Gallery(int galleryID, String name, String description, String image) {
+    public Gallery(Integer galleryID,String name, String description, String qrCode) {
         this.galleryID = galleryID;
         this.name = name;
         this.description = description;
-        this.image = image;
+        this.qrCode = qrCode;
     }
 
-    public int getGalleryID() {
+    public Integer getGalleryID() {
         return galleryID;
     }
 
@@ -36,7 +36,7 @@ public class Gallery {
     }
 
     public static void setGalleries() {
-        ArrayList<Gallery> galleries = new ArrayList<Gallery>();
+        ArrayList<Gallery> galleries = new ArrayList<>();
         galleries.add(new Gallery(1, "Dolls", "Gallery 1 description", "www.google.com"));
         galleries.add(new Gallery(2, "Playmobil", "Gallery 2 description", "www.google.com"));
         galleries.add(new Gallery(3, "Mechanical toys, robots and space", "Gallery 3 description", "www.google.com"));
