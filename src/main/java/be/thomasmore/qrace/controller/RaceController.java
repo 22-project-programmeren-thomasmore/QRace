@@ -29,15 +29,14 @@ public class RaceController {
     }
 
     @PostMapping("/host")
-    public ResponseEntity<Race> create(@RequestBody Player hostPlayer) {
+    public ResponseEntity<Race> host(@RequestBody Player hostPlayer) {
         log.info("host game request: {}", hostPlayer);
         return ResponseEntity.ok(raceService.createNewRace(hostPlayer));
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Race> connect(@RequestBody JoinRequest request) throws RaceException {
+    public ResponseEntity<Race> join(@RequestBody JoinRequest request) throws RaceException {
         log.info("connect request: {}", request);
-        return ResponseEntity.ok(raceService.connectToRace(request.getPlayer(), request.getRaceId()));
-    }
+        return ResponseEntity.ok(raceService.connectToRace(request.getPlayer(), request.getRaceID()));
     }
 }
