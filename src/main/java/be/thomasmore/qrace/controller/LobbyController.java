@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @AllArgsConstructor
-@RequestMapping("/race")
+@RequestMapping("/lobby")
 public class LobbyController {
     private final RaceService raceService;
 
@@ -34,7 +34,7 @@ public class LobbyController {
         return ResponseEntity.ok(raceService.createNewRace(hostPlayer));
     }
 
-    @PostMapping("/join")
+    @PostMapping("/join/{raceID}")
     public ResponseEntity<Race> join(@RequestBody JoinRequest request) throws RaceException {
         log.info("connect request: {}", request);
         return ResponseEntity.ok(raceService.connectToRace(request.getPlayer(), request.getRaceID()));
