@@ -1,5 +1,6 @@
 package be.thomasmore.qrace.controllers;
 
+import be.thomasmore.qrace.model.Player;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +17,13 @@ public class NameController {
 
     @PostMapping("/name")
     public ModelAndView handleNameSubmit(@RequestParam("name") String name) {
+        Player player = new Player();
+        player.setName(name);
+        // save the player object in the database or session as needed
+
         ModelAndView modelAndView = new ModelAndView("host-join");
-        modelAndView.addObject("name", name);
+        modelAndView.addObject("player", player);
         return modelAndView;
     }
+
 }
