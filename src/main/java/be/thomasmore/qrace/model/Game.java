@@ -17,7 +17,7 @@ public class Game {
 
     }
 
-    public String getRaceId() {
+    public int getRaceId() {
         return raceId;
     }
 }
