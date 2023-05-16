@@ -4,6 +4,7 @@ import be.thomasmore.qrace.model.Game;
 import be.thomasmore.qrace.repository.RaceRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Map;
@@ -15,11 +16,13 @@ public class GameService {
 
     private final Map<String, Game> games = new ConcurrentHashMap<>();
     RaceRepository raceRepository;
+    @PersistenceContext
+    private EntityManager entityManager;
     @Autowired
     public GameService(RaceRepository raceRepository) {
         this.raceRepository = raceRepository;
     }
-
+    @Transactional
     public Game createGame() {
         Game game = new Game(generateRaceId());
         games.put(Integer.toString(game.getRaceId()), game);
@@ -31,10 +34,11 @@ public class GameService {
         return games.get(raceId);
     }
 
-    private int generateRaceId() {
+
+    public int generateRaceId() {
         int randomId = new Random().nextInt(9000) + 1000;
         String sql = "INSERT INTO GAMES values (" + randomId + ", 1, 2, 3, 4)";
-        //raceRepository.save(sql);
+        entityManager.createNativeQuery(sql).executeUpdate();
         return randomId;
     }
 }
