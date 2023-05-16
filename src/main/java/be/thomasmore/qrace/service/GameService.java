@@ -1,7 +1,7 @@
 package be.thomasmore.qrace.service;
 
 import be.thomasmore.qrace.model.Game;
-import be.thomasmore.qrace.repository.RaceRepository;
+import be.thomasmore.qrace.repository.GameRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,12 +15,12 @@ import java.util.Random;
 public class GameService {
 
     private final Map<String, Game> games = new ConcurrentHashMap<>();
-    RaceRepository raceRepository;
+    GameRepository gameRepository;
     @PersistenceContext
     private EntityManager entityManager;
     @Autowired
-    public GameService(RaceRepository raceRepository) {
-        this.raceRepository = raceRepository;
+    public GameService(GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
     }
     @Transactional
     public Game createGame() {
