@@ -7,16 +7,17 @@ import org.springframework.stereotype.Repository;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Repository
-    public interface PlayerRepository extends JpaRepository<Player, Integer> {
+public interface PlayerRepository extends JpaRepository<Player, Integer> {
 
-        default int generateRandomPlayerID() {
-            return ThreadLocalRandom.current().nextInt(100000, 1000000);
-        }
-
-        default Player savePlayerWithName(String name) {
-            Player player = new Player();
-            player.setName(name);
-            player.setPlayerId(generateRandomPlayerID());
-            return save(player);
-        }
+    default int generateRandomPlayerID() {
+        return ThreadLocalRandom.current().nextInt(100000, 1000000);
     }
+
+    default Player savePlayerWithName(String name) {
+        Player player = new Player();
+        player.setName(name);
+        player.setPlayerId(generateRandomPlayerID());
+        return save(player);
+
+    }
+}
