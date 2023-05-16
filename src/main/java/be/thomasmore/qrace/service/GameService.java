@@ -34,7 +34,6 @@ public class GameService {
         return games.get(raceId);
     }
 
-
     public int generateRaceId() {
         int randomId = new Random().nextInt(9000) + 1000;
         String sql = "INSERT INTO GAMES values (" + randomId + ", 1, 2, 3, 4)";
