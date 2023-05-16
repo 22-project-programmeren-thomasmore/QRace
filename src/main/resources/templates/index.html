@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="nl-BE" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments\head :: head"></head>
+<header th:replace="fragments\header :: header"></header>
+
+<body>
+    <container class="homePage1">
+        <section class="left">
+            <h1 id="title"></h1>
+            <a href="#redirect"><button id="slogan"></button></a>
+        </section>
+        <section class="right">
+            <img class="homeImg" src="../public/img/SPMkind.png" alt="kinderen op zoek">
+        </section>
+    </container>
+
+    <container class="homePage2" id="redirect">
+        <section class="left">
+            <img class="homeImg" src="../public/img/drex.png" alt="Drex">
+        </section>
+        <section class="right">
+            <h2 id="intertitle"></h2>
+            <article id="article">
+                <p id="p1"></p>
+                <p id="p2"></p>
+                <p id="p3"></p>
+            </article>
+            <a href="name"><button id="play"></button></a>
+        </section>
+    </container>
+</body>
+
+</html>
