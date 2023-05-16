@@ -15,8 +15,6 @@ public class GameService {
 
     private final Map<String, Game> games = new ConcurrentHashMap<>();
     RaceRepository raceRepository;
-    @PersistenceContext
-    private EntityManager entityManager;
     @Autowired
     public GameService(RaceRepository raceRepository) {
         this.raceRepository = raceRepository;
@@ -36,7 +34,7 @@ public class GameService {
     private int generateRaceId() {
         int randomId = new Random().nextInt(9000) + 1000;
         String sql = "INSERT INTO GAMES values (" + randomId + ", 1, 2, 3, 4)";
-        //entityManager.createNativeQuery(sql).executeUpdate();
+        //raceRepository.save(sql);
         return randomId;
     }
 }
