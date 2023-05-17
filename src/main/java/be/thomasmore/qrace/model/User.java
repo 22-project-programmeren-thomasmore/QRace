@@ -47,7 +47,7 @@ public class User {
         this.email = email;
     }
 
-    public void setPasswoord(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 }
