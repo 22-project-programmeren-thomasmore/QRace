@@ -32,7 +32,7 @@ window.translations = {
       play: "Play now!",
     },
   },
-  name: {
+  nameInput: {
     nl: {
       name: "Naam",
       next: "Volgende",
