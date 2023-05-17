@@ -3,10 +3,11 @@ package be.thomasmore.qrace.controller;
 import be.thomasmore.qrace.model.Game;
 import be.thomasmore.qrace.service.GameService;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-@RestController
+@Controller
 @RequestMapping("/api/game")
 public class HostJoinController {
     private final GameService gameService;
@@ -34,6 +35,4 @@ public class HostJoinController {
     public String hostJoinPage() {
         return "host-join";
     }
-
-
 }
