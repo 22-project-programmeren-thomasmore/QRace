@@ -14,6 +14,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class QraceApplication {
     public static void main(String[] args) {
         SpringApplication.run(QraceApplication.class, args);
-
     }
 }
