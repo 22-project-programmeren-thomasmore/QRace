@@ -1,10 +1,13 @@
 package be.thomasmore.qrace.model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+@Entity
 @AllArgsConstructor
 @Data
 @Builder
@@ -12,8 +15,13 @@ public class Player {
     @Id
     private String playerID;
     private String name;
+    @OneToOne
     private Mascot chosenMascot;
     private int score;
+
+    public Player() {
+
+    }
 
     public String getName() {
         return name;
