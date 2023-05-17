@@ -1,18 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl-BE" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Voeg een stylesheet toe voor de opmaak -->
-  <link rel="stylesheet" href="../public/css/style.css">
-  <!-- Voeg Font Awesome toe voor iconen -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Voeg een JavaScript-bibliotheek toe voor QR-scanner functionaliteit -->
-  <script type="text/javascript" src="https://unpkg.com/qr-scanner"></script>
-  <title>Mijn Spring-applicatie</title>
-</head>
+<head th:replace="~{0-fragments\head :: head}"></head>
+<header th:replace="~{0-fragments\header :: header}"></header>
 
 <body>
   <h1>Test for game</h1>
