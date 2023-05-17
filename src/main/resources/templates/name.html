@@ -4,21 +4,22 @@
 <head th:replace="~{0-fragments\head :: head}"></head>
 <header th:replace="~{0-fragments\header :: header}"></header>
 
-<body>
-<container>
-    <section class="avatar">
-        <img src="/img/drex.png" alt="drex" width="25%" border-radius="100%">
-    </section>
-    <section>
-        <form action="/name" method="post">
-            <input type="text" id="nameInput" name="name" required>
-            <label for="name">
-                <div id="name"></div>
-            </label>
-            <a href="host-join"><button id="play"></button></a>
-        </form>
-        </div>
-    </section>
+<body style="display: flex; justify-content: center; align-items: center;">
+    <container>
+
+        <section class="avatar">
+            <img src="/img/drex.png" alt="drex" width="25%" border-radius="100%">
+        </section>
+        <section>
+            <form action="/name" method="post">
+                <input type="text" id="nameInput" name="name" required>
+                <label for="name">
+                    <div id="name"></div>
+                </label>
+                <a href="host-join"><button id="play"></button></a>
+            </form>
+            </div>
+        </section>
     </container>
 </body>
 
