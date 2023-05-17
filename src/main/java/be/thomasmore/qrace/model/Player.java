@@ -1,7 +1,9 @@
 package be.thomasmore.qrace.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,44 +14,49 @@ import lombok.Data;
 @Data
 @Builder
 public class Player {
-    @Id
-    private String playerID;
-    private String name;
-    @ManyToOne
-    private Mascot chosenMascot;
-    
-    private int score;
 
-    public String getName() {
-        return name;
-    }
+  @Id
+  @Column(name = "player_id")
+  private String playerID;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  @Column(name = "player_name")
+  private String name;
 
-    public String getPlayerID() {
-        return playerID;
-    }
+  @ManyToOne
+  @JoinColumn(name = "mascot_id")
+  private Mascot chosenMascot;
 
-    public void setPlayerID(String playerID) {
-        this.playerID = playerID;
-    }
+  private int score;
 
-    public Mascot getChosenMascot() {
-        return chosenMascot;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setChosenMascot(Mascot chosenMascot) {
-        this.chosenMascot = chosenMascot;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public int getScore() {
-        return score;
-    }
+  public String getPlayerID() {
+    return playerID;
+  }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
+  public void setPlayerID(String playerID) {
+    this.playerID = playerID;
+  }
+
+  public Mascot getChosenMascot() {
+    return chosenMascot;
+  }
+
+  public void setChosenMascot(Mascot chosenMascot) {
+    this.chosenMascot = chosenMascot;
+  }
+
+  public int getScore() {
+    return score;
+  }
+
+  public void setScore(int score) {
+    this.score = score;
+  }
 }
-

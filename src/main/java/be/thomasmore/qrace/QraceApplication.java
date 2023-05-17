@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories("be.thomasmore.qrace")
-@EntityScan("be.thomasmore.qrace")
+@EnableJpaRepositories("be.thomasmore.qrace.repository")
+@EntityScan("be.thomasmore.qrace.model")
 public class QraceApplication {
     public static void main(String[] args) {
         SpringApplication.run(QraceApplication.class, args);
