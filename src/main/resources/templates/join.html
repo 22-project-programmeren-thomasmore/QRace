@@ -1,17 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl-BE" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Join existing race!</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/util@0.12.5/util.min.js"></script>
-</head>
+<head th:replace="~{0-fragments\head :: head}"></head>
+<header th:replace="~{0-fragments\header :: header}"></header>
 
 <body>
 
@@ -114,9 +105,8 @@
     </div>
     <label for="raceIdInput">Enter RaceID: </label>
     <input id="raceIdInput" type="text" />
-    <a class="btn btn-block btn-dark" id="joinGameButton" type="button" href="join/aaa" role="button">Join Game</a>
+    <a class="btn btn-block btn-dark" id="joinGameButton" type="button" href="join/{raceID}" role="button">Join Game</a>
 
-    <a class="btn btn-block btn-dark" type="button" href="game" role="button">Start de race!</a>
 
 </body>
 
