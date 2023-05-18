@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+.hintrc
+
+# H2 database files
+qrace.mv.db
+qrace.trace.db
