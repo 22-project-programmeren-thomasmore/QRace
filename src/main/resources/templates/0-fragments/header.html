@@ -1,0 +1,88 @@
+<header class="header" th:fragment="header">
+    <div class="logo">
+        <a href="#"><img src="/img/SPMlogo.png" alt="Speelgoed Museum logo" title="SM logo"></a>
+    </div>
+    <nav id="nav">
+        <ul>
+            <li class="info">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#infoModal">
+                    <i class="fas fa-info"></i>
+                </a>
+            </li>
+            <li class="user">
+                <a href="login">
+                    <i class="fas fa-user"></i>
+                </a>
+            </li>
+            <li class="globe">
+                <a href="#" id="changeLanguage">
+                    <i class="fas fa-globe"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- The Modal for info -->
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="infoModalLabel">Info</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- The information about the page goes here -->
+                    <div id="info"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change language -->
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const translations = window.translations;
+            let currentLanguage = 'nl';
+
+            // Get the current page's name
+            let pageName = window.location.pathname.split('/').pop().replace('.html', '');
+
+            // Als pageName niet overeenkomt met een van de keys in translations, stellen we het in op 'start'
+            if (!translations.hasOwnProperty(pageName)) {
+                pageName = 'start';
+            }
+
+            function updateText() {
+                console.log(currentLanguage); // Log the current language
+
+                // Update the text on the page
+                for (const key in translations[pageName][currentLanguage]) {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        console.log(key, translations[pageName][currentLanguage][key]); // Log the key and translation
+                        element.innerText = translations[pageName][currentLanguage][key];
+                    }
+                }
+            }
+
+            // Fill in the initial text
+            updateText();
+
+            document.getElementById('changeLanguage').addEventListener('click', function () {
+                // Cycle through the languages
+                if (currentLanguage === 'nl') {
+                    currentLanguage = 'fr';
+                } else if (currentLanguage === 'fr') {
+                    currentLanguage = 'en';
+                } else if (currentLanguage === 'en') {
+                    currentLanguage = 'nl';
+                }
+
+                updateText();
+            });
+        });
+    </script>
+
+</header>

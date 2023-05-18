@@ -1,42 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="nl-BE" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Race Your Rivals</title>
-    <link rel="stylesheet" href="../public/css/style.css">
-    <!-- Achtergrondkleur -->
-    <!-- Bootstrap en Font Awesome toe -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
+<head th:replace="~{0-fragments\head :: head}"></head>
+<header th:replace="~{0-fragments\header :: header}"></header>
 
-<body>
-    <!-- Help-knop met popup -->
-    <div th:replace="fragments\help-language :: help(helpText=${'tooltip.nl'})"></div>
+<body style="display: flex; justify-content: center; align-items: center;">
+    <container>
 
-    <!-- Taal-knop -->
-    <div th:replace="fragments\help-language :: language"></div>
-
-    <h1></h1>
-    <div class="container">
-        <div class="left">
+        <section class="avatar">
+            <img src="/img/drex.png" alt="drex" width="25%" border-radius="100%">
+        </section>
+        <section>
             <form action="/name" method="post">
-                <input type="text" id="name" name="name" required>
-        </div>
-        <div class="right">
-            <button for="next" type="submit"></button>
+                <input type="text" id="nameInput" name="name" required>
+                <label for="name">
+                    <div id="name"></div>
+                </label>
+                <a href="host-join"><button id="play"></button></a>
             </form>
-        </div>
-    </div>
-
-    <!-- Importeer het scripts.js bestand -->
-    <script src="../public/js/name.js"></script>
-
-    <!-- Bootstrap en Font Awesome JavaScript toe -->
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            </div>
+        </section>
+    </container>
 </body>
 
 </html>
