@@ -14,29 +14,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" integrity="sha512-oHBLR38hkpOtf4dW75gdfO7VhEKg2fsitvHZYHZjObc4BPKou2PGenyxA5ZJ8CCqWytBx5wpiSqwVEBy84b7tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/util@0.12.5/util.min.js"></script>
     <!-- javascript -->
-    <script src="/static/js/translator.js"></script>
-    <script src="/static/js/translations.js"></script>
+    <script src="/public/js/translator.js"></script>
+    <script src="/public/js/translations.js"></script>
     <!-- title -->
     <title>QRace: Lobby</title>
 </head>
 <body>
 <!-- navbar -->
 <nav class="navbar navbar-expand-xxl navbar-light bg-light">
-    <a class="navbar-brand" href="https://www.speelgoedmuseum.be/"><img src="/static/img/logo.png" height="50" class="d-inline-block align-top" alt="Speelgoedmuseum Mechelen"></a>
+    <a class="navbar-brand" href="https://www.speelgoedmuseum.be/"><img src="/public/img/logo.png" height="50" class="d-inline-block align-top" alt="Speelgoedmuseum Mechelen"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav text-right">
             <li id="home" class="nav-item active"><a class="nav-link" href="#"><span class="sr-only">(current)</span></a></li>
             <li id="inlog" class="nav-item"><a class="nav-link" href="#"></a></li>
             <li id="info" class="nav-item"><a class="nav-link" href="#"></a></li>
-            <li id="changeLanguage" class="nav-item"><img src="/static/img/translate.svg" alt="Translate"></li></li>
+            <li id="changeLanguage" class="nav-item"><img src="/public/img/translate.svg" alt="Translate"></li></li>
         </ul>
     </div>
 </nav>
 <!-- content  -->
 <div class="container-fluid">
     <div class = "row d-block justify-content-center align-items-center" style="text-align: center;">
-        <img class = "my-3" id = "mascotGif" src="/static/img/mascots-circle.gif" alt="changing mascottes" height = 250px>
+        <img class = "my-3" id = "mascotGif" src="/public/img/mascots-circle.gif" alt="changing mascottes" height = 250px>
         <h2 id="question" class="my-3"></h2>
         <form class="d-block" action="/name" method="post">
             <input class="d-block mx-auto" type="text" id="nameInput" name="name" required>
