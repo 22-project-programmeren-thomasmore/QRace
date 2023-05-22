@@ -1,0 +1,32 @@
+.carousel .carousel-item {
+    height: 450px;
+}
+
+.carousel-item img {
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    min-height: 450px;
+}
+
+footer {
+    font-size: small;
+}
+
+#mascotGif{
+    border-radius: 50%;
+}
+
+#nameInput {
+    height: 25px;
+    font-size: 16px;
+}
+
+#send {
+    height: 25px;
+    width: inherit;
+    font-size: 16px;
+}
+
+
