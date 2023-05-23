@@ -1,3 +1,21 @@
+@media screen and (min-width: 992px) {
+    .carousel {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+    .carousel .carousel-item {
+        height: 550px;
+    }
+
+    .carousel-item img {
+        position: absolute;
+        object-fit: cover;
+        top: 0;
+        left: 0;
+        min-height: 550px;
+    }
+}
+
 footer {
     font-size: small;
 }

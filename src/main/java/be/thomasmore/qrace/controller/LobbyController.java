@@ -5,27 +5,31 @@ import be.thomasmore.qrace.exception.RaceException;
 import be.thomasmore.qrace.model.Player;
 import be.thomasmore.qrace.model.Race;
 import be.thomasmore.qrace.service.RaceService;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-
-@RestController
 @Slf4j
-@AllArgsConstructor
-@RequestMapping("/lobby")
-public class LobbyController {
-    private final RaceService raceService;
+@Controller
+public class LobbyController{
+    private RaceService raceService;
 
-    @GetMapping({"/", "/lobby"})
-    public String lobby() {
+    @GetMapping({ "/name" })
+    public String giveName() {
         return "name";
     }
 
-    @GetMapping("/host-join")
-    public String hostJoinPage() {
+    @GetMapping({ "/host-join" })
+    public String hostOrJoin() {
         return "host-join";
+    }
+
+    @GetMapping({ "/host" })
+    public String pickMascotAsHost() {
+        return "host-pickMascot";
     }
 
     @PostMapping("/host")
@@ -34,9 +38,29 @@ public class LobbyController {
         return ResponseEntity.ok(raceService.createNewRace(hostPlayer));
     }
 
-    @PostMapping("/join/{raceID}")
-    public ResponseEntity<Race> join(@RequestBody JoinRequest request) throws RaceException {
-        log.info("connect request: {}", request);
-        return ResponseEntity.ok(raceService.connectToRace(request.getPlayer(), request.getRaceID()));
+    @GetMapping({ "/join"})
+    public String seeAvailableRaces() {
+        return "join-availableRaces";
     }
+
+    @PostMapping("/join")
+    public ResponseEntity<Race> join(@RequestBody JoinRequest request)
+            throws RaceException {
+        log.info("connect request: {}", request);
+        return ResponseEntity.ok(
+                raceService.connectToRace(request.getPlayer(), request.getRaceID())
+        );
+    }
+
+    @GetMapping({ "/join/pickMascot" })
+    public String pickMascotAsMember() {
+        return "join-pickMascot";
+    }
+
+    @GetMapping({ "/lobby" })
+    public String lobby() {
+        return "lobby";
+    }
+
+
 }
