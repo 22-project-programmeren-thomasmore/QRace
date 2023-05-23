@@ -3,7 +3,7 @@ CREATE TABLE if not exists HIGHSCORES (
      name VARCHAR(255) NOT NULL,
     score INT NOT NULL);
 
-CREATE TABLE GAMES (
+CREATE TABLE if not exists GAMES (
     raceId  int,
     host    varchar(50),
     player2 varchar(50),
