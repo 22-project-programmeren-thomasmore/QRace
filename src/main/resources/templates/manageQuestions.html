@@ -17,7 +17,40 @@
         <button type="submit">Create Question</button>
     </form>
     <div id="feedback"></div>
+
+    <form id="edit-form" style="display: none;">
+        <input type="text" id="edit-question-text" placeholder="Question text">
+        <input type="text" id="edit-answer1" placeholder="Answer 1">
+        <input type="text" id="edit-answer2" placeholder="Answer 2">
+        <input type="text" id="edit-answer3" placeholder="Answer 3">
+        <input type="text" id="edit-answer4" placeholder="Answer 4">
+        <input type="text" id="edit-correct-answer" placeholder="Correct answer">
+        <input type="text" id="edit-group-parameter" placeholder="Group parameter">
+        <input type="text" id="edit-language" placeholder="Language">
+        <button type="submit">Update Question</button>
+    </form>
+
+    <table id="questions">
+        <thead>
+            <tr>
+                <th>Question </th>
+                <th>Answer 1</th>
+                <th>Answer 2</th>
+                <th>Answer 3</th>
+                <th>Answer 4</th>
+                <th>Correct Answer</th>
+                <th>Group Parameter</th>
+                <th>Language</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be added here by the script -->
+        </tbody>
+    </table>
+
     <script>
+        // Event listener for question form submission
         document.getElementById('question-form').addEventListener('submit', function (event) {
             event.preventDefault();
 
@@ -54,27 +87,7 @@
                 document.getElementById('feedback').style.color = 'red';
             });
         });
-    </script>
 
-    <table id="questions">
-        <thead>
-            <tr>
-                <th>Question </th>
-                <th>Answer 1</th>
-                <th>Answer 2</th>
-                <th>Answer 3</th>
-                <th>Answer 4</th>
-                <th>Correct Answer</th>
-                <th>Group Parameter</th>
-                <th>Language</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Rows will be added here by the script -->
-        </tbody>
-    </table>
-
-    <script>
         // Fetch the questions from the server
         fetch('/api/questions')
             .then(function (response) {
@@ -99,6 +112,25 @@
                         row.appendChild(cell);
                     });
 
+                    // Add an "Edit" button to each row
+                    var editButton = document.createElement('button');
+                    editButton.textContent = 'Edit';
+                    editButton.addEventListener('click', function () {
+                        // Populate the form with the data of the question
+                        document.getElementById('edit-question-text').value = question.questionText;
+                        document.getElementById('edit-answer1').value = question.answer1;
+                        document.getElementById('edit-answer2').value = question.answer2;
+                        document.getElementById('edit-answer3').value = question.answer3;
+                        document.getElementById('edit-answer4').value = question.answer4;
+                        document.getElementById('edit-correct-answer').value = question.correctAnswer;
+                        document.getElementById('edit-group-parameter').value = question.groupParameter;
+                        document.getElementById('edit-language').value = question.language;
+
+                        // Show the form
+                        document.getElementById('edit-form').style.display = 'block';
+                    });
+                    row.appendChild(editButton);
+
                     tbody.appendChild(row);
                 });
             })
@@ -106,6 +138,7 @@
                 console.error('Error:', error);
             });
     </script>
+
 
 </body>
 
