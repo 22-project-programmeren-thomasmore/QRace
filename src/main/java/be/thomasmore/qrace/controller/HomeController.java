@@ -50,6 +50,11 @@ public class HomeController {
     return "host";
   }
 
+  @GetMapping("/manageQuestions")
+  public String manageQuestionsPage() {
+    return "manageQuestions";
+  }
+
   @PostMapping("/host")
   public ResponseEntity<Race> host(@RequestBody Player hostPlayer) {
     log.info("host game request: {}", hostPlayer);

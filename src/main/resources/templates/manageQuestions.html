@@ -55,4 +55,58 @@
             });
         });
     </script>
+
+    <table id="questions">
+        <thead>
+            <tr>
+                <th>Question </th>
+                <th>Answer 1</th>
+                <th>Answer 2</th>
+                <th>Answer 3</th>
+                <th>Answer 4</th>
+                <th>Correct Answer</th>
+                <th>Group Parameter</th>
+                <th>Language</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be added here by the script -->
+        </tbody>
+    </table>
+
+    <script>
+        // Fetch the questions from the server
+        fetch('/api/questions')
+            .then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to fetch questions');
+                }
+            })
+            .then(function (questions) {
+                // Get the tbody element
+                var tbody = document.getElementById('questions').getElementsByTagName('tbody')[0];
+
+                // Create a row for each question and append it to the tbody
+                questions.forEach(function (question) {
+                    var row = document.createElement('tr');
+
+                    // Create a cell for each property and append it to the row
+                    ['questionText', 'answer1', 'answer2', 'answer3', 'answer4', 'correctAnswer', 'groupParameter', 'language'].forEach(function (property) {
+                        var cell = document.createElement('td');
+                        cell.textContent = question[property];
+                        row.appendChild(cell);
+                    });
+
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+    </script>
+
 </body>
+
+</html>
