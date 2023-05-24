@@ -42,6 +42,7 @@
                 <th>Group Parameter</th>
                 <th>Language</th>
                 <th>Edit</th>
+                <th>Archive</th>
             </tr>
         </thead>
         <tbody>
@@ -147,6 +148,37 @@
 
                     // Add an "Edit" button to each row
                     var editButton = document.createElement('button');
+                    // Add an "Archive" button to each row
+                    var archiveButton = document.createElement('button');
+                    archiveButton.textContent = 'Archive';
+                    archiveButton.addEventListener('click', function () {
+                        // Set the archived field of the question to true
+                        question.archived = true;
+
+                        fetch('/api/questions/' + question.id, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(question)
+                        }).then(function (response) {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                throw new Error('Failed to archive question');
+                            }
+                        }).then(function (archivedQuestion) {
+                            console.log('Archived question:', archivedQuestion);
+                            document.getElementById('feedback').textContent = 'Question archived successfully!';
+                            document.getElementById('feedback').style.color = 'green';
+                        }).catch(function (error) {
+                            console.error('Error:', error);
+                            document.getElementById('feedback').textContent = 'Failed to archive question. Please try again.';
+                            document.getElementById('feedback').style.color = 'red';
+                        });
+                    });
+                    row.appendChild(archiveButton);
+
                     editButton.textContent = 'Edit';
                     editButton.addEventListener('click', function () {
                         // Set questionId to the ID of the question
@@ -172,6 +204,7 @@
             .catch(function (error) {
                 console.error('Error:', error);
             });
+
     </script>
 
 
