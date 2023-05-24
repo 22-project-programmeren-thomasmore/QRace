@@ -18,11 +18,11 @@ public class LobbyController{
     private RaceService raceService;
 
     @ModelAttribute("name")
-    public String name() {
+    public String attributeName() {
         return "";
     }
     @GetMapping({ "/name" })
-    public String giveName() {
+    public String name() {
         return "name";
     }
 
