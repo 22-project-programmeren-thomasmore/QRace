@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="nl-BE" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{0-fragments\head :: head}"></head>
+<header th:replace="~{0-fragments\header :: header}"></header>
+
+<body>
+    <form id="question-form">
+        <input type="text" id="question-text" placeholder="Question text">
+        <input type="text" id="answer1" placeholder="Answer 1">
+        <input type="text" id="answer2" placeholder="Answer 2">
+        <input type="text" id="answer3" placeholder="Answer 3">
+        <input type="text" id="answer4" placeholder="Answer 4">
+        <input type="text" id="correct-answer" placeholder="Correct answer">
+        <input type="text" id="group-parameter" placeholder="Group parameter">
+        <input type="text" id="language" placeholder="Language">
+        <button type="submit">Create Question</button>
+    </form>
+    <div id="feedback"></div>
+    <script>
+        document.getElementById('question-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var question = {
+                questionText: document.getElementById('question-text').value,
+                answer1: document.getElementById('answer1').value,
+                answer2: document.getElementById('answer2').value,
+                answer3: document.getElementById('answer3').value,
+                answer4: document.getElementById('answer4').value,
+                correctAnswer: document.getElementById('correct-answer').value,
+                groupParameter: document.getElementById('group-parameter').value,
+                language: document.getElementById('language').value
+            };
+
+            fetch('/api/questions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(question)
+            }).then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to create question');
+                }
+            }).then(function (createdQuestion) {
+                console.log('Created question:', createdQuestion);
+                document.getElementById('feedback').textContent = 'Question created successfully!';
+                document.getElementById('feedback').style.color = 'green';
+            }).catch(function (error) {
+                console.error('Error:', error);
+                document.getElementById('feedback').textContent = 'Failed to create question. Please try again.';
+                document.getElementById('feedback').style.color = 'red';
+            });
+        });
+    </script>
+</body>
