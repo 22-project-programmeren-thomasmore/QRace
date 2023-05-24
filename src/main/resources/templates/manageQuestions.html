@@ -87,7 +87,40 @@
                 document.getElementById('feedback').style.color = 'red';
             });
         });
-
+        // Event listener for edit form submission
+        document.getElementById('edit-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var question = {
+                questionText: document.getElementById('edit-question-text').value,
+                answer1: document.getElementById('edit-answer1').value,
+                answer2: document.getElementById('edit-answer2').value,
+                answer3: document.getElementById('edit-answer3').value,
+                answer4: document.getElementById('edit-answer4').value,
+                correctAnswer: document.getElementById('edit-correct-answer').value,
+                groupParameter: document.getElementById('edit-group-parameter').value,
+                language: document.getElementById('edit-language').value
+            }; fetch('/api/questions/' + questionId, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(question)
+            }).then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to update question');
+                }
+            }).then(function (updatedQuestion) {
+                console.log('Updated question:', updatedQuestion);
+                document.getElementById('feedback').textContent = 'Question updated successfully!';
+                document.getElementById('feedback').style.color = 'green';
+            }).catch(function (error) {
+                console.error('Error:', error);
+                document.getElementById('feedback').textContent = 'Failed to update question. Please try again.';
+                document.getElementById('feedback').style.color = 'red';
+            });
+        });
         // Fetch the questions from the server
         fetch('/api/questions')
             .then(function (response) {
@@ -116,6 +149,8 @@
                     var editButton = document.createElement('button');
                     editButton.textContent = 'Edit';
                     editButton.addEventListener('click', function () {
+                        // Set questionId to the ID of the question
+                        questionId = question.id;
                         // Populate the form with the data of the question
                         document.getElementById('edit-question-text').value = question.questionText;
                         document.getElementById('edit-answer1').value = question.answer1;
