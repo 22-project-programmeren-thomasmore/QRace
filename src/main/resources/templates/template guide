@@ -4,10 +4,23 @@ home
 lobby
 - name.html
 - host-join.html
-lobby -
-- join
-- lobby
+
+lobby: join (2 docs)
+1 join-availableRaces.html
+2 join-pickMascot.html
+
+lobby: host (1 doc)
+1 host-pickmascot.html
+
+- lobby voor host and join optie
 
 race
+- race-intro.html
+- race-scanner.html
+- race-question.html
+- race-results.html
+- scoreboard.html
 
 accounts
+- login.html
+- dashboard.html (user vs admin)
