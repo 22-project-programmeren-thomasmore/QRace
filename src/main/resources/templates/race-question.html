@@ -14,32 +14,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" integrity="sha512-oHBLR38hkpOtf4dW75gdfO7VhEKg2fsitvHZYHZjObc4BPKou2PGenyxA5ZJ8CCqWytBx5wpiSqwVEBy84b7tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/util@0.12.5/util.min.js"></script>
     <!-- data for translations -->
-    <script src="/static/js/translator.js"></script>
-    <script src="/static/js/translations.js"></script>
+    <script src="/js/translator.js"></script>
+    <script src="/js/translations.js"></script>
     <!-- title -->
-    <title>QRace: Home</title>
+    <title>QRace: Race</title>
 </head>
 <body>
 <!-- navbar -->
 <nav class="navbar navbar-expand-xxl navbar-light bg-light">
-    <a class="navbar-brand" href="https://www.speelgoedmuseum.be/"><img src="/static/img/logo.png" height="50" class="d-inline-block align-top" alt="Speelgoedmuseum Mechelen"></a>
+    <a class="navbar-brand" href="https://www.speelgoedmuseum.be/"><img src="/img/logo.png" height="50" class="d-inline-block align-top" alt="Speelgoedmuseum Mechelen"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav text-right">
             <li id="home" class="nav-item active"><a class="nav-link" href="#"><span class="sr-only">(current)</span></a></li>
             <li id="inlog" class="nav-item"><a class="nav-link" href="#"></a></li>
             <li id="info" class="nav-item"><a class="nav-link" href="#"></a></li>
-            <li id="changeLanguage" class="nav-item"><img src="/static/img/translate.svg" alt="Translate"></li></li>
+            <li id="changeLanguage" class="nav-item"><img src="/img/translate.svg" alt="Translate"></li>
         </ul>
     </div>
 </nav>
 <!-- content  -->
 <div class="container-fluid">
     <div class = "row d-block" style="text-align: center;">
-        <h1 id = "heading"></h1>
-        <h3 id = "startingPoint"></h3>
-        <h3 id = "instruction"></h3>
-        <button id="nextbtn" type="button" class="btn mx-auto d-block" href="race"></button>
+        <h1 id = "genreQ"></h1>
+        <h3 id = "subQ"></h3>
+        <div class = "qAndA">
+            <h3 id = "assignedQuestion"></h3>
+            <h3 id = "possibleAnswer1"></h3>
+            <h3 id = "possibleAnswer2"></h3>
+            <h3 id = "possibleAnswer3"></h3>
+            <h3 id = "possibleAnswer4"></h3>
+        </div>
+        <!-- after picking question there should be a popup that asks you if you're sure about picking that answer after every try -->
+        <!-- you should get a second try to answer the question -->
+        <div id = "scanner"></div>
         <!-- jQuery, popper.js, bootstrap js -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
