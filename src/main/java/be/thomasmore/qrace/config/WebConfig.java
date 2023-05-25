@@ -10,8 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     registry
-            .addResourceHandler("/public/***")
-            .addResourceLocations("classpath:/public/");
-
+      .addResourceHandler("/public/*")
+      .addResourceLocations("classpath:/public/");
   }
 }

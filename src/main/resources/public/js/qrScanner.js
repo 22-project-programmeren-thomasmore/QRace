@@ -21,7 +21,9 @@ let currentQuestion;
 const scanner = new QrScanner(
   video,
   (result) => setResult(scanResult, result),
-  { returnDetailedScanResult: true }
+  {
+    returnDetailedScanResult: true,
+  }
 );
 
 // add event listener for the open scanner button
