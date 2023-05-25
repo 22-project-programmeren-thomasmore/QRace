@@ -3,6 +3,10 @@ package be.thomasmore.qrace.model;
 
 import jakarta.persistence.*;
 
+import javax.management.relation.Role;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 
@@ -16,6 +20,8 @@ public class User {
     private String email;
     private String passwoord;
 
+
+
     public User(String username, String email, String passwoord) {
         this.username = username;
         this.email = email;
@@ -25,6 +31,7 @@ public class User {
     public User() {
 
     }
+
 
     public String getUsername() {
         return username;
