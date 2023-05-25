@@ -53,6 +53,6 @@ public class WebController {
 
   @GetMapping("/manageQuestions")
   public String manageQuestions() {
-    return "manageQuestions";
+    return "admin/manageQuestions";
   }
 }
