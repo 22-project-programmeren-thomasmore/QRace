@@ -1,9 +1,11 @@
 package be.thomasmore.qrace.controller;
 
 import be.thomasmore.qrace.model.Question;
+import be.thomasmore.qrace.repository.QuestionRepository;
 import be.thomasmore.qrace.service.QuestionService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +15,6 @@ public class QuestionController {
 
   private final QuestionService questionService;
 
-  @Autowired
   public QuestionController(QuestionService questionService) {
     this.questionService = questionService;
   }
@@ -56,5 +57,12 @@ public class QuestionController {
     }
     questionService.deleteQuestion(id);
     return ResponseEntity.ok().build();
+  }
+
+  @GetMapping("/api/questions")
+  public Iterable<Question> getQuestions(
+    @RequestParam(required = false) String sortBy
+  ) {
+    return questionService.getQuestionsSorted(sortBy);
   }
 }

@@ -63,6 +63,13 @@
         <input type="text" id="edit-language" placeholder="Language" required>
         <button type="submit">Update Question</button>
     </form>
+    <select id="sort-select">
+        <option value="">Sort by...</option>
+        <option value="createdAt">Time Created</option>
+        <option value="updatedAt">Time Edited</option>
+        <option value="group">Group</option>
+        <option value="questionText">Question</option>
+    </select>
     <table id="questions">
         <thead>
             <tr>
@@ -83,116 +90,46 @@
             <!-- Rows will be added here by the script -->
         </tbody>
     </table>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Function to clear the table
-            function clearTable() {
-                var tbody = document.getElementById('questions').getElementsByTagName('tbody')[0];
-                while (tbody.firstChild) {
-                    tbody.removeChild(tbody.firstChild);
-                }
-            }
-
-            // Function to create a table row for a question
-            function createQuestionRow(question) {
-                var row = document.createElement('tr');
-                // Create a cell for each property and append it to the row
-                ['questionText', 'correctAnswer', 'answer1', 'answer2', 'answer3', 'answer4', 'groupParameter', 'language'].forEach(function (property) {
-                    var cell = document.createElement('td');
-                    cell.textContent = question[property];
-                    row.appendChild(cell);
-                });
-                // Add an "Archived" cell to each row
-                var archivedCell = document.createElement('td');
-                archivedCell.textContent = question.archived ? 'Yes' : 'No';
-                row.appendChild(archivedCell);
-                // Add an "Archive" button to each row
-                var archiveButton = document.createElement('button');
-                archiveButton.textContent = question.archived ? 'Unarchive' : 'Archive';
-                // Add event listener to the archive button here...
-                row.appendChild(archiveButton);
-                // Add an "Edit" button to each row
-                var editCell = document.createElement('td');
-                var editButton = document.createElement('button');
-                editButton.textContent = 'Edit';
-                // Add event listener to the edit button here...
-                editCell.appendChild(editButton);
-                row.appendChild(editCell);
-                return row;
-            }
-
-            // Function to populate the table with questions
-            function populateTable() {
-                fetch('/api/questions')
-                    .then(function (response) {
-                        if (response.ok) {
-                            return response.json();
-                        } else {
-                            throw new Error('Failed to fetch questions');
-                        }
-                    })
-                    .then(function (questions) {
-                        var tbody = document.getElementById('questions').getElementsByTagName('tbody')[0];
-                        questions.forEach(function (question) {
-                            var row = createQuestionRow(question);
-                            tbody.appendChild(row);
-                        });
-                    })
-                    .catch(function (error) {
-                        console.error('Error:', error);
-                    });
-            }
-            // Event listener for question form submission
-            document.getElementById('question-form').addEventListener('submit', function (event) {
-                event.preventDefault();
-                var question = {
-                    questionText: document.getElementById('question-text').value,
-                    correctAnswer: document.getElementById('correct-answer').value,
-                    answer1: document.getElementById('answer1').value,
-                    answer2: document.getElementById('answer2').value,
-                    answer3: document.getElementById('answer3').value,
-                    answer4: document.getElementById('answer4').value,
-                    groupParameter: document.getElementById('group-parameter').value,
-                    language: document.getElementById('language').value
-                };
-                fetch('/api/questions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(question)
-                }).then(function (response) {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error('Failed to create question');
-                    }
-                }).then(function (createdQuestion) {
-                    console.log('Created question:', createdQuestion);
-                    document.getElementById('feedback').textContent = 'Question created successfully!';
-                    document.getElementById('feedback').style.color = 'green';
-                    clearTable();
-                    populateTable();
-                }).catch(function (error) {
-                    console.error('Error:', error);
-                    document.getElementById('feedback').textContent = 'Failed to create question. Please try again.';
-                    document.getElementById('feedback').style.color = 'red';
-                });
+        function populateTable(questions) {
+            var tbody = document.getElementById('questions').getElementsByTagName('tbody')[0];
+            questions.forEach(function (question) {
+                var row = createQuestionRow(question);
+                tbody.appendChild(row);
             });
-            // Event listener for edit form submission
-            document.getElementById('edit-form').addEventListener('submit', function (event) {
+        }
 
-                event.preventDefault();
-                var question = {
-                    questionText: document.getElementById('edit-question-text').value,
-                    answer1: document.getElementById('edit-answer1').value,
-                    answer2: document.getElementById('edit-answer2').value,
-                    answer3: document.getElementById('edit-answer3').value,
-                    answer4: document.getElementById('edit-answer4').value,
-                    correctAnswer: document.getElementById('edit-correct-answer').value,
-                    groupParameter: document.getElementById('edit-group-parameter').value,
-                    language: document.getElementById('edit-language').value
-                }; fetch('/api/questions/' + questionId, {
+        function clearTable() {
+            var tbody = document.getElementById('questions').getElementsByTagName('tbody')[0];
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
+            }
+        }
+
+        function createQuestionRow(question) {
+            // Create the row and cells for the question properties
+            var row = document.createElement('tr');
+            ['questionText', 'correctAnswer', 'answer1', 'answer2', 'answer3', 'answer4', 'groupParameter', 'language'].forEach(function (property) {
+                var cell = document.createElement('td');
+                cell.textContent = question[property];
+                row.appendChild(cell);
+            });
+
+            // Create the cell for the "Archived" property
+            var archivedCell = document.createElement('td');
+            archivedCell.textContent = question.archived ? 'Yes' : 'No';
+            row.appendChild(archivedCell);
+
+            // Create the "Archive" button and add event listener
+            var archiveButton = document.createElement('button');
+            archiveButton.textContent = question.archived ? 'Unarchive' : 'Archive';
+            archiveButton.addEventListener('click', function () {
+                // Toggle the archived field of the question
+                question.archived = !question.archived;
+
+                // Send a PUT request to update the question
+                fetch('/api/questions/' + question.id, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -206,17 +143,160 @@
                     }
                 }).then(function (updatedQuestion) {
                     console.log('Updated question:', updatedQuestion);
-                    document.getElementById('feedback').textContent = 'Question updated successfully!';
+                    document.getElementById('feedback').textContent = question.archived ? 'Question archived successfully!' : 'Question unarchived successfully!';
                     document.getElementById('feedback').style.color = 'green';
-                    clearTable();
-                    populateTable();
+
+                    // Update the "Archived" cell and the "Archive" button
+                    archivedCell.textContent = question.archived ? 'Yes' : 'No';
+                    archiveButton.textContent = question.archived ? 'Unarchive' : 'Archive';
                 }).catch(function (error) {
                     console.error('Error:', error);
                     document.getElementById('feedback').textContent = 'Failed to update question. Please try again.';
                     document.getElementById('feedback').style.color = 'red';
                 });
             });
-            // Fetch the questions from the server
+            row.appendChild(archiveButton);
+
+            // Create the "Edit" button and add event listener
+            var editCell = document.createElement('td');
+            var editButton = document.createElement('button');
+            editButton.textContent = 'Edit';
+            editButton.addEventListener('click', function () {
+                // Set questionId to the ID of the question
+                questionId = question.id;
+
+                // Populate the edit form with the data of the question
+                document.getElementById('edit-question-text').value = question.questionText;
+                document.getElementById('edit-correct-answer').value = question.correctAnswer;
+                document.getElementById('edit-answer1').value = question.answer1;
+                document.getElementById('edit-answer2').value = question.answer2;
+                document.getElementById('edit-answer3').value = question.answer3;
+                document.getElementById('edit-answer4').value = question.answer4;
+                document.getElementById('edit-group-parameter').value = question.groupParameter;
+                document.getElementById('edit-language').value = question.language;
+
+                // Show the edit form
+                document.getElementById('edit-form').style.display = 'block';
+            });
+            editCell.appendChild(editButton);
+            row.appendChild(editCell);
+
+            return row;
+        }
+
+        document.getElementById('sort-select').addEventListener('change', function () {
+            var sortBy = this.value;
+
+            // Clear the table
+            clearTable();
+
+            // Fetch the questions from the server with the selected sorting criteria
+            fetch('/api/questions?sortBy=' + sortBy)
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Failed to fetch questions');
+                    }
+                })
+                .then(function (questions) {
+                    // Populate the table with the sorted questions
+                    populateTable(questions);
+                })
+                .catch(function (error) {
+                    console.error('Error:', error);
+                });
+        });
+        document.getElementById('question-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var question = {
+                questionText: document.getElementById('question-text').value,
+                correctAnswer: document.getElementById('correct-answer').value,
+                answer1: document.getElementById('answer1').value,
+                answer2: document.getElementById('answer2').value,
+                answer3: document.getElementById('answer3').value,
+                answer4: document.getElementById('answer4').value,
+                groupParameter: document.getElementById('group-parameter').value,
+                language: document.getElementById('language').value
+            };
+            fetch('/api/questions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(question)
+            }).then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to create question');
+                }
+            }).then(function (createdQuestion) {
+                console.log('Created question:', createdQuestion);
+                document.getElementById('feedback').textContent = 'Question created successfully!';
+                document.getElementById('feedback').style.color = 'green';
+                clearTable();
+                fetchQuestionsAndPopulateTable();
+            }).catch(function (error) {
+                console.error('Error:', error);
+                document.getElementById('feedback').textContent = 'Failed to create question. Please try again.';
+                document.getElementById('feedback').style.color = 'red';
+            });
+        });
+        // Event listener for edit form submission
+        document.getElementById('edit-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var question = {
+                questionText: document.getElementById('edit-question-text').value,
+                answer1: document.getElementById('edit-answer1').value,
+                answer2: document.getElementById('edit-answer2').value,
+                answer3: document.getElementById('edit-answer3').value,
+                answer4: document.getElementById('edit-answer4').value,
+                correctAnswer: document.getElementById('edit-correct-answer').value,
+                groupParameter: document.getElementById('edit-group-parameter').value,
+                language: document.getElementById('edit-language').value
+            }; fetch('/api/questions/' + questionId, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(question)
+            }).then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to update question');
+                }
+            }).then(function (updatedQuestion) {
+                console.log('Updated question:', updatedQuestion);
+                document.getElementById('feedback').textContent = 'Question updated successfully!';
+                document.getElementById('feedback').style.color = 'green';
+                clearTable();
+                fetchQuestionsAndPopulateTable();
+            }).catch(function (error) {
+                console.error('Error:', error);
+                document.getElementById('feedback').textContent = 'Failed to update question. Please try again.';
+                document.getElementById('feedback').style.color = 'red';
+            });
+        });
+        // Fetch the questions from the server
+        fetch('/api/questions')
+            .then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to fetch questions');
+                }
+            })
+            .then(function (questions) {
+                // Populate the table with the questions
+                populateTable(questions);
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+        // Function to fetch questions from the server and populate the table
+        function fetchQuestionsAndPopulateTable() {
             fetch('/api/questions')
                 .then(function (response) {
                     if (response.ok) {
@@ -226,84 +306,16 @@
                     }
                 })
                 .then(function (questions) {
-                    // Get the tbody element
-                    var tbody = document.getElementById('questions').getElementsByTagName('tbody')[0];
-                    // Create a row for each question and append it to the tbody
-                    questions.forEach(function (question) {
-                        var row = document.createElement('tr');
-                        // Create a cell for each property and append it to the row
-                        ['questionText', 'correctAnswer', 'answer1', 'answer2', 'answer3', 'answer4', 'groupParameter', 'language'].forEach(function (property) {
-                            var cell = document.createElement('td');
-                            cell.textContent = question[property];
-                            row.appendChild(cell);
-                        });
-                        // Add an "Archived" cell to each row
-                        var archivedCell = document.createElement('td');
-                        archivedCell.textContent = question.archived ? 'Yes' : 'No';
-                        row.appendChild(archivedCell);
-                        // Add an "Archive" button to each row
-                        var archiveButton = document.createElement('button');
-                        archiveButton.textContent = question.archived ? 'Unarchive' : 'Archive';
-                        archiveButton.addEventListener('click', function () {
-                            // Toggle the archived field of the question
-                            question.archived = !question.archived;
-
-                            fetch('/api/questions/' + question.id, {
-                                method: 'PUT',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(question)
-                            }).then(function (response) {
-                                if (response.ok) {
-                                    return response.json();
-                                } else {
-                                    throw new Error('Failed to update question');
-                                }
-                            }).then(function (updatedQuestion) {
-                                console.log('Updated question:', updatedQuestion);
-                                document.getElementById('feedback').textContent = question.archived ? 'Question archived successfully!' : 'Question unarchived successfully!';
-                                document.getElementById('feedback').style.color = 'green';
-                                // Update the "Archived" cell and the "Archive" button
-                                archivedCell.textContent = question.archived ? 'Yes' : 'No';
-                                archiveButton.textContent = question.archived ? 'Unarchive' : 'Archive';
-                            }).catch(function (error) {
-                                console.error('Error:', error);
-                                document.getElementById('feedback').textContent = 'Failed to update question. Please try again.';
-                                document.getElementById('feedback').style.color = 'red';
-                            });
-                        });
-                        row.appendChild(archiveButton);
-                        // Add an "Edit" button to each row
-                        var editCell = document.createElement('td');
-                        var editButton = document.createElement('button');
-                        editButton.textContent = 'Edit';
-                        editButton.addEventListener('click', function () {
-                            // Set questionId to the ID of the question
-                            questionId = question.id;
-                            // Populate the form with the data of the question
-                            document.getElementById('edit-question-text').value = question.questionText;
-                            document.getElementById('edit-correct-answer').value = question.correctAnswer;
-                            document.getElementById('edit-answer1').value = question.answer1;
-                            document.getElementById('edit-answer2').value = question.answer2;
-                            document.getElementById('edit-answer3').value = question.answer3;
-                            document.getElementById('edit-answer4').value = question.answer4;
-                            document.getElementById('edit-group-parameter').value = question.groupParameter;
-                            document.getElementById('edit-language').value = question.language;
-
-                            // Show the form
-                            document.getElementById('edit-form').style.display = 'block';
-                        });
-                        editCell.appendChild(editButton);
-                        row.appendChild(editCell);
-
-                        tbody.appendChild(row);
-                    });
+                    // Populate the table with the questions
+                    populateTable(questions);
                 })
                 .catch(function (error) {
                     console.error('Error:', error);
                 });
-        });
+        }
+
+        // Initial fetch and populate table
+        fetchQuestionsAndPopulateTable();
     </script>
 </body>
 
