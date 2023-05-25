@@ -10,10 +10,6 @@
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
-        integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
     <!-- javascript -->
     <script src="/js/translator.js"></script>
     <script src="/js/translations.js"></script>
@@ -183,13 +179,10 @@
 
             return row;
         }
-
         document.getElementById('sort-select').addEventListener('change', function () {
             var sortBy = this.value;
-
             // Clear the table
             clearTable();
-
             // Fetch the questions from the server with the selected sorting criteria
             fetch('/api/questions?sortBy=' + sortBy)
                 .then(function (response) {
@@ -279,25 +272,8 @@
                 document.getElementById('feedback').style.color = 'red';
             });
         });
-        // Fetch the questions from the server
-        fetch('/api/questions')
-            .then(function (response) {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Failed to fetch questions');
-                }
-            })
-            .then(function (questions) {
-                // Populate the table with the questions
-                populateTable(questions);
-            })
-            .catch(function (error) {
-                console.error('Error:', error);
-            });
-        // Function to fetch questions from the server and populate the table
-        function fetchQuestionsAndPopulateTable() {
-            fetch('/api/questions')
+        function fetchQuestionsAndPopulateTable(sortBy = '') {
+            fetch('/api/questions?sortBy=' + sortBy)
                 .then(function (response) {
                     if (response.ok) {
                         return response.json();
@@ -306,17 +282,21 @@
                     }
                 })
                 .then(function (questions) {
-                    // Populate the table with the questions
+                    clearTable();
                     populateTable(questions);
                 })
                 .catch(function (error) {
                     console.error('Error:', error);
                 });
         }
-
+        document.getElementById('sort-select').addEventListener('change', function () {
+            var sortBy = this.value;
+            fetchQuestionsAndPopulateTable(sortBy);
+        });
         // Initial fetch and populate table
         fetchQuestionsAndPopulateTable();
     </script>
+
 </body>
 
 </html>
