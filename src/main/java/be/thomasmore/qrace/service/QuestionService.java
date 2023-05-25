@@ -32,10 +32,13 @@ public class QuestionService {
   }
 
   public List<Question> getQuestionsSorted(String sortBy) {
-    if (sortBy != null) {
-      return questionRepository.findAll(Sort.by(sortBy));
-    } else {
+    if (sortBy == null || sortBy.isEmpty()) {
+      // If sortBy is null or empty, return the questions without sorting
       return questionRepository.findAll();
+    } else {
+      // If sortBy is not null or empty, return the questions sorted by sortBy
+      Sort sort = Sort.by(sortBy).ascending();
+      return questionRepository.findAll(sort);
     }
   }
 }

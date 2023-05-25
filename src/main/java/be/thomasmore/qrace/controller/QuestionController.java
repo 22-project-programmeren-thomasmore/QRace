@@ -1,11 +1,8 @@
 package be.thomasmore.qrace.controller;
 
 import be.thomasmore.qrace.model.Question;
-import be.thomasmore.qrace.repository.QuestionRepository;
 import be.thomasmore.qrace.service.QuestionService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +17,16 @@ public class QuestionController {
   }
 
   @GetMapping
-  public ResponseEntity<List<Question>> getAllQuestions() {
-    return ResponseEntity.ok(questionService.getAllQuestions());
+  public ResponseEntity<List<Question>> getQuestions(
+    @RequestParam(required = false) String sortBy
+  ) {
+    List<Question> questions;
+    if (sortBy != null) {
+      questions = questionService.getQuestionsSorted(sortBy);
+    } else {
+      questions = questionService.getAllQuestions();
+    }
+    return ResponseEntity.ok(questions);
   }
 
   @GetMapping("/{id}")
@@ -57,12 +62,5 @@ public class QuestionController {
     }
     questionService.deleteQuestion(id);
     return ResponseEntity.ok().build();
-  }
-
-  @GetMapping("/api/questions")
-  public Iterable<Question> getQuestions(
-    @RequestParam(required = false) String sortBy
-  ) {
-    return questionService.getQuestionsSorted(sortBy);
   }
 }
