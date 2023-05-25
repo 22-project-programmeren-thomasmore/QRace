@@ -85,11 +85,66 @@
     </table>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Function to clear the table
+            function clearTable() {
+                var tbody = document.getElementById('questions').getElementsByTagName('tbody')[0];
+                while (tbody.firstChild) {
+                    tbody.removeChild(tbody.firstChild);
+                }
+            }
+
+            // Function to create a table row for a question
+            function createQuestionRow(question) {
+                var row = document.createElement('tr');
+                // Create a cell for each property and append it to the row
+                ['questionText', 'correctAnswer', 'answer1', 'answer2', 'answer3', 'answer4', 'groupParameter', 'language'].forEach(function (property) {
+                    var cell = document.createElement('td');
+                    cell.textContent = question[property];
+                    row.appendChild(cell);
+                });
+                // Add an "Archived" cell to each row
+                var archivedCell = document.createElement('td');
+                archivedCell.textContent = question.archived ? 'Yes' : 'No';
+                row.appendChild(archivedCell);
+                // Add an "Archive" button to each row
+                var archiveButton = document.createElement('button');
+                archiveButton.textContent = question.archived ? 'Unarchive' : 'Archive';
+                // Add event listener to the archive button here...
+                row.appendChild(archiveButton);
+                // Add an "Edit" button to each row
+                var editCell = document.createElement('td');
+                var editButton = document.createElement('button');
+                editButton.textContent = 'Edit';
+                // Add event listener to the edit button here...
+                editCell.appendChild(editButton);
+                row.appendChild(editCell);
+                return row;
+            }
+
+            // Function to populate the table with questions
+            function populateTable() {
+                fetch('/api/questions')
+                    .then(function (response) {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Failed to fetch questions');
+                        }
+                    })
+                    .then(function (questions) {
+                        var tbody = document.getElementById('questions').getElementsByTagName('tbody')[0];
+                        questions.forEach(function (question) {
+                            var row = createQuestionRow(question);
+                            tbody.appendChild(row);
+                        });
+                    })
+                    .catch(function (error) {
+                        console.error('Error:', error);
+                    });
+            }
             // Event listener for question form submission
             document.getElementById('question-form').addEventListener('submit', function (event) {
-
                 event.preventDefault();
-
                 var question = {
                     questionText: document.getElementById('question-text').value,
                     correctAnswer: document.getElementById('correct-answer').value,
@@ -116,6 +171,8 @@
                     console.log('Created question:', createdQuestion);
                     document.getElementById('feedback').textContent = 'Question created successfully!';
                     document.getElementById('feedback').style.color = 'green';
+                    clearTable();
+                    populateTable();
                 }).catch(function (error) {
                     console.error('Error:', error);
                     document.getElementById('feedback').textContent = 'Failed to create question. Please try again.';
@@ -151,6 +208,8 @@
                     console.log('Updated question:', updatedQuestion);
                     document.getElementById('feedback').textContent = 'Question updated successfully!';
                     document.getElementById('feedback').style.color = 'green';
+                    clearTable();
+                    populateTable();
                 }).catch(function (error) {
                     console.error('Error:', error);
                     document.getElementById('feedback').textContent = 'Failed to update question. Please try again.';
