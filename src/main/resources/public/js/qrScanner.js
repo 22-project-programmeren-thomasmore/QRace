@@ -1,3 +1,5 @@
+import QrScanner from "/js/qr-scanner.min.js"; // if using plain es6 import
+
 // get the video element from the DOM
 const video = document.getElementById("qr-video");
 // get the video container element from the DOM
@@ -23,6 +25,7 @@ const scanner = new QrScanner(
   (result) => setResult(scanResult, result),
   {
     returnDetailedScanResult: true,
+    workerPath: "/js/qr-scanner-worker.min.js",
   }
 );
 
