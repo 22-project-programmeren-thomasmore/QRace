@@ -1,13 +1,20 @@
 package be.thomasmore.qrace.controller;
 
-import lombok.AllArgsConstructor;
+import be.thomasmore.qrace.service.RaceService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
 @Slf4j
-@AllArgsConstructor
-@RequestMapping("/race")
+@Controller
+@SessionAttributes("name")
 public class RaceController {
+    private RaceService raceService;
+
+    @GetMapping("/race")
+    public String racePage() {
+        return "race";
+    }
 }
+
+
