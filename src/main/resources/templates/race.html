@@ -2,93 +2,85 @@
 <html lang="nl-BE">
 
 <head>
-  <!--meta tags -->
+  <!-- Meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- stylesheet -->
+  <!-- Stylesheet -->
   <link rel="stylesheet" type="text/css" href="/css/stylesheet.css" />
-  <!-- bootstrap -->
+  <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
-    integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-  <!-- util -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js"
-    integrity="sha512-oHBLR38hkpOtf4dW75gdfO7VhEKg2fsitvHZYHZjObc4BPKou2PGenyxA5ZJ8CCqWytBx5wpiSqwVEBy84b7tw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdn.jsdelivr.net/npm/util@0.12.5/util.min.js"></script>
-  <!-- data for translations -->
-  <script src="/js/translator.js"></script>
-  <script src="/js/translations.js"></script>
-  <!-- qr scanner -->
-  <script type="text/javascript" src="https://unpkg.com/qr-scanner"></script>
-  <!-- title -->
+  <!-- JavaScript libraries -->
+  <script src="https://unpkg.com/qr-scanner"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha384-KyvjnXy3stht0T/aPI2QzzJc7q+vZ9Lx8d1Ls2sJ1OYD6HJi3yq4p3ZCB9UyPDuM"
+    crossorigin="anonymous"></script>
+  <!-- Title -->
   <title>QRace: Race</title>
 </head>
-<!-- navbar -->
-<nav class="navbar navbar-expand-xxl navbar-light bg-light">
-  <a class="navbar-brand" href="https://www.speelgoedmuseum.be/"><img src="/img/logo.png" height="50"
-      class="d-inline-block align-top" alt="Speelgoedmuseum Mechelen"></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><span
-      class="navbar-toggler-icon"></span></button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav text-right">
-      <li id="home" class="nav-item active"><a class="nav-link" href="home"><span class="sr-only">(current)</span></a>
-      </li>
-      <li id="inlog" class="nav-item"><a class="nav-link" href="login"></a></li>
-      <li id="info" class="nav-item"><a class="nav-link" href="info"></a></li>
-      <li id="changeLanguage" class="nav-item"><img src="/img/translate.svg" alt="Translate"></li>
-    </ul>
-  </div>
-</nav>
-<!-- content  -->
-<div class="container-fluid">
-  <div class="row d-block" style="text-align: center;">
-    <h1>Test for game</h1>
-    <!-- Maak een container voor de rechterkant van het spel -->
-    <div class="flex-container-game-right">
-      <!-- Toon de timer -->
-      <div id="timer">⏱ 00:00</div>
-      <!-- Voeg een script toe voor de timer -->
-      <script src="/js/timer.js"></script>
-      <!-- Toon de resultaten van de scans -->
-      <div class="allScans">Scan 1 --:--</div>
-      <div class="allScans">Scan 2 --:--</div>
-      <div class="allScans">Scan 3 --:--</div>
-      <!-- Maak een knop om de scanner te openen -->
-      <button id="openScannerBtn"><i class="fa fa-camera"></i></button>
-    </div>
-    <!-- Toon het resultaat van de scan -->
-    <h2 id="scanResult"></h2>
 
-    <!-- Maak een container voor de QR-scanner -->
-    <div id="scannerContainer" style="display: none;">
-      <!-- Maak een knop om de scanner te sluiten -->
-      <button id="closeScannerBtn">Sluit scanner</button>
-      <br>
-      <!-- Maak een container voor de video -->
-      <div id="video-container">
-        <video id="qr-video"></video>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-xxl navbar-light bg-light">
+    <a class="navbar-brand" href="https://www.speelgoedmuseum.be/">
+      <img src="/img/logo.png" height="50" class="d-inline-block align-top" alt="Speelgoedmuseum Mechelen">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav text-right">
+        <li id="home" class="nav-item active">
+          <a class="nav-link" href="home"><span class="sr-only">(current)</span></a>
+        </li>
+        <li id="inlog" class="nav-item">
+          <a class="nav-link" href="login"></a>
+        </li>
+        <li id="info" class="nav-item">
+          <a class="nav-link" href="info"></a>
+        </li>
+        <li id="changeLanguage" class="nav-item">
+          <img src="/img/translate.svg" alt="Translate">
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <div class="container-fluid">
+    <div class="row d-block" style="text-align: center;">
+      <h1>Test for game</h1>
+      <div class="flex-container-game-right">
+        <div id="timer">⏱ 00:00</div>
+        <script src="/js/timer.js"></script>
+        <div class="allScans">Scan 1 --:--</div>
+        <div class="allScans">Scan 2 --:--</div>
+        <div class="allScans">Scan 3 --:--</div>
+        <button id="openScannerBtn" class="btn btn-primary">Scan QR Code</button>
+      </div>
+      <h2 id="scanResult"></h2>
+      <div id="scannerContainer" style="display: none;">
+        <button id="closeScannerBtn" class="btn btn-secondary">Close Scanner</button>
+        <br>
+        <div id="video-container">
+          <video id="qr-video"></video>
+        </div>
       </div>
 
+      <script src="../public/js/qrScanner.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+        integrity="sha384-KyvjnXy3stht0T/aPI2QzzJc7q+vZ9Lx8d1Ls2sJ1OYD6HJi3yq4p3ZCB9UyPDuM"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-I3oq4FHH5nO+FmkzvQyV+g3+7hF2IwIk3hBA49pBnC+Cq6H+WcZf1+PrgdH0XekB"
+        crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-pzjw8f+ua6D7vcv+nX+6dhbTa/Ixp6M2zC+X4xM/W6wC6J9/zW3B6Wcz5By5uV7O"
+        crossorigin="anonymous"></script>
+      <script src="/js/translations.js"></script>
     </div>
-    <!-- Voeg een script toe voor de QR-scanner functionaliteit -->
-    <script type="module" src="../public/js/qrScanner.js"></script>
-    <!-- jQuery, popper.js, bootstrap js -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"></script>
   </div>
-</div>
 </body>
 
 </html>
