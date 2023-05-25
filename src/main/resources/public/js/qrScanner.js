@@ -110,40 +110,6 @@ function displayQuestion(question) {
   // Add event listener for answer submission
   answerOptionsContainer.addEventListener("change", handleAnswerSubmission);
 }
-function displayQuestion(question) {
-  // Update the DOM to display the question and answer options
-  questionTextElement.textContent = question.questionText;
-
-  // Clear the previous answer options
-  answerOptionsContainer.innerHTML = "";
-
-  // Iterate over the answer options and create HTML elements for each option
-  question.answerOptions.forEach((answerOption, index) => {
-    // Create a label element
-    const label = document.createElement("label");
-
-    // Create a radio button for the answer option
-    const radio = document.createElement("input");
-    radio.type = "radio";
-    radio.name = "answerOptions";
-    radio.value = answerOption;
-    radio.id = `answer${index + 1}`;
-
-    // Create a span element to display the answer option text
-    const span = document.createElement("span");
-    span.textContent = answerOption;
-
-    // Append the radio button and span to the label
-    label.appendChild(radio);
-    label.appendChild(span);
-
-    // Append the label to the answer options container
-    answerOptionsContainer.appendChild(label);
-  });
-
-  // Add event listener for answer submission
-  answerOptionsContainer.addEventListener("change", handleAnswerSubmission);
-}
 
 function handleAnswerSubmission(event) {
   // Get the selected answer option
@@ -169,7 +135,10 @@ function handleAnswerSubmission(event) {
   questionCount++;
 
   // Check if the maximum number of questions has been reached
-  if (questionCount === maxQuestions || selectedOption === currentQuestion.correctAnswer) {
+  if (
+    questionCount === maxQuestions ||
+    selectedOption === currentQuestion.correctAnswer
+  ) {
     // Display score and prompt for scanning a new QR code
     displayScore();
     promptForNewQRCode();
@@ -198,21 +167,4 @@ function displayNextQuestion() {
 
   // Clear the current question
   currentQuestion = null;
-}
-
-
-function displayScore() {
-  // Display the score to the user
-  scoreElement.textContent = `Score: ${score}`;
-}
-
-function promptForNewQRCode() {
-  // Display a message or prompt for scanning a new QR code
-  // You can show a button or a message to instruct the user to scan a new QR code
-  // Example:
-  promptElement.textContent = "Scan a new QR code from a different group.";
-  // Show the prompt element
-  promptElement.style.display = "block";
-  // Hide the scanner element
-  scannerContainer.style.display = "none";
 }
