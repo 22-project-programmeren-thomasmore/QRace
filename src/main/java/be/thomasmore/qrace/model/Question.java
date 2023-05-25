@@ -15,7 +15,7 @@ public class Question {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "question_text")
+  @Column(name = "question_text", nullable = false)
   private String questionText;
 
   @Column(name = "answer1")
@@ -30,16 +30,16 @@ public class Question {
   @Column(name = "answer4")
   private String answer4;
 
-  @Column(name = "correct_answer")
+  @Column(name = "correct_answer", nullable = false)
   private String correctAnswer;
 
-  @Column(name = "group_parameter")
+  @Column(name = "group_parameter", nullable = false)
   private String groupParameter;
 
-  @Column(name = "language")
+  @Column(name = "language", nullable = false)
   private String language;
 
-  @Column(name = "archived")
+  @Column(name = "archived", nullable = false)
   private boolean archived = false;
 
   // getters and setters...
