@@ -30,7 +30,6 @@ public class QuestionService {
   public void deleteQuestion(Long id) {
     questionRepository.deleteById(id);
   }
-
   public List<Question> getQuestionsSorted(String sortBy) {
     if (sortBy == null || sortBy.isEmpty()) {
       // If sortBy is null or empty, return the questions without sorting
@@ -40,5 +39,9 @@ public class QuestionService {
       Sort sort = Sort.by(sortBy).ascending();
       return questionRepository.findAll(sort);
     }
+  }
+  
+  public Question getQuestionByGroup(String group) {
+    return questionRepository.findByGroupParameter(group);
   }
 }
