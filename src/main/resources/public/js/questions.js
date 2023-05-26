@@ -73,12 +73,9 @@ function handleAnswerClick(selectedAnswer) {
   const answerCards = document.getElementsByClassName('answer-card');
   const correctAnswer = selectedCard.dataset.correctAnswer;
 
-  // Extract the number from the selectedAnswer
-  const selectedAnswerNumber = selectedAnswer.replace('answer', '');
-
   // Add CSS classes to indicate selected answer and correctness
   selectedCard.classList.add('selected');
-  if (selectedAnswerNumber === correctAnswer) {
+  if (selectedCard.textContent === correctAnswer) {
     selectedCard.classList.add('correct');
     console.log("Correct answer selected"); // Log to console
   } else {
@@ -94,8 +91,8 @@ function handleAnswerClick(selectedAnswer) {
   // Hide the question container
   const questionContainer = document.getElementById('questionContainer');
   questionContainer.style.display = 'none';
-}
 
+}
 
 // Event listener for the custom "exportData" event
 document.addEventListener("exportData", (event) => {

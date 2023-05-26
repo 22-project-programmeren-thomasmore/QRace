@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 
     function updateText() {
-        console.log(currentLanguage); // Log the current language
+        console.log('current Language: ', currentLanguage); // Log the current language
 
         // Update the text on the page
         for (const key in translations[pageName][currentLanguage]) {
