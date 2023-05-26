@@ -1,4 +1,3 @@
-
 // get the video element from the DOM
 const video = document.getElementById("qr-video");
 // get the video container element from the DOM
@@ -11,10 +10,6 @@ const closeScannerBtn = document.getElementById("closeScannerBtn");
 const scannerContainer = document.getElementById("scannerContainer");
 // get the element that displays the scan result
 const scanResult = document.getElementById("scanResult");
-// get the element that displays the question
-const questionTextElement = document.getElementById("questionText");
-// get the element that contains the answer options
-const answerOptionsContainer = document.getElementById("answerOptions");
 
 let currentQuestion;
 
@@ -22,7 +17,7 @@ let currentQuestion;
 const scanner = new QrScanner(
   video,
   (result) => setResult(scanResult, result),
-  { 
+  {
     returnDetailedScanResult: true,
     onDecodeContinuouslyStop: true,
     scanBoth: true,
@@ -30,9 +25,8 @@ const scanner = new QrScanner(
     highlightCodeOutline: true,
     showCanvas: true,
     scanRegion: true,
-
     preferredFacingMode: "environment",
-    scanRegion: {top: '25%', left: '25%', width: '50%', height: '50%'},
+    scanRegion: { top: "25%", left: "25%", width: "50%", height: "50%" },
   }
 );
 
@@ -56,12 +50,12 @@ closeScannerBtn.addEventListener("click", () => {
 window.scanner = scanner;
 
 function setResult(label, result) {
-    // stop the scanner
-    scanner.stop();
-    // hide the scanner container
-    scannerContainer.style.display = "none";
-    
-    // display the result in console
+  // stop the scanner
+  scanner.stop();
+  // hide the scanner container
+  scannerContainer.style.display = "none";
+
+  // display the result in console
   console.log(result.data);
 
   // Fetch the question from the backend
@@ -88,7 +82,7 @@ function setResult(label, result) {
     });
 }
 
-function displayQuestion(question) {
+export function displayQuestion(question) {
   // Update the DOM to display the question and answer options
   questionTextElement.textContent = question.questionText;
 

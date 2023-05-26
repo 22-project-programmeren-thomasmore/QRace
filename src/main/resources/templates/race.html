@@ -82,6 +82,7 @@
           <div class="allScans">Scan 2 --:--</div>
           <div class="allScans">Scan 3 --:--</div>
         </div>
+        <!-- scanner -->
         <div>
           <button id="openScannerBtn" class="btn btn-primary">
             Scan QR Code
@@ -97,7 +98,36 @@
           </div>
         </div>
 
+         <!-- questions -->
+         <div id="questionContainer" style="display: none">
+          <h2 id="questionText"></h2>
+          <div id="answersContainer">
+            <label><input type="radio" name="answer" value="answer1" />
+              <span id="answer1Text"></span></label                  >
+              <br />
+            <label><input type="radio" name="answer" value="answer2" />
+              <span id="answer2Text"></span></label                  >
+              <br />
+            <label><input type="radio" name="answer" value="answer3" />
+              <span id="answer3Text"></span></label                  >
+              <br />
+            <label><input type="radio" name="answer" value="answer4" />
+              <span id="answer4Text"></span></label><br />
+            </div>
+          <button id="submitAnswerBtn" class="btn btn-primary">
+            Submit Answer
+          </button>
+        </div>
+        <div id="resultContainer" style="display: none">
+          <h3 id="resultText"></h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
         <script type="module" src="/js/qrScanner.js"></script>
+        <script src="/js/questions.js" type="module"></script>
         <script src="/js/translator.js"></script>
         <script src="/js/translations.js"></script>
       </div>
