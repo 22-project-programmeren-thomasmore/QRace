@@ -94,6 +94,7 @@ function handleAnswerClick(selectedAnswer) {
 
 }
 
+
 // Event listener for the custom "exportData" event
 document.addEventListener("exportData", (event) => {
   const groupParameter = event.detail.groupParameter; // Adjust the property name accordingly
