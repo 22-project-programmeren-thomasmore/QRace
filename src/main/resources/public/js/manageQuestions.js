@@ -95,10 +95,8 @@ function createQuestionRow(question) {
     questionId = question.id;
 
     // Populate the edit form with the data of the question
-    document.getElementById("edit-question-text").value =
-      question.questionText;
-    document.getElementById("edit-correct-answer").value =
-      question.correctAnswer;
+    document.getElementById("edit-question-text").value = question.questionText;
+    document.getElementById("edit-correct-answer").value = question.correctAnswer;
     document.getElementById("edit-answer1").value = question.answer1;
     document.getElementById("edit-answer2").value = question.answer2;
     document.getElementById("edit-answer3").value = question.answer3;
@@ -193,7 +191,7 @@ document
       questionText: document.getElementById("edit-question-text").value,
       correctAnswer: document.getElementById(
         "edit-answer" +
-          document.getElementById("edit-correct-answer").value
+        document.getElementById("edit-correct-answer").value
       ).value,
       answer1: document.getElementById("edit-answer1").value,
       answer2: document.getElementById("edit-answer2").value,
