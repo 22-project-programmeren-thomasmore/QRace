@@ -22,7 +22,18 @@ let currentQuestion;
 const scanner = new QrScanner(
   video,
   (result) => setResult(scanResult, result),
-  {    returnDetailedScanResult: true  }
+  { 
+    returnDetailedScanResult: true,
+    onDecodeContinuouslyStop: true,
+    scanBoth: true,
+    highlightScanRegion: true,
+    highlightCodeOutline: true,
+    showCanvas: true,
+    scanRegion: true,
+
+    preferredFacingMode: "environment",
+    scanRegion: {top: '25%', left: '25%', width: '50%', height: '50%'},
+  }
 );
 
 // add event listener for the open scanner button
@@ -45,19 +56,13 @@ closeScannerBtn.addEventListener("click", () => {
 window.scanner = scanner;
 
 function setResult(label, result) {
+    // stop the scanner
+    scanner.stop();
+    // hide the scanner container
+    scannerContainer.style.display = "none";
+    
+    // display the result in console
   console.log(result.data);
-
-  // set the scan result text
-  scanResult.textContent = result.data;
-  // set the text color
-  label.style.color = "teal";
-  // clear the highlight timeout
-  clearTimeout(label.highlightTimeout);
-  // set the highlight timeout
-  label.highlightTimeout = setTimeout(
-    () => (label.style.color = "inherit"),
-    100
-  );
 
   // Fetch the question from the backend
   fetch(`/api/questions/groupParameter/${result.data}`)
@@ -72,7 +77,11 @@ function setResult(label, result) {
       // Display the question to the user
       currentQuestion = question;
       displayQuestion(question);
-    })
+    // add a delay before the next scan
+    setTimeout(() => {
+      scanner.start(); //restart the scanner
+    }, 5000); // delay in milliseconds (1000 = 1 sec)
+    }) 
     .catch((error) => {
       console.error("Error:", error);
       // Handle error scenario

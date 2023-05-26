@@ -10,7 +10,7 @@ CREATE TABLE if not exists GAMES (
     player2 varchar(50),
     player3 varchar(50),
     player4 varchar(50));
-    
+
 CREATE TABLE if not exists QUESTIONS (
     ID  int AUTO_INCREMENT PRIMARY KEY NOT NULL,
     QUESTION_TEXT VARCHAR(100) NOT NULL,
