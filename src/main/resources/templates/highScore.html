@@ -37,9 +37,16 @@
     </div>
 </nav>
 <form id="question-form">
-    <input type="text" id="User-name" placeholder="User Name" required>
+    <input type="text" id="User-name" placeholder="User Name" minlength="3" required>
     <input type="text" id="highscore-points" placeholder="Highscore Points" required>
-    <input type="text" id="highscore-date" placeholder="Highscore Date" required>
+    <input type="text" id="highscore-date" placeholder="Highscore Date" minlength="10" maxlength="10" required>
+    <!-- Put the current date of today in the highscore-date text box -->
+    <!-- padStart is to add the 0 when the day / month is below 10 -->
+    <script>
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1).toString().padStart(2, '0')+'-'+today.getDate().toString().padStart(2, '0');
+        document.getElementById("highscore-date").value = date;
+    </script>
     <button type="submit">Add Highscore</button>
 </form>
 <div id="feedback"></div>
@@ -47,6 +54,7 @@
     <input type="text" id="edit-highscore-name" placeholder="Highscore Name" required>
     <input type="text" id="edit-highscore-points" placeholder="Highscore Points" required>
     <input type="text" id="edit-highscore-date" placeholder="Highscore Date" required>
+
     <button type="submit">Update Highscore</button>
 </form>
 <select id="sort-select">

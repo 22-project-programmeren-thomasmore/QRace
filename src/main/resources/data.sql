@@ -1,4 +1,4 @@
-CREATE TABLE if not exists HIGHSCORES (
+CREATE TABLE if not exists HIGH_SCORES (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_name VARCHAR(255) NOT NULL,
     score INT NOT NULL,

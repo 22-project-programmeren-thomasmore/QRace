@@ -9,7 +9,7 @@ import java.util.Date;
 public class HighScores {
     @Id
     private Integer id;
-    private String username;
+    private String user_name;
     private Integer score;
     private Date highscore_date;
 
@@ -23,11 +23,11 @@ public class HighScores {
     }
 
     public String getUsername() {
-        return username;
+        return user_name;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.user_name = username;
     }
 
     public Integer getScore() {
