@@ -51,8 +51,8 @@ public class WebController {
   //     return "lobby";
   //   }
 
-  @GetMapping("/manageQuestions")
+  @GetMapping({"/manageQuestions","/managequestions","/questions"})
   public String manageQuestions() {
-    return "manageQuestions";
+    return "admin/manageQuestions";
   }
 }

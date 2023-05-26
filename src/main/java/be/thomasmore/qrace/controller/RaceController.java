@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class RaceController {
     private RaceService raceService;
 
-    @GetMapping("/race")
+    @GetMapping({"/race","/game"})
     public String racePage() {
         return "race";
     }

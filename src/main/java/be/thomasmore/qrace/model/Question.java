@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "questions")
@@ -15,7 +16,8 @@ public class Question {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "question_text", nullable = false)
+  @NotNull
+  @Column(name = "question_text")
   private String questionText;
 
   @Column(name = "answer1")
@@ -30,16 +32,20 @@ public class Question {
   @Column(name = "answer4")
   private String answer4;
 
-  @Column(name = "correct_answer", nullable = false)
+  @NotNull
+  @Column(name = "correct_answer")
   private String correctAnswer;
 
-  @Column(name = "group_parameter", nullable = false)
+  @NotNull
+  @Column(name = "group_parameter")
   private String groupParameter;
 
-  @Column(name = "language", nullable = false)
+  @NotNull
+  @Column(name = "language")
   private String language;
 
-  @Column(name = "archived", nullable = false)
+  @NotNull
+  @Column(name = "archived")
   private boolean archived = false;
 
   // getters and setters...
