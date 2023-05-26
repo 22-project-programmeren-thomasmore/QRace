@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html lang="nl-BE">
+
 <head>
     <!--meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- stylesheet -->
-    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css" />
     <!-- bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
+        integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
     <!-- util -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" integrity="sha512-oHBLR38hkpOtf4dW75gdfO7VhEKg2fsitvHZYHZjObc4BPKou2PGenyxA5ZJ8CCqWytBx5wpiSqwVEBy84b7tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js"
+        integrity="sha512-oHBLR38hkpOtf4dW75gdfO7VhEKg2fsitvHZYHZjObc4BPKou2PGenyxA5ZJ8CCqWytBx5wpiSqwVEBy84b7tw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/util@0.12.5/util.min.js"></script>
     <!-- data for translations -->
     <script src="/js/translator.js"></script>
@@ -19,52 +25,74 @@
     <!-- title -->
     <title>QRace: Home</title>
 </head>
+
 <body>
-<!-- navbar -->
-<nav class="navbar navbar-expand-xxl navbar-light bg-light">
-    <a class="navbar-brand" href="https://www.speelgoedmuseum.be/"><img src="/img/logo.png" height="50" class="d-inline-block align-top" alt="Speelgoedmuseum Mechelen"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav text-right">
-            <li id="home" class="nav-item active"><a class="nav-link" href="home"><span class="sr-only">(current)</span></a></li>
-            <li id="inlog" class="nav-item"><a class="nav-link" href="login"></a></li>
-            <li id="info" class="nav-item"><a class="nav-link" href="info"></a></li>
-            <li id="changeLanguage" class="nav-item"><img src="/img/translate.svg" alt="Translate"></li>
-        </ul>
-    </div>
-</nav>
-<!-- content  -->
-<div class="container-fluid">
-    <div class = "row d-block" style="text-align: center;">
-        <h1 id="heading" class="font-weight-bold"></h1>
-        <h4 id="subheading"></h4>
-        <div id="carousel" class="carousel slide" data-ride="carousel"  data-interval="2500">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block img-fluid w-100" src="/img/drex.png" alt="Drew">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block img-fluid w-100" src="/img/hans.png" alt="Hans">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block img-fluid w-100" src="/img/max.png" alt="Max">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block img-fluid w-100" src="/img/bert.png" alt="Bert">
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-xxl navbar-light bg-light">
+        <a class="navbar-brand" href="https://www.speelgoedmuseum.be/"><img src="/img/logo.png" height="50"
+                class="d-inline-block align-top" alt="Speelgoedmuseum Mechelen"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav text-right">
+                <li id="home" class="nav-item active"><a class="nav-link" href="home"><span
+                            class="sr-only">(current)</span></a></li>
+                <li id="inlog" class="nav-item"><a class="nav-link" href="login"></a></li>
+                <li id="info" class="nav-item"><a class="nav-link" href="info"></a></li>
+                <li id="changeLanguage" class="nav-item"><img src="/img/translate.svg" alt="Translate"></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- content  -->
+    <div class="container-fluid">
+        <div class="row d-block" style="text-align: center;">
+            <h1 id="heading" class="font-weight-bold"></h1>
+            <h4 id="subheading"></h4>
+            <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="2500">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block img-fluid w-100" src="/img/drex.png" alt="Drew">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block img-fluid w-100" src="/img/hans.png" alt="Hans">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block img-fluid w-100" src="/img/max.png" alt="Max">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block img-fluid w-100" src="/img/bert.png" alt="Bert">
+                    </div>
                 </div>
             </div>
+            <h2 id="desc" class="my-3 mx-3"></h2>
+            <p id="desc1" class="mt-3 mx-3"></p>
+            <p id="desc2" class="mx-3"></p>
+            <p id="desc3" class="mx-3"></p>
+            <button id="descbtn" type="button" class="btn mx-auto d-block mt-3"
+                onclick="location.href='/name'"></button>
+            <footer class="footer mt-5">
+                <p>© Aberzak, Ahalli, Diop, Ekkart & Rousseaux 2023</p>
+            </footer>
+            <script>
+                // Clear the session storage
+                function clearSessionStorage() {
+                    sessionStorage.clear();
+                }
+
+            </script>
+            <!-- jQuery, popper.js, bootstrap js -->
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
         </div>
-        <h2 id="desc" class="my-3 mx-3"></h2>
-        <p id="desc1" class="mt-3 mx-3"></p>
-        <p id="desc2" class="mx-3"></p>
-        <p id="desc3" class="mx-3"></p>
-        <button id="descbtn" type="button" class="btn mx-auto d-block mt-3" onclick="location.href='/name'"></button>
-        <footer class="footer mt-5"><p>© Aberzak, Ahalli, Diop, Ekkart & Rousseaux 2023</p></footer>
-        <!-- jQuery, popper.js, bootstrap js -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </div>
-</div>
 </body>
+
 </html>
