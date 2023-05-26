@@ -74,14 +74,21 @@
     <!-- Content -->
     <div class="container-fluid">
       <div class="row d-block" style="text-align: center">
-        <h1>Test for game</h1>
+        <!-- <h1>Game</h1> -->
         <div class="flex-container-game-right">
-          <div id="timer">⏱ 00:00</div>
+          <h1 id="timer">⏱ 00:00</h1>
           <script src="/js/timer.js"></script>
-          <div class="allScans">Scan 1 --:--</div>
+          <!-- <div class="allScans">Scan 1 --:--</div>
           <div class="allScans">Scan 2 --:--</div>
-          <div class="allScans">Scan 3 --:--</div>
+          <div class="allScans">Scan 3 --:--</div> -->
         </div>
+
+        <!-- questions -->
+        <div id="questionContainer">
+          <h2 id="questionText"></h2>
+          <div id="answerContainer"></div>
+        </div>
+
         <!-- scanner -->
         <div>
           <button id="openScannerBtn" class="btn btn-primary">
@@ -98,38 +105,8 @@
           </div>
         </div>
         <div id="questionContainer"></div>
-        <!-- questions -->
-        <div id="questionContainer" style="display: none">
-          <h2 id="questionText"></h2>
-          <div id="answersContainer">
-            <label
-              ><input type="radio" name="answer" value="answer1" />
-              <span id="answer1Text"></span
-            ></label>
-            <br />
-            <label
-              ><input type="radio" name="answer" value="answer2" />
-              <span id="answer2Text"></span
-            ></label>
-            <br />
-            <label
-              ><input type="radio" name="answer" value="answer3" />
-              <span id="answer3Text"></span
-            ></label>
-            <br />
-            <label
-              ><input type="radio" name="answer" value="answer4" />
-              <span id="answer4Text"></span></label
-            ><br />
-          </div>
-          <button id="submitAnswerBtn" class="btn btn-primary">
-            Submit Answer
-          </button>
-        </div>
-        <div id="resultContainer" style="display: none">
-          <h3 id="resultText"></h3>
-        </div>
 
+        <!-- scripts -->
         <script src="/js/qrScanner.js" type="module"></script>
         <script src="/js/questions.js" type="module"></script>
         <script src="/js/translator.js"></script>
