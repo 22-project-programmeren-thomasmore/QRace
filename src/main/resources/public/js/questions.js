@@ -41,27 +41,52 @@ function getRandomQuestion(group, language, questions) {
         for (const key of answerKeys) {
           const answer = randomQuestion[key];
           if (answer) {
-            const answerElement = document.createElement('p');
-            answerElement.textContent = answer;
-            answerContainer.appendChild(answerElement);
+            const answerCard = document.createElement('div');
+            answerCard.id = key;
+            answerCard.className = 'answer-card';
+            answerCard.textContent = answer;
+            answerCard.dataset.correctAnswer = randomQuestion.correctAnswer;
+            answerCard.addEventListener('click', () => {
+              handleAnswerClick(key);
+            });
+            answerContainer.appendChild(answerCard);
           }
         }
   
         // Show the question and answers container
         const questionContainer = document.getElementById('questionContainer');
         questionContainer.style.display = 'block';
-  
-        // Handle the submit answer button click event
-        const submitAnswerBtn = document.getElementById('submitAnswerBtn');
-        submitAnswerBtn.addEventListener('click', () => {
-          const selectedAnswer = document.querySelector('input[name="answer"]:checked').value;
-          // TODO: Handle the selected answer
-        });
       })
       .catch((error) => {
         console.error("Error:", error);
         // Handle error scenario
       });
+  }
+  
+  // Handle the answer click event
+function handleAnswerClick(selectedAnswer) {
+    const selectedCard = document.getElementById(selectedAnswer);
+    const answerCards = document.getElementsByClassName('answer-card');
+    const correctAnswer = selectedCard.dataset.correctAnswer;
+  
+    // Add CSS classes to indicate selected answer and correctness
+    selectedCard.classList.add('selected');
+    if (selectedAnswer === correctAnswer) {
+      selectedCard.classList.add('correct');
+      console.log("Correct answer selected"); // Log to console
+    } else {
+      selectedCard.classList.add('incorrect');
+      console.log("Incorrect answer selected"); // Log to console
+    }
+  
+    // Hide all answer cards
+    for (const card of answerCards) {
+      card.style.display = 'none';
+    }
+  
+    // Hide the question container
+    const questionContainer = document.getElementById('questionContainer');
+    questionContainer.style.display = 'none';
   }
   
   // Event listener for the custom "exportData" event
