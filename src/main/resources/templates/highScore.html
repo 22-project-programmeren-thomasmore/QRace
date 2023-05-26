@@ -115,7 +115,29 @@
         return row;
     }
 
-
+    function fetchHighscoresAndPopulateTable(sortBy = '') {
+        fetch('/api/highscores?sortBy=' + sortBy)
+            .then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to fetch highscores');
+                }
+            })
+            .then(function (highscores) {
+                clearTable();
+                populateTable(highscores);
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+    }
+    document.getElementById('sort-select').addEventListener('change', function () {
+        var sortBy = this.value;
+        fetchHighscoresAndPopulateTable(sortBy);
+    });
+    // Initial fetch and populate table
+    fetchHighscoresAndPopulateTable();
 </script>
 
 

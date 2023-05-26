@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 //@RequestMapping("/api/highscores")
 public class HighScoreController {
 
-
     @GetMapping("/highscore")
     public String highscore(Model model) {
         int test = 1;
