@@ -56,20 +56,13 @@ closeScannerBtn.addEventListener("click", () => {
 window.scanner = scanner;
 
 function setResult(label, result) {
-  scanner.stop(); //stop the scanner
+    // stop the scanner
+    scanner.stop();
+    // hide the scanner container
+    scannerContainer.style.display = "none";
+    
+    // display the result in console
   console.log(result.data);
-
-  // set the scan result text
-  scanResult.textContent = result.data;
-  // set the text color
-  label.style.color = "teal";
-  // clear the highlight timeout
-  clearTimeout(label.highlightTimeout);
-  // set the highlight timeout
-  label.highlightTimeout = setTimeout(
-    () => (label.style.color = "inherit"),
-    100
-  );
 
   // Fetch the question from the backend
   fetch(`/api/questions/groupParameter/${result.data}`)
@@ -87,7 +80,7 @@ function setResult(label, result) {
     // add a delay before the next scan
     setTimeout(() => {
       scanner.start(); //restart the scanner
-    }, 50000); // delay in milliseconds
+    }, 5000); // delay in milliseconds (1000 = 1 sec)
     }) 
     .catch((error) => {
       console.error("Error:", error);
