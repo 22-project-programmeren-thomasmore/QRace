@@ -49,6 +49,7 @@ closeScannerBtn.addEventListener("click", () => {
 window.scanner = scanner;
 
 function setResult(label, result) {
+  console.log(result.data);  
   // set the scan result text
   scanResult.textContent = result.data;
   // set the text color
@@ -62,7 +63,7 @@ function setResult(label, result) {
   );
 
   // Fetch the question from the backend
-  fetch(`/api/questions/group/${result.data}`)
+  fetch(`/api/questions/groupParameter/${result.data}`)
     .then((response) => {
       if (response.ok) {
         return response.json();
