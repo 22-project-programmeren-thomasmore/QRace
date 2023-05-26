@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="nl-BE">
   <head>
+    <!-- stylesheet -->
+    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css" />
     <!-- bootstrap -->
     <link
       rel="stylesheet"
@@ -83,10 +85,13 @@
           <div class="allScans">Scan 3 --:--</div> -->
         </div>
 
-        <!-- questions -->
-        <div id="questionContainer">
+        <!-- Questions -->
+        <div id="questionContainer" class="my-5">
           <h2 id="questionText"></h2>
-          <div id="answerContainer"></div>
+          <div
+            id="answerContainer"
+            class="row justify-content-center mt-4"
+          ></div>
         </div>
 
         <!-- scanner -->
@@ -104,14 +109,12 @@
             </div>
           </div>
         </div>
-        <div id="questionContainer"></div>
-
-        <!-- scripts -->
-        <script src="/js/qrScanner.js" type="module"></script>
-        <script src="/js/questions.js" type="module"></script>
-        <script src="/js/translator.js"></script>
-        <script src="/js/translations.js"></script>
       </div>
     </div>
+    <!-- scripts -->
+    <script src="/js/qrScanner.js" type="module"></script>
+    <script src="/js/questions.js" type="module"></script>
+    <script src="/js/translator.js"></script>
+    <script src="/js/translations.js"></script>
   </body>
 </html>
