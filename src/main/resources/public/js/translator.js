@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         for (const key in translations[pageName][currentLanguage]) {
             const element = document.getElementById(key);
             if (element) {
-                console.log(key, translations[pageName][currentLanguage][key]); // Log the key and translation
                 element.innerText = translations[pageName][currentLanguage][key];
             }
         }
