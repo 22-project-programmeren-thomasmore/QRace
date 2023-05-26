@@ -2,10 +2,7 @@ package be.thomasmore.qrace.model;
 
 
 import jakarta.persistence.*;
-
-import javax.management.relation.Role;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
@@ -15,23 +12,29 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Long id;
+
+    private Long ID;
     private String username;
     private String email;
-    private String passwoord;
+    private String password;
 
+    @NotNull
+    private boolean isAdmin;
 
-
-    public User(String username, String email, String passwoord) {
+    public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
-        this.passwoord = passwoord;
+        this.password = password;
+        this.isAdmin = isAdmin;
     }
 
     public User() {
 
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
 
     public String getUsername() {
         return username;
@@ -41,8 +44,8 @@ public class User {
         return email;
     }
 
-    public String getPasswoord() {
-        return passwoord;
+    public String getPassword() {
+        return password;
     }
 
     public void setUsername(String username) {
@@ -53,7 +56,13 @@ public class User {
         this.email = email;
     }
 
-    public void setPasswoord(String passwoord) {
-        this.passwoord = passwoord;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Long getId() {
+        return ID;
     }
 }
+
+
