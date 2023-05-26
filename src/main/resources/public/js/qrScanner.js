@@ -1,4 +1,3 @@
-import QrScanner from "/js/qr-scanner.min.js"; // if using plain es6 import
 
 // get the video element from the DOM
 const video = document.getElementById("qr-video");
@@ -23,10 +22,7 @@ let currentQuestion;
 const scanner = new QrScanner(
   video,
   (result) => setResult(scanResult, result),
-  {
-    returnDetailedScanResult: true,
-    workerPath: "/js/qr-scanner-worker.min.js",
-  }
+  {    returnDetailedScanResult: true  }
 );
 
 // add event listener for the open scanner button
@@ -49,6 +45,8 @@ closeScannerBtn.addEventListener("click", () => {
 window.scanner = scanner;
 
 function setResult(label, result) {
+  console.log(result.data);
+
   // set the scan result text
   scanResult.textContent = result.data;
   // set the text color
@@ -62,7 +60,7 @@ function setResult(label, result) {
   );
 
   // Fetch the question from the backend
-  fetch(`/api/questions/group/${result.data}`)
+  fetch(`/api/questions/groupParameter/${result.data}`)
     .then((response) => {
       if (response.ok) {
         return response.json();
