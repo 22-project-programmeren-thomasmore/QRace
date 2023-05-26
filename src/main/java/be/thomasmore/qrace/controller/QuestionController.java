@@ -64,7 +64,7 @@ public class QuestionController {
     return ResponseEntity.ok().build();
   }
 
-  @GetMapping("/group/{group}")
+  @GetMapping("/groupParameter/{group}")
   public ResponseEntity<Question> getQuestionByGroup(@PathVariable("group") String group) {
       Question question = questionService.getQuestionByGroup(group);
       if (question == null) {
