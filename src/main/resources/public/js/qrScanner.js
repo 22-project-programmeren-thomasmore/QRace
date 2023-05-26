@@ -22,7 +22,18 @@ let currentQuestion;
 const scanner = new QrScanner(
   video,
   (result) => setResult(scanResult, result),
-  {    returnDetailedScanResult: true  }
+  { 
+    returnDetailedScanResult: true,
+    onDecodeContinuouslyStop: true,
+    scanBoth: true,
+    highlightScanRegion: true,
+    highlightCodeOutline: true,
+    showCanvas: true,
+    scanRegion: true,
+
+    preferredFacingMode: "environment",
+    scanRegion: {top: '25%', left: '25%', width: '50%', height: '50%'},
+  }
 );
 
 // add event listener for the open scanner button
@@ -45,6 +56,7 @@ closeScannerBtn.addEventListener("click", () => {
 window.scanner = scanner;
 
 function setResult(label, result) {
+  scanner.stop(); //stop the scanner
   console.log(result.data);
 
   // set the scan result text
@@ -72,7 +84,11 @@ function setResult(label, result) {
       // Display the question to the user
       currentQuestion = question;
       displayQuestion(question);
-    })
+    // add a delay before the next scan
+    setTimeout(() => {
+      scanner.start(); //restart the scanner
+    }, 50000); // delay in milliseconds
+    }) 
     .catch((error) => {
       console.error("Error:", error);
       // Handle error scenario
