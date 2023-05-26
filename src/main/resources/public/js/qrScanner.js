@@ -1,4 +1,3 @@
-
 // get the video element from the DOM
 const video = document.getElementById("qr-video");
 // get the video container element from the DOM
@@ -11,18 +10,12 @@ const closeScannerBtn = document.getElementById("closeScannerBtn");
 const scannerContainer = document.getElementById("scannerContainer");
 // get the element that displays the scan result
 const scanResult = document.getElementById("scanResult");
-// get the element that displays the question
-const questionTextElement = document.getElementById("questionText");
-// get the element that contains the answer options
-const answerOptionsContainer = document.getElementById("answerOptions");
-
-let currentQuestion;
 
 // create a new scanner
 const scanner = new QrScanner(
   video,
   (result) => setResult(scanResult, result),
-  { 
+  {
     returnDetailedScanResult: true,
     onDecodeContinuouslyStop: true,
     scanBoth: true,
@@ -30,9 +23,8 @@ const scanner = new QrScanner(
     highlightCodeOutline: true,
     showCanvas: true,
     scanRegion: true,
-
     preferredFacingMode: "environment",
-    scanRegion: {top: '25%', left: '25%', width: '50%', height: '50%'},
+    scanRegion: { top: "25%", left: "25%", width: "50%", height: "50%" },
   }
 );
 
@@ -56,111 +48,25 @@ closeScannerBtn.addEventListener("click", () => {
 window.scanner = scanner;
 
 function setResult(label, result) {
-    // stop the scanner
-    scanner.stop();
-    // hide the scanner container
-    scannerContainer.style.display = "none";
-    
-    // display the result in console
-  console.log(result.data);
+  // stop the scanner
+  scanner.stop();
+  // hide the scanner container
+  scannerContainer.style.display = "none";
 
-  // Fetch the question from the backend
-  fetch(`/api/questions/groupParameter/${result.data}`)
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("Failed to fetch question");
-      }
-    })
-    .then((question) => {
-      // Display the question to the user
-      currentQuestion = question;
-      displayQuestion(question);
-    // add a delay before the next scan
-    setTimeout(() => {
-      scanner.start(); //restart the scanner
-    }, 5000); // delay in milliseconds (1000 = 1 sec)
-    }) 
-    .catch((error) => {
-      console.error("Error:", error);
-      // Handle error scenario
-    });
+  // display the result in console
+  console.log('scan result: ',result.data);
+  exportResult(result.data);
+
 }
 
-function displayQuestion(question) {
-  // Update the DOM to display the question and answer options
-  questionTextElement.textContent = question.questionText;
+function exportResult(data) {
+  // Create a custom event to export the data to questions.js
+  const exportDataEvent = new CustomEvent("exportData", { detail: { groupParameter: data } });
 
-  // Clear the previous answer options
-  answerOptionsContainer.innerHTML = "";
-
-  // Iterate over the answer options and create HTML elements for each option
-  question.answerOptions.forEach((answerOption, index) => {
-    // Create a label element
-    const label = document.createElement("label");
-
-    // Create a radio button for the answer option
-    const radio = document.createElement("input");
-    radio.type = "radio";
-    radio.name = "answerOptions";
-    radio.value = answerOption;
-    radio.id = `answer${index + 1}`;
-
-    // Create a span element to display the answer option text
-    const span = document.createElement("span");
-    span.textContent = answerOption;
-
-    // Append the radio button and span to the label
-    label.appendChild(radio);
-    label.appendChild(span);
-
-    // Append the label to the answer options container
-    answerOptionsContainer.appendChild(label);
-  });
-
-  // Add event listener for answer submission
-  answerOptionsContainer.addEventListener("change", handleAnswerSubmission);
+  // Dispatch the custom event
+  document.dispatchEvent(exportDataEvent);
 }
 
-function handleAnswerSubmission(event) {
-  // Get the selected answer option
-  const selectedOption = event.target.value;
-
-  // Compare the selected answer with the correct answer
-  if (selectedOption === currentQuestion.correctAnswer) {
-    // Increment the score for correct answer
-    score += 10;
-    event.target.parentElement.classList.add("correct");
-  } else {
-    // Decrement the score for wrong answer on the first try
-    if (questionCount === 0) {
-      score -= 5;
-    }
-    event.target.parentElement.classList.add("incorrect");
-  }
-
-  // Remove the event listener to prevent multiple submissions
-  answerOptionsContainer.removeEventListener("change", handleAnswerSubmission);
-
-  // Update the question count
-  questionCount++;
-
-  // Check if the maximum number of questions has been reached
-  if (
-    questionCount === maxQuestions ||
-    selectedOption === currentQuestion.correctAnswer
-  ) {
-    // Display score and prompt for scanning a new QR code
-    displayScore();
-    promptForNewQRCode();
-  } else {
-    // Display the next question after a delay
-    setTimeout(() => {
-      displayNextQuestion();
-    }, 2000);
-  }
-}
 
 function promptForNewQRCode() {
   // Hide the answer options container
@@ -168,15 +74,4 @@ function promptForNewQRCode() {
 
   // Show the button to open the scanner
   openScannerBtn.style.display = "block";
-}
-
-function displayNextQuestion() {
-  // Show the answer options container
-  answerOptionsContainer.style.display = "block";
-
-  // Hide the button to open the scanner
-  openScannerBtn.style.display = "none";
-
-  // Clear the current question
-  currentQuestion = null;
 }
