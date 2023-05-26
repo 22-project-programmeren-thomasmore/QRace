@@ -20,12 +20,14 @@ public class User {
     private String email;
     private String passwoord;
 
+    private String role;
 
 
-    public User(String username, String email, String passwoord) {
+    public User(String username, String email, String passwoord, String role) {
         this.username = username;
         this.email = email;
         this.passwoord = passwoord;
+        this.role = role;
     }
 
     public User() {
