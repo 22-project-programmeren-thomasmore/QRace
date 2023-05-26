@@ -1,7 +1,8 @@
-CREATE TABLE if not exists HIGHSCORES (
+CREATE TABLE if not exists HIGH_SCORES (
     id INT AUTO_INCREMENT PRIMARY KEY,
-     name VARCHAR(255) NOT NULL,
-    score INT NOT NULL);
+    user_name VARCHAR(255) NOT NULL,
+    score INT NOT NULL,
+    highscore_date DATE NOT NULL);
 
 CREATE TABLE if not exists GAMES (
     raceId  int,
