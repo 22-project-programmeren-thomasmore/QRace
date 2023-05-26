@@ -2,6 +2,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const translations = window.translations;
     let currentLanguage = 'nl';
 
+    // Check if a language has been saved in the cookies
+    const savedLanguage = document.cookie.replace(/(?:(?:^|.*;\s*)language\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    if (savedLanguage) {
+        currentLanguage = savedLanguage;
+    }
+
     // Get the current page's name
     let pageName = window.location.pathname.split('/').pop().replace('.html', '');
 
@@ -34,6 +40,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         } else if (currentLanguage === 'en') {
             currentLanguage = 'nl';
         }
+
+        // Save the selected language in a cookie
+        document.cookie = "language=" + currentLanguage;
 
         updateText();
     });
