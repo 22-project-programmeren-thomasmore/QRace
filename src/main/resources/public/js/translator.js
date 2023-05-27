@@ -2,6 +2,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const translations = window.translations;
     let currentLanguage = 'nl';
 
+    // Check if a language has been saved in the cookies
+    const savedLanguage = document.cookie.replace(/(?:(?:^|.*;\s*)language\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    if (savedLanguage) {
+        currentLanguage = savedLanguage;
+    }
+
     // Get the current page's name
     let pageName = window.location.pathname.split('/').pop().replace('.html', '');
 
@@ -11,13 +17,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 
     function updateText() {
-        console.log(currentLanguage); // Log the current language
+        console.log('current Language: ', currentLanguage); // Log the current language
 
         // Update the text on the page
         for (const key in translations[pageName][currentLanguage]) {
             const element = document.getElementById(key);
             if (element) {
-                console.log(key, translations[pageName][currentLanguage][key]); // Log the key and translation
                 element.innerText = translations[pageName][currentLanguage][key];
             }
         }
@@ -35,6 +40,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         } else if (currentLanguage === 'en') {
             currentLanguage = 'nl';
         }
+
+        // Save the selected language in a cookie
+        document.cookie = "language=" + currentLanguage;
 
         updateText();
     });

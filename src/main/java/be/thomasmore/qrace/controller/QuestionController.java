@@ -63,13 +63,4 @@ public class QuestionController {
     questionService.deleteQuestion(id);
     return ResponseEntity.ok().build();
   }
-
-  @GetMapping("/group/{group}")
-  public ResponseEntity<Question> getQuestionByGroup(@PathVariable("group") String group) {
-      Question question = questionService.getQuestionByGroup(group);
-      if (question == null) {
-          return ResponseEntity.notFound().build();
-      }
-      return ResponseEntity.ok(question);
-  }
 }
