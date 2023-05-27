@@ -2,6 +2,7 @@ package be.thomasmore.qrace.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -9,7 +10,8 @@ import java.util.Date;
 @Table(name = "high_scores")
 public class HighScores {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HIGHSCORE_SEQ")
+    @SequenceGenerator(name = "HIGHSCORE_SEQ", sequenceName = "HIGHSCORE_SEQ", allocationSize = 1)
     private Integer id;
     @NotNull
     @Column(name = "user_name")
@@ -18,6 +20,7 @@ public class HighScores {
     private Integer score;
     @NotNull
     @Column(name = "highscore_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date highscoreDate;
 
 

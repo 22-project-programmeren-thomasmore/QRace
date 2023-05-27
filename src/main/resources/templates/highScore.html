@@ -36,27 +36,42 @@
         </ul>
     </div>
 </nav>
-<form id="question-form">
-    <input type="text" id="User-name" placeholder="User Name" minlength="3" required>
-    <input type="text" id="highscore-points" placeholder="Highscore Points" required>
-    <input type="text" id="highscore-date" placeholder="Highscore Date" minlength="10" maxlength="10" required>
-    <!-- Put the current date of today in the highscore-date text box -->
-    <!-- padStart is to add the 0 when the day / month is below 10 -->
-    <script>
-        var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1).toString().padStart(2, '0')+'-'+today.getDate().toString().padStart(2, '0');
-        document.getElementById("highscore-date").value = date;
-    </script>
-    <button type="submit">Add Highscore</button>
-</form>
-<div id="feedback"></div>
-<form id="edit-form" style="display: none;">
-    <input type="text" id="edit-highscore-name" placeholder="Highscore Name" required>
-    <input type="text" id="edit-highscore-points" placeholder="Highscore Points" required>
-    <input type="text" id="edit-highscore-date" placeholder="Highscore Date" required>
+<!--<form id="question-form">-->
+<!--    <input type="text" id="User-name" placeholder="User Name" minlength="3" required>-->
+<!--    <input type="text" id="highscore-points" placeholder="Highscore Points" required>-->
+<!--    <input type="text" id="highscore-date" placeholder="Highscore Date" minlength="10" maxlength="10" required>-->
+<!--    &lt;!&ndash; Put the current date of today in the highscore-date text box &ndash;&gt;-->
+<!--    &lt;!&ndash; padStart is to add the 0 when the day / month is below 10 &ndash;&gt;-->
+<!--    <script>-->
+<!--        var today = new Date();-->
+<!--        var date = today.getFullYear()+'-'+(today.getMonth()+1).toString().padStart(2, '0')+'-'+today.getDate().toString().padStart(2, '0');-->
+<!--        document.getElementById("highscore-date").value = date;-->
+<!--    </script>-->
+<!--    <button type="submit">Add Highscore</button>-->
+<!--</form>-->
+<!--<div id="feedback"></div>-->
+<!--<form id="edit-form" style="display: none;">-->
+<!--    <input type="text" id="edit-highscore-name" placeholder="Highscore Name" required>-->
+<!--    <input type="text" id="edit-highscore-points" placeholder="Highscore Points" required>-->
+<!--    <input type="text" id="edit-highscore-date" placeholder="Highscore Date" required>-->
 
-    <button type="submit">Update Highscore</button>
+<!--    <button type="submit">Update Highscore</button>-->
+<!--</form>-->
+
+
+<form th:action="@{/highscore}" th:object="${highscore}" method="post">
+    <label for="userName">User Name:</label><br>
+    <input type="text" id="userName" th:field="*{userName}" name="userName" required><br>
+
+    <label for="score">Score:</label><br>
+    <input type="number" id="score" th:field="*{score}" name="score" required><br>
+
+    <label for="highscoreDate">Highscore Date:</label><br>
+    <input type="date" id="highscoreDate" th:field="*{highscoreDate}" name="highscoreDate" required><br>
+
+    <input type="submit" value="Submit">
 </form>
+
 <select id="sort-select">
     <option value="">Sort by...</option>
     <option value="Highscore">Highscore</option>
