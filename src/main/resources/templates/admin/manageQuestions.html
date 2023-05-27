@@ -2,301 +2,132 @@
 <html lang="nl-BE">
 
 <head>
-    <!--meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- stylesheet -->
-    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css" />
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- javascript -->
-    <script src="/js/translator.js"></script>
-    <script src="/js/translations.js"></script>
-    <!-- title -->
-    <title>manage questions</title>
+  <!--meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- stylesheet -->
+  <link rel="stylesheet" type="text/css" href="/css/stylesheet.css" />
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <!-- javascript -->
+  <script src="/js/translator.js"></script>
+  <script src="/js/translations.js"></script>
+  <!-- title -->
+  <title>manage questions</title>
 </head>
 
 <body>
-    <!-- navbar -->
-    <nav class="navbar navbar-expand-xxl navbar-light bg-light">
-        <a class="navbar-brand" href="https://www.speelgoedmuseum.be/"><img src="/img/logo.png" height="50"
-                class="d-inline-block align-top" alt="Speelgoedmuseum Mechelen"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><span
-                class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav text-right">
-                <li id="home" class="nav-item active"><a class="nav-link" href="#"><span
-                            class="sr-only">(current)</span></a></li>
-                <li id="inlog" class="nav-item"><a class="nav-link" href="#"></a></li>
-                <li id="info" class="nav-item"><a class="nav-link" href="#"></a></li>
-                <li id="changeLanguage" class="nav-item"><img src="/img/translate.svg" alt="Translate"></li>
-            </ul>
-        </div>
-    </nav>
+  <!-- navbar -->
+  <nav class="navbar navbar-expand-xxl navbar-light bg-light">
+    <a class="navbar-brand" href="https://www.speelgoedmuseum.be/"><img src="/img/logo.png" height="50"
+        class="d-inline-block align-top" alt="Speelgoedmuseum Mechelen" /></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav text-right">
+        <li id="home" class="nav-item active">
+          <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
+        </li>
+        <li id="inlog" class="nav-item"><a class="nav-link" href="#"></a></li>
+        <li id="info" class="nav-item"><a class="nav-link" href="#"></a></li>
+        <li id="changeLanguage" class="nav-item">
+          <img src="/img/translate.svg" alt="Translate" />
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-    <form id="question-form">
-        <input type="text" id="question-text" placeholder="Question text" required>
-        <input type="text" id="correct-answer" placeholder="Correct answer" required>
-        <input type="text" id="answer1" placeholder="Answer 1">
-        <input type="text" id="answer2" placeholder="Answer 2">
-        <input type="text" id="answer3" placeholder="Answer 3">
-        <input type="text" id="answer4" placeholder="Answer 4">
-        <input type="text" id="group-parameter" placeholder="Group" required>
-        <input type="text" id="language" placeholder="Language" required>
-        <button type="submit">Create Question</button>
-    </form>
-    <div id="feedback"></div>
-    <form id="edit-form" style="display: none;">
-        <input type="text" id="edit-question-text" placeholder="Question text" required>
-        <input type="text" id="edit-correct-answer" placeholder="Correct answer" required>
-        <input type="text" id="edit-answer1" placeholder="Answer 1">
-        <input type="text" id="edit-answer2" placeholder="Answer 2">
-        <input type="text" id="edit-answer3" placeholder="Answer 3">
-        <input type="text" id="edit-answer4" placeholder="Answer 4">
-        <input type="text" id="edit-group-parameter" placeholder="Group" required>
-        <input type="text" id="edit-language" placeholder="Language" required>
-        <button type="submit">Update Question</button>
-    </form>
-    <select id="sort-select">
-        <option value="">Sort by...</option>
-        <option value="id">Time Created</option>
-        <option value="groupParameter">Group</option>
-        <option value="questionText">Question</option>
-        <option value="archived">active</option>
+  <form id="question-form">
+    <input type="text" id="question-text" placeholder="Question text" required />
+    <input type="text" id="answer1" placeholder="Answer 1" required />
+    <input type="text" id="answer2" placeholder="Answer 2" />
+    <input type="text" id="answer3" placeholder="Answer 3" />
+    <input type="text" id="answer4" placeholder="Answer 4" />
+    <select id="correct-answer" required>
+      <option value="">Select correct answer</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
     </select>
-    <table id="questions">
-        <thead>
-            <tr>
-                <th>Question</th>
-                <th>Correct Answer</th>
-                <th>Answer 1</th>
-                <th>Answer 2</th>
-                <th>Answer 3</th>
-                <th>Answer 4</th>
-                <th>Group</th>
-                <th>Language</th>
-                <th>Archived</th>
-                <th>Archive</th>
-                <th>Edit</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Rows will be added here by the script -->
-        </tbody>
-    </table>
+    <select id="group-parameter" required>
+      <option value="">Select group</option>
+      <option value="test">Test</option>
+      <option value="lego">Lego</option>
+      <option value="kunst">Kunst</option>
+      <option value="other">Other</option>
+    </select>
+    <select id="language" required>
+      <option value="">Select language</option>
+      <option value="nl">NL</option>
+      <option value="fr">FR</option>
+      <option value="en">EN</option>
+    </select>
+    <button type="submit">Create Question</button>
+  </form>
 
-    <script>
-        function populateTable(questions) {
-            var tbody = document.getElementById('questions').getElementsByTagName('tbody')[0];
-            questions.forEach(function (question) {
-                var row = createQuestionRow(question);
-                tbody.appendChild(row);
-            });
-        }
+  <div id="feedback"></div>
 
-        function clearTable() {
-            var tbody = document.getElementById('questions').getElementsByTagName('tbody')[0];
-            while (tbody.firstChild) {
-                tbody.removeChild(tbody.firstChild);
-            }
-        }
+  <form id="edit-form" style="display: none">
+    <input type="text" id="edit-question-text" placeholder="Question text" required />
+    <input type="text" id="edit-answer1" placeholder="Answer 1" required />
+    <input type="text" id="edit-answer2" placeholder="Answer 2" />
+    <input type="text" id="edit-answer3" placeholder="Answer 3" />
+    <input type="text" id="edit-answer4" placeholder="Answer 4" />
+    <select id="edit-correct-answer" required>
+      <option value="">Select correct answer</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+    <select id="edit-group-parameter" required>
+      <option value="">Select group</option>
+      <option value="test">Test</option>
+      <option value="lego">Lego</option>
+      <option value="kunst">Kunst</option>
+      <option value="other">Other</option>
+    </select>
+    <select id="edit-language" required>
+      <option value="">Select language</option>
+      <option value="nl">NL</option>
+      <option value="fr">FR</option>
+      <option value="en">EN</option>
+    </select>
+    <button type="submit">Update Question</button>
+  </form>
 
-        function createQuestionRow(question) {
-            // Create the row and cells for the question properties
-            var row = document.createElement('tr');
-            ['questionText', 'correctAnswer', 'answer1', 'answer2', 'answer3', 'answer4', 'groupParameter', 'language'].forEach(function (property) {
-                var cell = document.createElement('td');
-                cell.textContent = question[property];
-                row.appendChild(cell);
-            });
-
-            // Create the cell for the "Archived" property
-            var archivedCell = document.createElement('td');
-            archivedCell.textContent = question.archived ? 'Yes' : 'No';
-            row.appendChild(archivedCell);
-
-            // Create the "Archive" button and add event listener
-            var archiveButton = document.createElement('button');
-            archiveButton.textContent = question.archived ? 'Unarchive' : 'Archive';
-            archiveButton.addEventListener('click', function () {
-                // Toggle the archived field of the question
-                question.archived = !question.archived;
-
-                // Send a PUT request to update the question
-                fetch('/api/questions/' + question.id, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(question)
-                }).then(function (response) {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error('Failed to update question');
-                    }
-                }).then(function (updatedQuestion) {
-                    console.log('Updated question:', updatedQuestion);
-                    document.getElementById('feedback').textContent = question.archived ? 'Question archived successfully!' : 'Question unarchived successfully!';
-                    document.getElementById('feedback').style.color = 'green';
-
-                    // Update the "Archived" cell and the "Archive" button
-                    archivedCell.textContent = question.archived ? 'Yes' : 'No';
-                    archiveButton.textContent = question.archived ? 'Unarchive' : 'Archive';
-                }).catch(function (error) {
-                    console.error('Error:', error);
-                    document.getElementById('feedback').textContent = 'Failed to update question. Please try again.';
-                    document.getElementById('feedback').style.color = 'red';
-                });
-            });
-            row.appendChild(archiveButton);
-
-            // Create the "Edit" button and add event listener
-            var editCell = document.createElement('td');
-            var editButton = document.createElement('button');
-            editButton.textContent = 'Edit';
-            editButton.addEventListener('click', function () {
-                // Set questionId to the ID of the question
-                questionId = question.id;
-
-                // Populate the edit form with the data of the question
-                document.getElementById('edit-question-text').value = question.questionText;
-                document.getElementById('edit-correct-answer').value = question.correctAnswer;
-                document.getElementById('edit-answer1').value = question.answer1;
-                document.getElementById('edit-answer2').value = question.answer2;
-                document.getElementById('edit-answer3').value = question.answer3;
-                document.getElementById('edit-answer4').value = question.answer4;
-                document.getElementById('edit-group-parameter').value = question.groupParameter;
-                document.getElementById('edit-language').value = question.language;
-
-                // Show the edit form
-                document.getElementById('edit-form').style.display = 'block';
-            });
-            editCell.appendChild(editButton);
-            row.appendChild(editCell);
-
-            return row;
-        }
-        document.getElementById('sort-select').addEventListener('change', function () {
-            var sortBy = this.value;
-            // Clear the table
-            clearTable();
-            // Fetch the questions from the server with the selected sorting criteria
-            fetch('/api/questions?sortBy=' + sortBy)
-                .then(function (response) {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error('Failed to fetch questions');
-                    }
-                })
-                .then(function (questions) {
-                    // Populate the table with the sorted questions
-                    populateTable(questions);
-                })
-                .catch(function (error) {
-                    console.error('Error:', error);
-                });
-        });
-        document.getElementById('question-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-            var question = {
-                questionText: document.getElementById('question-text').value,
-                correctAnswer: document.getElementById('correct-answer').value,
-                answer1: document.getElementById('answer1').value,
-                answer2: document.getElementById('answer2').value,
-                answer3: document.getElementById('answer3').value,
-                answer4: document.getElementById('answer4').value,
-                groupParameter: document.getElementById('group-parameter').value,
-                language: document.getElementById('language').value
-            };
-            fetch('/api/questions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(question)
-            }).then(function (response) {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Failed to create question');
-                }
-            }).then(function (createdQuestion) {
-                console.log('Created question:', createdQuestion);
-                document.getElementById('feedback').textContent = 'Question created successfully!';
-                document.getElementById('feedback').style.color = 'green';
-                clearTable();
-                fetchQuestionsAndPopulateTable();
-            }).catch(function (error) {
-                console.error('Error:', error);
-                document.getElementById('feedback').textContent = 'Failed to create question. Please try again.';
-                document.getElementById('feedback').style.color = 'red';
-            });
-        });
-        // Event listener for edit form submission
-        document.getElementById('edit-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-            var question = {
-                questionText: document.getElementById('edit-question-text').value,
-                answer1: document.getElementById('edit-answer1').value,
-                answer2: document.getElementById('edit-answer2').value,
-                answer3: document.getElementById('edit-answer3').value,
-                answer4: document.getElementById('edit-answer4').value,
-                correctAnswer: document.getElementById('edit-correct-answer').value,
-                groupParameter: document.getElementById('edit-group-parameter').value,
-                language: document.getElementById('edit-language').value
-            }; fetch('/api/questions/' + questionId, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(question)
-            }).then(function (response) {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Failed to update question');
-                }
-            }).then(function (updatedQuestion) {
-                console.log('Updated question:', updatedQuestion);
-                document.getElementById('feedback').textContent = 'Question updated successfully!';
-                document.getElementById('feedback').style.color = 'green';
-                clearTable();
-                fetchQuestionsAndPopulateTable();
-            }).catch(function (error) {
-                console.error('Error:', error);
-                document.getElementById('feedback').textContent = 'Failed to update question. Please try again.';
-                document.getElementById('feedback').style.color = 'red';
-            });
-        });
-        function fetchQuestionsAndPopulateTable(sortBy = '') {
-            fetch('/api/questions?sortBy=' + sortBy)
-                .then(function (response) {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error('Failed to fetch questions');
-                    }
-                })
-                .then(function (questions) {
-                    clearTable();
-                    populateTable(questions);
-                })
-                .catch(function (error) {
-                    console.error('Error:', error);
-                });
-        }
-        document.getElementById('sort-select').addEventListener('change', function () {
-            var sortBy = this.value;
-            fetchQuestionsAndPopulateTable(sortBy);
-        });
-        // Initial fetch and populate table
-        fetchQuestionsAndPopulateTable();
-    </script>
-
+  <select id="sort-select">
+    <option value="">Sort by...</option>
+    <option value="id">Time Created</option>
+    <option value="groupParameter">Group</option>
+    <option value="questionText">Question alphabetical</option>
+    <option value="archived">active</option>
+  </select>
+  <table id="questions">
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th>Correct Answer</th>
+        <th>Answer 1</th>
+        <th>Answer 2</th>
+        <th>Answer 3</th>
+        <th>Answer 4</th>
+        <th>Group</th>
+        <th>Language</th>
+        <th>Archived</th>
+        <th>Archive</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Rows will be added here by the script -->
+    </tbody>
+  </table>
+  <script src="/js/manageQuestions.js"></script>
 </body>
 
 </html>

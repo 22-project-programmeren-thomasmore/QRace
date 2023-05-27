@@ -40,8 +40,5 @@ public class QuestionService {
       return questionRepository.findAll(sort);
     }
   }
-  
-  public Question getQuestionByGroup(String group) {
-    return questionRepository.findByGroupParameter(group);
-  }
+
 }
