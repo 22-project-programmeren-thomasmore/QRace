@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl-BE">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!--meta tags -->
@@ -63,82 +63,18 @@
     <option value="Username">Username</option>
 </select>
 
-<table id="highscores">
-    <thead>
+<table>
     <tr>
-        <th>User name</th>
-        <th>Points</th>
-        <th>Date</th>
+        <th>User Name</th>
+        <th>Score</th>
+        <th>Highscore Date</th>
     </tr>
-    </thead>
-    <tbody>
-    <!-- Rows will be added here by the script -->
-    </tbody>
+    <tr th:each="score : ${highscores}">
+        <td th:text="${score.userName}"></td>
+        <td th:text="${score.score}"></td>
+        <td th:text="${score.highscoreDate}"></td>
+    </tr>
 </table>
-
-<script>
-    function populateTable(highscores) {
-        var tbody = document.getElementById('highscores').getElementsByTagName('tbody')[0];
-        highscores.forEach(function (highscore) {
-            var row = createHighscoreRow(highscore);
-            tbody.appendChild(row);
-        });
-    }
-
-
-    function createHighscoreRow(highscore) {
-        // Create the row and cells for the highscores properties
-        var row = document.createElement('tr');
-        ['username', 'highscorePoints', 'highscoreDate'].forEach(function (property) {
-            var cell = document.createElement('td');
-            cell.textContent = highscore[property];
-            row.appendChild(cell);
-        });
-
-        // Create the "Edit" button and add event listener
-        var editCell = document.createElement('td');
-        var editButton = document.createElement('button');
-        editButton.textContent = 'Edit';
-        editButton.addEventListener('click', function () {
-
-            // Populate the edit form with the data of the question
-            document.getElementById('edit-highscore-name').value = highscore.name;
-            document.getElementById('edit-highscore-points').value = highscore.points;
-            document.getElementById('edit-highscore-date').value = highscore.date;
-
-            // Show the edit form
-            document.getElementById('edit-form').style.display = 'block';
-        });
-        editCell.appendChild(editButton);
-        row.appendChild(editCell);
-
-        return row;
-    }
-
-    function fetchHighscoresAndPopulateTable(sortBy = '') {
-        fetch('/api/highscores?sortBy=' + sortBy)
-            .then(function (response) {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Failed to fetch highscores');
-                }
-            })
-            .then(function (highscores) {
-                clearTable();
-                populateTable(highscores);
-            })
-            .catch(function (error) {
-                console.error('Error:', error);
-            });
-    }
-    document.getElementById('sort-select').addEventListener('change', function () {
-        var sortBy = this.value;
-        fetchHighscoresAndPopulateTable(sortBy);
-    });
-    // Initial fetch and populate table
-    fetchHighscoresAndPopulateTable();
-</script>
 
 
 </body>

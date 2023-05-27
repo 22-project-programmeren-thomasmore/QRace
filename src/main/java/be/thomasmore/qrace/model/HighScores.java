@@ -1,8 +1,6 @@
 package be.thomasmore.qrace.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
@@ -11,13 +9,16 @@ import java.util.Date;
 @Table(name = "high_scores")
 public class HighScores {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @NotNull
-    private String user_name;
+    @Column(name = "user_name")
+    private String userName;
     @NotNull
     private Integer score;
     @NotNull
-    private Date highscore_date;
+    @Column(name = "highscore_date")
+    private Date highscoreDate;
 
 
     public void setId(Integer id) {
@@ -28,12 +29,12 @@ public class HighScores {
         return id;
     }
 
-    public String getUsername() {
-        return user_name;
+    public String getUserName() {
+        return this.userName;
     }
 
-    public void setUsername(String username) {
-        this.user_name = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public Integer getScore() {
@@ -44,11 +45,11 @@ public class HighScores {
         this.score = score;
     }
 
-    public Date getHighscore_date() {
-        return highscore_date;
+    public Date getHighscoreDate() {
+        return this.highscoreDate;
     }
 
-    public void setHighscore_date(Date highscore_date) {
-        this.highscore_date = highscore_date;
+    public void setHighscoreDate(Date highscoreDate) {
+        this.highscoreDate = highscoreDate;
     }
 }
