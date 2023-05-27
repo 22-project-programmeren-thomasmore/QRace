@@ -34,7 +34,6 @@ public class Player {
     }
 
 
-
     public int getCurrentCheckpoint() {
         return currentCheckpoint;
     }
@@ -55,7 +54,7 @@ public class Player {
         this.currentCheckpoint--;
     }
 
-public void removeScore(int score) {
+    public void removeScore(int score) {
         this.score -= score;
     }
 
@@ -72,7 +71,17 @@ public void removeScore(int score) {
         this.currentCheckpoint = 0;
     }
 
-
+    public void movePlayer(boolean isAnswerCorrect) {
+        if (isAnswerCorrect) {
+            // Increment the current checkpoint
+            currentCheckpoint++;
+        } else {
+            // Decrement the current checkpoint unless the player is at the start
+            if (currentCheckpoint > 0) {
+                currentCheckpoint--;
+            }
+        }
+    }
 
 
     public String getName() {
