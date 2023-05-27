@@ -1,159 +1,126 @@
-// Event listener for the custom "exportData" event
-document.addEventListener("exportData", (event) => {
-  const groupParameter = event.detail; // Adjust the property name accordingly
-  // console.log('groupParameter: ', groupParameter);
+const MAX_ATTEMPTS = 2;
+const FIRST_ATTEMPT_SCORE_CORRECT = 10;
+const FIRST_ATTEMPT_SCORE_INCORRECT = -5;
+const SECOND_ATTEMPT_SCORE_CORRECT = 5;
+const SECOND_ATTEMPT_SCORE_INCORRECT = -5;
 
-  // Call the function to select a random question and update the UI
+const answeredQuestionsKey = 'answeredQuestions';
+const scoreKey = 'score';
+
+initializeLocalStorage();
+
+document.addEventListener("exportData", (event) => {
+  const groupParameter = event.detail;
   selectRandomQuestion(groupParameter);
 });
 
-// Function to handle question selection and UI update
+function initializeLocalStorage() {
+  if (!localStorage.getItem(answeredQuestionsKey)) {
+    localStorage.setItem(answeredQuestionsKey, JSON.stringify({}));
+  }
+  if (!localStorage.getItem(scoreKey)) {
+    localStorage.setItem(scoreKey, 0);
+  }
+}
+
 function selectRandomQuestion(groupParameter) {
-  // Fetch all questions from the server
   fetch('/api/questions')
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("Failed to fetch questions");
+    .then(response => {
+      if (!response.ok) {
+        return Promise.reject(`Failed to fetch questions. Status: ${response.status}`);
       }
+      return response.json();
     })
-    .then((questions) => {
-      // Check if there's a group in session storage
-      const { group } = getAnsweredQuestion();
-      if (group && group === groupParameter) {
-        // If the group in session storage is the same as the current group, don't select a question
-        console.error("You have already answered a question from this group");
-        // Here you could show an error message to the user
+    .then(questions => getFilteredQuestions(questions, groupParameter))
+    .then(filteredQuestions => {
+      const randomQuestion = getRandomQuestion(filteredQuestions);
+      if (!randomQuestion) {
+        console.error("No questions available for the selected group and language");
         return;
       }
-
-      // Check if there's a question ID in session storage
-      const { questionId } = getAnsweredQuestion();
-      if (questionId) {
-        // Filter out the question with the ID in session storage
-        questions = questions.filter((question) => question.id !== questionId);
-      }
-
-      // Get a random question from the available non-archived questions in the specified group and language
-      const randomQuestion = getRandomQuestion(groupParameter, questions);
-
-      // Check if a random question was successfully selected
-      if (randomQuestion) {
-        // Store the answered question ID and attempts in session storage
-        storeAnsweredQuestion(randomQuestion.id, 0, groupParameter);
-
-
-        // Display the question on the page
-        const questionTextElement = document.getElementById('questionText');
-        questionTextElement.textContent = randomQuestion.questionText;
-
-        // Display the answers on the page
-        const answerContainer = document.getElementById('answerContainer');
-        answerContainer.innerHTML = ''; // Clear previous answers
-
-        // Loop through the answers and add them to the answer container
-        const answerKeys = ['answer1', 'answer2', 'answer3', 'answer4'];
-        for (const key of answerKeys) {
-          const answer = randomQuestion[key];
-          if (answer) {
-            const answerCard = document.createElement('div');
-            answerCard.id = key;
-            answerCard.className = 'answer-card';
-            answerCard.textContent = answer;
-            answerCard.dataset.correctAnswer = randomQuestion.correctAnswer;
-            answerCard.addEventListener('click', () => {
-              handleAnswerClick(key);
-            });
-            answerContainer.appendChild(answerCard);
-          }
-        }
-
-        // Show the question and answers container
-        const questionContainer = document.getElementById('questionContainer');
-        questionContainer.style.display = 'block';
-      } else {
-        // Handle the case where no question was selected
-        console.error("No questions available for the selected group and language");
-        // Here you could show an error message to the user
-      }
+      displayQuestion(randomQuestion);
     })
-    .catch((error) => {
-      console.error("Error:", error);
-      // Handle error scenario
-    });
+    .catch(console.error);
 }
-// Get a random question from the available non-archived questions in the specified group and language
-function getRandomQuestion(group, questions) {
-  // Get the language from the cookies
-  const language = document.cookie.replace(/(?:(?:^|.*;\s*)language\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-  // console.log('language: ', language);
-  // Filter the questions based on the group, archived status, and language
-  const filteredQuestions = questions.filter(
-    (question) =>
-      question.groupParameter === group &&
-      !question.archived &&
-      question.language === language
+
+function getFilteredQuestions(questions, groupParameter) {
+  const answeredQuestions = JSON.parse(localStorage.getItem(answeredQuestionsKey));
+  const language = getLanguageFromCookies();
+
+  return questions.filter(question =>
+    question.groupParameter === groupParameter &&
+    question.language === language &&
+    !question.archived &&
+    (!answeredQuestions[question.id] || answeredQuestions[question.id].group !== groupParameter || answeredQuestions[question.id].attempts < MAX_ATTEMPTS)
   );
-
-  // Select a random question from the filtered questions
-  const randomIndex = Math.floor(Math.random() * filteredQuestions.length);
-  return filteredQuestions[randomIndex];
 }
 
-// Handle the answer click event
-function handleAnswerClick(selectedAnswer) {
-  const selectedCard = document.getElementById(selectedAnswer);
-  const answerCards = document.getElementsByClassName('answer-card');
-  const correctAnswer = selectedCard.dataset.correctAnswer;
+function getRandomQuestion(questions) {
+  return questions[Math.floor(Math.random() * questions.length)];
+}
 
-  // Add CSS classes to indicate selected answer and correctness
-  selectedCard.classList.add('selected');
-  if (selectedCard.textContent === correctAnswer) {
-    selectedCard.classList.add('correct');
-    console.log("Correct answer selected"); // Log to console
-  } else {
-    selectedCard.classList.add('incorrect');
-    console.log("Incorrect answer selected"); // Log to console
+let correctAnswerGlobal = ""; // global variable to keep track of correct answer
 
-    // Increment attempts and give a second chance if attempts is less than 2
-    const { questionId, attempts, group } = getAnsweredQuestion();
-    const newAttempts = Number(attempts) + 1;
-    storeAnsweredQuestion(questionId, newAttempts, group);
-    if (newAttempts < 2) {
-      selectRandomQuestion(group);
-    } else {
-      clearSessionStorage();
+function displayQuestion(question) {
+  const questionContainer = document.getElementById('questionContainer');
+  const questionTextElement = document.getElementById('questionText');
+  const answerContainer = document.getElementById('answerContainer');
+
+  questionTextElement.textContent = question.questionText;
+
+  correctAnswerGlobal = question.correctAnswer; // update global variable with correct answer
+
+  answerContainer.innerHTML = '';
+  const answerKeys = ['answer1', 'answer2', 'answer3', 'answer4'];
+  for (const key of answerKeys) {
+    if (question[key]) {
+      const answerCard = document.createElement('div');
+      answerCard.id = key;
+      answerCard.className = 'answer-card';
+      answerCard.textContent = question[key];
+      answerCard.addEventListener('click', () => handleAnswerClick(answerCard.textContent, question.id, question.groupParameter));
+      answerContainer.appendChild(answerCard);
     }
   }
+  openScannerBtn.style.visibility = 'hidden';
+  questionContainer.style.display = 'block';
+}
 
-  // Hide all answer cards
-  for (const card of answerCards) {
-    card.style.display = 'none';
+function handleAnswerClick(selectedAnswer, questionId, groupParameter) {
+  const selectedCard = document.getElementById(selectedAnswer);
+  const answerCards = Array.from(document.getElementsByClassName('answer-card'));
+
+  const answeredQuestions = JSON.parse(localStorage.getItem(answeredQuestionsKey));
+  const currentScore = Number(localStorage.getItem(scoreKey));
+  const isCorrectAnswer = selectedAnswer === correctAnswerGlobal; // use global variable for comparison
+
+  if (!answeredQuestions[questionId]) {
+    answeredQuestions[questionId] = {
+      attempts: 0,
+      group: groupParameter,
+      correct: false
+    };
   }
 
-  // Hide the question container
-  const questionContainer = document.getElementById('questionContainer');
-  questionContainer.style.display = 'none';
+  if (isCorrectAnswer) {
+    selectedCard.classList.add('correct');
+    answeredQuestions[questionId].attempts = MAX_ATTEMPTS;
+    answeredQuestions[questionId].correct = true;
+    localStorage.setItem(scoreKey, currentScore + (answeredQuestions[questionId].attempts === 1 ? FIRST_ATTEMPT_SCORE_CORRECT : SECOND_ATTEMPT_SCORE_CORRECT));
+  } else {
+    selectedCard.classList.add('incorrect');
+    answeredQuestions[questionId].attempts++;
+    answeredQuestions[questionId].correct = false;
+    localStorage.setItem(scoreKey, currentScore + (answeredQuestions[questionId].attempts === 1 ? FIRST_ATTEMPT_SCORE_INCORRECT : SECOND_ATTEMPT_SCORE_INCORRECT));
+  }
 
+  localStorage.setItem(answeredQuestionsKey, JSON.stringify(answeredQuestions));
+
+  answerCards.forEach(card => card.style.display = 'none');
+  document.getElementById('questionContainer').style.display = 'none';
+  document.getElementById('openScannerBtn').style.visibility = 'visible';
 }
 
-// Store the answered question ID, attempts, and group
-function storeAnsweredQuestion(questionId, attempts, group) {
-  sessionStorage.setItem('answeredQuestionId', questionId);
-  sessionStorage.setItem('attempts', attempts);
-  sessionStorage.setItem('answeredGroup', group);
-}
-
-// Retrieve the answered question ID, attempts, and group
-function getAnsweredQuestion() {
-  const questionId = sessionStorage.getItem('answeredQuestionId');
-  const attempts = sessionStorage.getItem('attempts');
-  const group = sessionStorage.getItem('answeredGroup');
-  return { questionId, attempts, group };
-}
-
-// Clear the session storage
-function clearSessionStorage() {
-  sessionStorage.clear();
+function getLanguageFromCookies() {
+  return document.cookie.replace(/(?:(?:^|.*;\s*)language\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 }
