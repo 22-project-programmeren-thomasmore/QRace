@@ -18,6 +18,7 @@ public class HighScores {
     private String userName;
     @NotNull
     private Long score;
+
     @NotNull
     @Column(name = "highscore_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
