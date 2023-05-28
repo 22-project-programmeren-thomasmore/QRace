@@ -79,7 +79,6 @@ function handleAnswerClick(selectedAnswer, question) {
   const answerCards = Array.from(document.getElementsByClassName('answer-card'));
 
   const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
-  const currentScore = Number(localStorage.getItem(trackProgressKey.score));
   const isCorrectAnswer = selectedCard.textContent === question.correctAnswer;
   if (isCorrectAnswer) {
     selectedCard.classList.add('correct');
@@ -91,17 +90,17 @@ function handleAnswerClick(selectedAnswer, question) {
     trackProgress.groups[question.groupParameter].attempts++; 
     trackProgress.groups[question.groupParameter].answeredQuestions[question.id].correct = false; 
     trackProgress.score += trackProgress.groups[question.groupParameter].attempts >= 2 ? SECOND_ATTEMPT_SCORE_INCORRECT : FIRST_ATTEMPT_SCORE_INCORRECT;
-    }
-
+  }
   localStorage.setItem(trackProgressKey, JSON.stringify(trackProgress));
 
   answerCards.forEach(card => card.style.display = 'none');
   document.getElementById('questionContainer').style.display = 'none';
   document.getElementById('openScannerBtn').style.visibility = 'visible';
+  
+  giveNewChance(question);
 }
 
 function updateTrackProgress(question) {
-  console.log('question', question)
   if (!question || question.id === undefined || !question.groupParameter) {
     console.error("Invalid object:", question);
     return;
@@ -122,7 +121,15 @@ function updateTrackProgress(question) {
   }
   localStorage.setItem(trackProgressKey, JSON.stringify(trackProgress));
 }
+function giveNewChance(question) {
+  const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
+  console.log('attempts', trackProgress.groups[question.groupParameter]?.attempts)  
+  console.log('answer correct',trackProgress.groups[question.groupParameter]?.answeredQuestions[question.id]?.correct)
 
+  if (trackProgress.groups[question.groupParameter]?.attempts < MAX_ATTEMPTS && trackProgress.groups[question.groupParameter].answeredQuestions[question.id].correct === false) {
+    selectRandomQuestion(question.groupParameter);
+  }
+}
 function getLanguageFromCookies() {
   return document.cookie.replace(/(?:(?:^|.*;\s*)language\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 }
