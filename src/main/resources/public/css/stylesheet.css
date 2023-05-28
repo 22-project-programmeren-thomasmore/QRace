@@ -56,14 +56,14 @@ footer {
 /*  overflow: auto;*/
 /*}*/
 
-
 .popup {
     position: absolute;
-    top: 100%;
+    top: 50%;
     left: 50%;
     opacity: 0;
-    transform: translate(-50%, 0) scale(1);
-    width: 380px;
+    transform: translate(-50%, -50%) scale(1);
+    width: 90%; /* Adjust the width as needed */
+    max-width: 380px; /* Set a maximum width */
     background: #fff;
     box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
@@ -81,18 +81,8 @@ footer {
     transform 20ms ease-in-out 0ms;
 }
 
-.popup .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 15px;
-    height: 15px;
-    background: #888;
-    color: #eee;
-    text-align: center;
-    line-height: 15px;
-    border-radius: 15px;
-    cursor: pointer;
+.popup .form {
+    padding: 20px; /* Add padding for better spacing */
 }
 
 .popup .form h2 {
@@ -116,7 +106,7 @@ footer {
 .popup .form .form-element input[type="password"] {
     margin: 5px;
     display: block;
-    width: 90%;
+    width: 100%; /* Make the input fields occupy the full width */
     padding: 10px;
     outline: none;
     border: 1px solid #aaa;
@@ -128,7 +118,7 @@ footer {
 }
 
 .popup .form .form-element button {
-    width: 90%;
+    width: 100%; /* Make the button occupy the full width */
     height: 40px;
     border: none;
     outline: none;
