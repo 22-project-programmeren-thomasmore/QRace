@@ -13,64 +13,61 @@ const scanResult = document.getElementById("scanResult");
 
 // create a new scanner
 const scanner = new QrScanner(
-  video,
-  (result) => setResult(scanResult, result),
-  {
-    returnDetailedScanResult: true,
-    onDecodeContinuouslyStop: true,
-    scanBoth: true,
-    highlightScanRegion: true,
-    highlightCodeOutline: true,
-    showCanvas: true,
-    scanRegion: true,
-    preferredFacingMode: "environment",
-    scanRegion: { top: "25%", left: "25%", width: "50%", height: "50%" },
-  }
+    video,
+    (result) => setResult(scanResult, result),
+    {
+        returnDetailedScanResult: true,
+        onDecodeContinuouslyStop: true,
+        scanBoth: true,
+        highlightScanRegion: true,
+        highlightCodeOutline: true,
+        preferredFacingMode: "environment",
+        scanRegion: {top: "25%", left: "25%", width: "50%", height: "50%"},
+    }
 );
 
 // add event listener for the open scanner button
 openScannerBtn.addEventListener("click", () => {
-  // start the scanner
-  scanner.start();
-  // display the scanner container
-  scannerContainer.style.display = "block";
+    // start the scanner
+    scanner.start();
+    // display the scanner container
+    scannerContainer.style.display = "block";
 });
 
 // add event listener for the close scanner button
 closeScannerBtn.addEventListener("click", () => {
-  // stop the scanner
-  scanner.stop();
-  // hide the scanner container
-  scannerContainer.style.display = "none";
+    // stop the scanner
+    scanner.stop();
+    // hide the scanner container
+    scannerContainer.style.display = "none";
 });
 
 // for debugging
 window.scanner = scanner;
 
 function setResult(label, result) {
-  // stop the scanner
-  scanner.stop();
-  // hide the scanner container
-  scannerContainer.style.display = "none";
+    // stop the scanner
+    scanner.stop();
+    // hide the scanner container
+    scannerContainer.style.display = "none";
 
-  // display the result in console
-  // console.log('scan result: ',result.data);
-  exportResult(result.data);
+    // display the result in console
+    exportResult(result.data);
 
 }
 
 function exportResult(data) {
-  // Create a custom event to export the data to questions.js
-  const exportDataEvent = new CustomEvent("exportData", { detail: data });
+    // Create a custom event to export the data to questions.js
+    const exportDataEvent = new CustomEvent("exportData", {detail: data});
 
-  // Dispatch the custom event
-  document.dispatchEvent(exportDataEvent);
+    // Dispatch the custom event
+    document.dispatchEvent(exportDataEvent);
 }
 
 function promptForNewQRCode() {
-  // Hide the answer options container
-  answerOptionsContainer.style.display = "none";
+    // Hide the answer options container
+    answerOptionsContainer.style.display = "none";
 
-  // Show the button to open the scanner
-  openScannerBtn.style.display = "block";
+    // Show the button to open the scanner
+    openScannerBtn.style.display = "block";
 }
