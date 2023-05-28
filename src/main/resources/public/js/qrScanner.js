@@ -54,19 +54,18 @@ function setResult(label, result) {
   scannerContainer.style.display = "none";
 
   // display the result in console
-  console.log('scan result: ',result.data);
+  // console.log('scan result: ',result.data);
   exportResult(result.data);
 
 }
 
 function exportResult(data) {
   // Create a custom event to export the data to questions.js
-  const exportDataEvent = new CustomEvent("exportData", { detail: { groupParameter: data } });
+  const exportDataEvent = new CustomEvent("exportData", { detail: data });
 
   // Dispatch the custom event
   document.dispatchEvent(exportDataEvent);
 }
-
 
 function promptForNewQRCode() {
   // Hide the answer options container

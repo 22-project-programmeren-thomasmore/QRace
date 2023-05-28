@@ -10,12 +10,14 @@ function populateTable(questions) {
 }
 
 function clearTable() {
-  var tbody = document
-    .getElementById("questions")
-    .getElementsByTagName("tbody")[0];
-  while (tbody.firstChild) {
-    tbody.removeChild(tbody.firstChild);
-  }
+  return new Promise(function (resolve) {
+    var tbody = document.getElementById("questions").getElementsByTagName("tbody")[0];
+    while (tbody.firstChild) {
+      tbody.removeChild(tbody.firstChild);
+    }
+    // Resolve the promise when all rows have been removed
+    resolve();
+  });
 }
 
 function createQuestionRow(question) {
@@ -95,8 +97,14 @@ function createQuestionRow(question) {
     questionId = question.id;
 
     // Populate the edit form with the data of the question
+    var correctAnswerNumber;
+    ["answer1", "answer2", "answer3", "answer4"].forEach(function (answer, index) {
+      if (question[answer] === question.correctAnswer) {
+        correctAnswerNumber = index + 1;
+      }
+    });
     document.getElementById("edit-question-text").value = question.questionText;
-    document.getElementById("edit-correct-answer").value = question.correctAnswer;
+    document.getElementById("edit-correct-answer").value = correctAnswerNumber;
     document.getElementById("edit-answer1").value = question.answer1;
     document.getElementById("edit-answer2").value = question.answer2;
     document.getElementById("edit-answer3").value = question.answer3;
@@ -136,52 +144,51 @@ document
         console.error("Error:", error);
       });
   });
-document
-  .getElementById("question-form")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
-    var question = {
-      questionText: document.getElementById("question-text").value,
-      correctAnswer: document.getElementById(
-        "answer" + document.getElementById("correct-answer").value
-      ).value,
-      answer1: document.getElementById("answer1").value,
-      answer2: document.getElementById("answer2").value,
-      answer3: document.getElementById("answer3").value,
-      answer4: document.getElementById("answer4").value,
-      groupParameter: document.getElementById("group-parameter").value,
-      language: document.getElementById("language").value,
-    };
+document.getElementById("question-form").addEventListener("submit", function (event) {
+  event.preventDefault();
+  var question = {
+    questionText: document.getElementById("question-text").value,
+    correctAnswer: document.getElementById(
+      "answer" + document.getElementById("correct-answer").value
+    ).value,
+    answer1: document.getElementById("answer1").value,
+    answer2: document.getElementById("answer2").value,
+    answer3: document.getElementById("answer3").value,
+    answer4: document.getElementById("answer4").value,
+    groupParameter: document.getElementById("group-parameter").value,
+    language: document.getElementById("language").value,
+  };
 
-    fetch("/api/questions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(question),
+  fetch("/api/questions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(question),
+  })
+    .then(function (response) {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Failed to create question");
+      }
     })
-      .then(function (response) {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Failed to create question");
-        }
-      })
-      .then(function (createdQuestion) {
-        console.log("Created question:", createdQuestion);
-        document.getElementById("feedback").textContent =
-          "Question created successfully!";
-        document.getElementById("feedback").style.color = "green";
-        clearTable();
-        fetchQuestionsAndPopulateTable();
-      })
-      .catch(function (error) {
-        console.error("Error:", error);
-        document.getElementById("feedback").textContent =
-          "Failed to create question. Please try again.";
-        document.getElementById("feedback").style.color = "red";
-      });
-  });
+    .then(function (createdQuestion) {
+      console.log("Created question:", createdQuestion);
+      document.getElementById("feedback").textContent =
+        "Question created successfully!";
+      document.getElementById("feedback").style.color = "green";
+      // clearTable();
+      // fetchQuestionsAndPopulateTable();
+      document.getElementById("sort-select").dispatchEvent(new Event("change"));
+    })
+    .catch(function (error) {
+      console.error("Error:", error);
+      document.getElementById("feedback").textContent =
+        "Failed to create question. Please try again.";
+      document.getElementById("feedback").style.color = "red";
+    });
+});
 // Event listener for edit form submission
 document
   .getElementById("edit-form")
@@ -220,9 +227,11 @@ document
         document.getElementById("feedback").textContent =
           "Question updated successfully!";
         document.getElementById("feedback").style.color = "green";
-        clearTable();
-        fetchQuestionsAndPopulateTable();
+        // clearTable();
+        // fetchQuestionsAndPopulateTable();
+        document.getElementById("sort-select").dispatchEvent(new Event("change"));
         document.getElementById("edit-form").style.display = "none";
+
       })
       .catch(function (error) {
         console.error("Error:", error);
@@ -231,7 +240,18 @@ document
         document.getElementById("feedback").style.color = "red";
       });
   });
+var isPopulatingTable = false;
+var abortController = new AbortController();
+
 function fetchQuestionsAndPopulateTable(sortBy = "") {
+  if (isPopulatingTable) {
+    // Cancel the previous fetch request
+    abortController.abort();
+    // Create a new AbortController for the new fetch request
+    abortController = new AbortController();
+
+  }
+  isPopulatingTable = true;
   fetch("/api/questions?sortBy=" + sortBy)
     .then(function (response) {
       if (response.ok) {
@@ -241,13 +261,22 @@ function fetchQuestionsAndPopulateTable(sortBy = "") {
       }
     })
     .then(function (questions) {
-      clearTable();
-      populateTable(questions);
+      // Wait for clearTable to finish before populating the table
+      return clearTable().then(function () {
+        populateTable(questions);
+        isPopulatingTable = false;
+      });
     })
     .catch(function (error) {
-      console.error("Error:", error);
+      if (error.name === 'AbortError') {
+        console.log('Fetch request cancelled');
+      } else {
+        console.error("Error:", error);
+      }
+      isPopulatingTable = false;
     });
 }
+
 document
   .getElementById("sort-select")
   .addEventListener("change", function () {
