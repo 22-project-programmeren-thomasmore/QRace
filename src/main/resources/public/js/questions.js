@@ -32,11 +32,7 @@ function selectRandomQuestion(groupParameter) {
         return;
       }
       displayQuestion(randomQuestion);
-      updateAnsweredQuestions();
-
-      if (answeredQuestionsKey[questionId].attempts < MAX_ATTEMPTS) {
-        selectRandomQuestion(groupParameter);
-      }
+      updateAnsweredQuestions(randomQuestion);
     })
     .catch(console.error);
 }
@@ -105,7 +101,29 @@ function handleAnswerClick(selectedAnswer, questionId, correctAnswer) {
   document.getElementById('openScannerBtn').style.visibility = 'visible';
 }
 
-function updateAnsweredQuestions() {
+function updateAnsweredQuestions(question) {
+  console.log('question',question)
+  if (!question || question.id === undefined) {
+    console.error("Invalid question object:", question);
+    return;
+  }
+
+  const answeredQuestions = JSON.parse(localStorage.getItem(answeredQuestionsKey));
+
+  if (!answeredQuestions[question.id]) {
+    answeredQuestions[question.id] = {
+      group: question.groupParameter,
+      attempts: null,
+      correct: null
+    };
+  }
+
+  localStorage.setItem(answeredQuestionsKey, JSON.stringify(answeredQuestions));
+
+  if (answeredQuestions[question.id].attempts > 0 && answeredQuestions[question.id].attempts < MAX_ATTEMPTS) {
+    selectRandomQuestion(question.groupParameter);
+  }
+
 }
 
 function getLanguageFromCookies() {
