@@ -22,7 +22,6 @@ const scanner = new QrScanner(
     highlightScanRegion: true,
     highlightCodeOutline: true,
     showCanvas: true,
-    scanRegion: true,
     preferredFacingMode: "environment",
     scanRegion: { top: "25%", left: "25%", width: "50%", height: "50%" },
   }
