@@ -1,19 +1,14 @@
-const MAX_ATTEMPTS = 10;
+const MAX_ATTEMPTS = 5;
 const FIRST_ATTEMPT_SCORE_CORRECT = 10;
 const FIRST_ATTEMPT_SCORE_INCORRECT = -5;
 const SECOND_ATTEMPT_SCORE_CORRECT = 5;
 const SECOND_ATTEMPT_SCORE_INCORRECT = -10;
 
-const answeredQuestionsKey = 'answered Questions';
-const scoreKey = 'points';
+const trackProgressKey = 'track progress';
 
 // Initialize local storage
-if (!localStorage.getItem(answeredQuestionsKey)) {
-  localStorage.setItem(answeredQuestionsKey, JSON.stringify({}));
-}
-
-if (!localStorage.getItem(scoreKey)) {
-  localStorage.setItem(scoreKey, 0);
+if (!localStorage.getItem(trackProgressKey)) {
+  localStorage.setItem(trackProgressKey, JSON.stringify({ score: 0, groups: {} }));
 }
 
 document.addEventListener("exportData", (event) => {
@@ -32,21 +27,29 @@ function selectRandomQuestion(groupParameter) {
         return;
       }
       displayQuestion(randomQuestion);
-      updateAnsweredQuestions(randomQuestion);
+      updateTrackProgress(randomQuestion);
     })
     .catch(console.error);
 }
 
 function getFilteredQuestions(questions, groupParameter) {
-  const answeredQuestions = JSON.parse(localStorage.getItem(answeredQuestionsKey));
+  const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
   const language = getLanguageFromCookies();
 
-  return questions.filter(question =>
+  console.log("Before filtering: ", questions);
+  console.log("Group Parameter: ", groupParameter);
+  console.log("Language: ", language);
+  console.log("Track Progress: ", trackProgress);
+
+  const filteredQuestions = questions.filter(question =>
     question.groupParameter === groupParameter &&
     question.language === language &&
     !question.archived &&
-    (!answeredQuestions[question.id] || answeredQuestions[question.id].attempts < MAX_ATTEMPTS)
+    (!(trackProgress.groups[groupParameter]?.answeredQuestions?.[question.id]) && trackProgress.groups[groupParameter]?.attempts < MAX_ATTEMPTS)
   );
+  console.log("After filtering: ", filteredQuestions);
+
+  return filteredQuestions;
 }
 
 function getRandomQuestion(questions) {
@@ -69,61 +72,64 @@ function displayQuestion(question) {
     answerCard.id = key;
     answerCard.className = 'answer-card';
     answerCard.textContent = question[key];
-    answerCard.addEventListener('click', () => handleAnswerClick(key, question.id, question.correctAnswer));
+    answerCard.addEventListener('click', () => handleAnswerClick(key, question));
     answerContainer.appendChild(answerCard);
   }
   openScannerBtn.style.visibility = 'hidden';
   questionContainer.style.display = 'block';
 }
 
-function handleAnswerClick(selectedAnswer, questionId, correctAnswer) {
+function handleAnswerClick(selectedAnswer, question) {
   const selectedCard = document.getElementById(selectedAnswer);
   const answerCards = Array.from(document.getElementsByClassName('answer-card'));
 
-  const answeredQuestions = JSON.parse(localStorage.getItem(answeredQuestionsKey));
-  const currentScore = Number(localStorage.getItem(scoreKey));
-  const isCorrectAnswer = selectedCard.textContent === correctAnswer;
+  const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
+  const currentScore = Number(localStorage.getItem(trackProgressKey.score));
+  const isCorrectAnswer = selectedCard.textContent === question.correctAnswer;
   if (isCorrectAnswer) {
     selectedCard.classList.add('correct');
-    answeredQuestions[questionId].attempts += 2; 
-    answeredQuestions[questionId].correct = true; 
-    localStorage.setItem(scoreKey, currentScore + (answeredQuestions[questionId].attempts >= 2 ? SECOND_ATTEMPT_SCORE_CORRECT : FIRST_ATTEMPT_SCORE_CORRECT));
+    trackProgress.groups[question.groupParameter].attempts += 2; 
+    trackProgress.groups[question.groupParameter].answeredQuestions[question.id].correct = true; 
+    trackProgress.score += trackProgress.groups[question.groupParameter].attempts >= 2 ? SECOND_ATTEMPT_SCORE_CORRECT : FIRST_ATTEMPT_SCORE_CORRECT;
   } else {
     selectedCard.classList.add('incorrect');
-    answeredQuestions[questionId].attempts++; 
-    answeredQuestions[questionId].correct = false; 
-    localStorage.setItem(scoreKey, currentScore + (answeredQuestions[questionId].attempts >= 2 ? SECOND_ATTEMPT_SCORE_INCORRECT : FIRST_ATTEMPT_SCORE_INCORRECT));
-    }
-  localStorage.setItem(answeredQuestionsKey, JSON.stringify(answeredQuestions));
+    trackProgress.groups[question.groupParameter].attempts++; 
+    trackProgress.groups[question.groupParameter].answeredQuestions[question.id].correct = false; 
+    trackProgress.score += trackProgress.groups[question.groupParameter].attempts >= 2 ? SECOND_ATTEMPT_SCORE_INCORRECT : FIRST_ATTEMPT_SCORE_INCORRECT;
+  }
+
+  localStorage.setItem(trackProgressKey, JSON.stringify(trackProgress));
 
   answerCards.forEach(card => card.style.display = 'none');
   document.getElementById('questionContainer').style.display = 'none';
   document.getElementById('openScannerBtn').style.visibility = 'visible';
 }
 
-function updateAnsweredQuestions(question) {
-  console.log('question',question)
-  if (!question || question.id === undefined) {
-    console.error("Invalid question object:", question);
+function updateTrackProgress(question) {
+  console.log('question', question)
+  if (!question || question.id === undefined || !question.groupParameter) {
+    console.error("Invalid object:", question);
     return;
   }
+    const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
 
-  const answeredQuestions = JSON.parse(localStorage.getItem(answeredQuestionsKey));
-
-  if (!answeredQuestions[question.id]) {
-    answeredQuestions[question.id] = {
-      group: question.groupParameter,
-      attempts: null,
-      correct: null
+  if (!trackProgress.groups[question.groupParameter]) {
+    trackProgress.groups[question.groupParameter] = {
+      attempts: 0,
+      answeredQuestions: {}
     };
   }
 
-  localStorage.setItem(answeredQuestionsKey, JSON.stringify(answeredQuestions));
-
-  if (answeredQuestions[question.id].attempts > 0 && answeredQuestions[question.id].attempts < MAX_ATTEMPTS) {
-    selectRandomQuestion(question.groupParameter);
+  if (!trackProgress.groups[question.groupParameter].answeredQuestions[question.id]) {
+    trackProgress.groups[question.groupParameter].answeredQuestions[question.id] = {
+      correct: null,
+    };
   }
+  localStorage.setItem(trackProgressKey, JSON.stringify(trackProgress));
 
+  // if (trackProgress.groups[question.groupParameter.group].attempts < MAX_ATTEMPTS) {
+  //   selectRandomQuestion(question.groupParameter);
+  // }
 }
 
 function getLanguageFromCookies() {
