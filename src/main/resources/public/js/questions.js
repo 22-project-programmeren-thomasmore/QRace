@@ -36,18 +36,13 @@ function getFilteredQuestions(questions, groupParameter) {
   const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
   const language = getLanguageFromCookies();
 
-  console.log("Before filtering: ", questions);
-  console.log("Group Parameter: ", groupParameter);
-  console.log("Language: ", language);
-  console.log("Track Progress: ", trackProgress);
-
   const filteredQuestions = questions.filter(question =>
     question.groupParameter === groupParameter &&
     question.language === language &&
     !question.archived &&
-    (!(trackProgress.groups[groupParameter]?.answeredQuestions?.[question.id]) && trackProgress.groups[groupParameter]?.attempts < MAX_ATTEMPTS)
-  );
-  console.log("After filtering: ", filteredQuestions);
+    (!trackProgress.groups[groupParameter] ||
+      (!trackProgress.groups[groupParameter]?.answeredQuestions?.[question.id] &&
+       trackProgress.groups[groupParameter]?.attempts < MAX_ATTEMPTS)));
 
   return filteredQuestions;
 }
@@ -96,7 +91,7 @@ function handleAnswerClick(selectedAnswer, question) {
     trackProgress.groups[question.groupParameter].attempts++; 
     trackProgress.groups[question.groupParameter].answeredQuestions[question.id].correct = false; 
     trackProgress.score += trackProgress.groups[question.groupParameter].attempts >= 2 ? SECOND_ATTEMPT_SCORE_INCORRECT : FIRST_ATTEMPT_SCORE_INCORRECT;
-  }
+    }
 
   localStorage.setItem(trackProgressKey, JSON.stringify(trackProgress));
 
@@ -126,10 +121,6 @@ function updateTrackProgress(question) {
     };
   }
   localStorage.setItem(trackProgressKey, JSON.stringify(trackProgress));
-
-  // if (trackProgress.groups[question.groupParameter.group].attempts < MAX_ATTEMPTS) {
-  //   selectRandomQuestion(question.groupParameter);
-  // }
 }
 
 function getLanguageFromCookies() {
