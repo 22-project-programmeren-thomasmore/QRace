@@ -12,23 +12,23 @@ public class HighScores {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HIGHSCORE_SEQ")
     @SequenceGenerator(name = "HIGHSCORE_SEQ", sequenceName = "HIGHSCORE_SEQ", allocationSize = 1)
-    private Integer id;
+    private Long id;
     @NotNull
     @Column(name = "user_name")
     private String userName;
     @NotNull
-    private Integer score;
+    private Long score;
     @NotNull
     @Column(name = "highscore_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date highscoreDate;
 
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -40,11 +40,11 @@ public class HighScores {
         this.userName = userName;
     }
 
-    public Integer getScore() {
+    public Long getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Long score) {
         this.score = score;
     }
 
