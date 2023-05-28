@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl-BE">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!--meta tags -->
@@ -13,6 +13,8 @@
     <!-- javascript -->
     <script src="/js/translator.js"></script>
     <script src="/js/translations.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <!-- title -->
     <title>Highscores</title>
 </head>
@@ -36,108 +38,117 @@
         </ul>
     </div>
 </nav>
-<form id="question-form">
-    <input type="text" id="User-name" placeholder="User Name" minlength="3" required>
-    <input type="text" id="highscore-points" placeholder="Highscore Points" required>
-    <input type="text" id="highscore-date" placeholder="Highscore Date" minlength="10" maxlength="10" required>
-    <!-- Put the current date of today in the highscore-date text box -->
-    <!-- padStart is to add the 0 when the day / month is below 10 -->
-    <script>
-        var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1).toString().padStart(2, '0')+'-'+today.getDate().toString().padStart(2, '0');
-        document.getElementById("highscore-date").value = date;
-    </script>
-    <button type="submit">Add Highscore</button>
-</form>
-<div id="feedback"></div>
-<form id="edit-form" style="display: none;">
-    <input type="text" id="edit-highscore-name" placeholder="Highscore Name" required>
-    <input type="text" id="edit-highscore-points" placeholder="Highscore Points" required>
-    <input type="text" id="edit-highscore-date" placeholder="Highscore Date" required>
 
-    <button type="submit">Update Highscore</button>
+
+<form th:action="@{/highscore}" th:object="${highscore}" method="post">
+    <label for="userName">User Name:</label><br>
+    <input type="text" id="userName" th:field="*{userName}" name="userName" required><br>
+
+    <label for="score">Score:</label><br>
+    <input type="number" id="score" th:field="*{score}" name="score" required><br>
+
+    <label for="highscoreDate">Highscore Date:</label><br>
+    <input type="date" id="highscoreDate" th:field="*{highscoreDate}" name="highscoreDate" required><br>
+
+    <input type="submit" value="Submit">
 </form>
+
 <select id="sort-select">
-    <option value="">Sort by...</option>
+    <option value="">Default (Date)</option>
     <option value="Highscore">Highscore</option>
     <option value="Username">Username</option>
 </select>
 
-<table id="highscores">
-    <thead>
+<table>
     <tr>
-        <th>User name</th>
-        <th>Points</th>
-        <th>Date</th>
+        <th>User Name</th>
+        <th>Score</th>
+        <th>Highscore Date</th>
+        <th>Actions</th>
     </tr>
-    </thead>
-    <tbody>
-    <!-- Rows will be added here by the script -->
-    </tbody>
+    <tr th:each="score : ${highscores}">
+        <td>
+            <span class="editable" data-field="userName" th:text="${score.userName}"></span>
+            <input type="text" class="form-control" style="display: none;">
+        </td>
+        <td>
+            <span class="editable" data-field="score" data-id="${score.id}" th:text="${score.score}"></span>
+            <input type="number" class="form-control" style="display: none;">
+        </td>
+        <td>
+            <span class="editable" data-field="highscoreDate" data-id="${score.id}"
+                  th:text="${#dates.format(score.highscoreDate, 'yyyy-MM-dd')}"></span>
+            <input type="date" class="form-control" style="display: none;">
+        </td>
+
+        <td>
+            <button class="btn btn-primary edit-button">Edit</button>
+            <button class="btn btn-success save-button" style="display: none;">Save</button>
+            <button class="btn btn-danger cancel-button" style="display: none;">Cancel</button>
+        </td>
+    </tr>
 </table>
-
-<script>
-    function populateTable(highscores) {
-        var tbody = document.getElementById('highscores').getElementsByTagName('tbody')[0];
-        highscores.forEach(function (highscore) {
-            var row = createHighscoreRow(highscore);
-            tbody.appendChild(row);
-        });
-    }
-
-
-    function createHighscoreRow(highscore) {
-        // Create the row and cells for the highscores properties
-        var row = document.createElement('tr');
-        ['username', 'highscorePoints', 'highscoreDate'].forEach(function (property) {
-            var cell = document.createElement('td');
-            cell.textContent = highscore[property];
-            row.appendChild(cell);
+<script th:inline="javascript">
+    $(document).ready(function () {
+        console.log("JavaScript code executed");
+        $(".edit-button").click(function () {
+            var row = $(this).closest("tr");
+            row.find(".editable").hide();
+            row.find("input").show();
+            row.find(".edit-button").hide();
+            row.find(".save-button, .cancel-button").show();
         });
 
-        // Create the "Edit" button and add event listener
-        var editCell = document.createElement('td');
-        var editButton = document.createElement('button');
-        editButton.textContent = 'Edit';
-        editButton.addEventListener('click', function () {
-
-            // Populate the edit form with the data of the question
-            document.getElementById('edit-highscore-name').value = highscore.name;
-            document.getElementById('edit-highscore-points').value = highscore.points;
-            document.getElementById('edit-highscore-date').value = highscore.date;
-
-            // Show the edit form
-            document.getElementById('edit-form').style.display = 'block';
+        $(".cancel-button").click(function () {
+            var row = $(this).closest("tr");
+            row.find("input").hide();
+            row.find(".editable").show();
+            row.find(".edit-button").show();
+            row.find(".save-button, .cancel-button").hide();
         });
-        editCell.appendChild(editButton);
-        row.appendChild(editCell);
 
-        return row;
-    }
+        $(".save-button").click(function () {
+            var row = $(this).closest("tr");
+            var id = row.find(".editable").data("id");
+            var userName = row.find("input[data-field='userName']").val();
+            var score = row.find("input[data-field='score']").val();
+            var highscoreDate = row.find("input[data-field='highscoreDate']").val();
+            console.log(userName, score, highscoreDate);
 
-    function fetchHighscoresAndPopulateTable(sortBy = '') {
-        fetch('/api/highscores?sortBy=' + sortBy)
-            .then(function (response) {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Failed to fetch highscores');
+            var updatedData = {
+                id: id, // Make sure this is the actual ID value, not "${score.id}"
+                userName: userName,
+                score: score,
+                highscoreDate: highscoreDate
+            };
+
+            $.ajax({
+                url: "/updateHighscore",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(updatedData),
+                success: function () {
+                    // Update the row with the new values
+                    row.find(".editable[data-field='userName']").text(userName);
+                    row.find(".editable[data-field='score']").text(score);
+                    row.find(".editable[data-field='highscoreDate']").text(highscoreDate);
+
+
+                    // Show the editable fields and hide the input fields and buttons
+                    row.find("input").hide();
+                    row.find(".editable").show();
+                    row.find(".edit-button").show();
+                    row.find(".save-button, .cancel-button").hide();
+                },
+                error: function () {
+
+                    console.log(userName, score, highscoreDate);
+                    console.log($.ajax)
+                    alert("Failed to update the highscore.");
                 }
-            })
-            .then(function (highscores) {
-                clearTable();
-                populateTable(highscores);
-            })
-            .catch(function (error) {
-                console.error('Error:', error);
             });
-    }
-    document.getElementById('sort-select').addEventListener('change', function () {
-        var sortBy = this.value;
-        fetchHighscoresAndPopulateTable(sortBy);
+        });
     });
-    // Initial fetch and populate table
-    fetchHighscoresAndPopulateTable();
 </script>
 
 
