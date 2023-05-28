@@ -6,8 +6,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.Random;
+import org.apache.commons.lang3.time.StopWatch;
 
 @Entity // Add this annotation
 @AllArgsConstructor
@@ -63,5 +62,16 @@ public class Race {
         this.secondPlayer = secondPlayer;
         this.thirdPlayer = thirdPlayer;
         this.fourthPlayer = fourthPlayer;
+    }
+
+    public void startStopWatch() {
+        StopWatch watch = new StopWatch();
+        watch.start();
+    }
+
+    public void stopStopWatch() {
+        StopWatch watch = new StopWatch();
+        watch.stop();
+        System.out.println(watch.getTime());
     }
 }

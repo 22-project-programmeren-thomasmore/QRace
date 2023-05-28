@@ -2,28 +2,18 @@ package be.thomasmore.qrace.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 
 @Entity
-@AllArgsConstructor
-@Data
-@Builder
 public class Player {
     @Id
     private String playerID;
     private String name;
-    @OneToOne
-    private Mascot chosenMascot;
     private int score;
+    private Mascot chosenMascot;
     private int currentCheckpoint;
 
 
-    public Player() {
-
-    }
+    public Player() {}
 
     public Player(String playerID, String name, Mascot chosenMascot) {
         this.playerID = playerID;
@@ -32,8 +22,6 @@ public class Player {
         this.score = 0;
         this.currentCheckpoint = 0;
     }
-
-
 
     public int getCurrentCheckpoint() {
         return currentCheckpoint;
