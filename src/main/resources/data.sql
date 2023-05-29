@@ -170,7 +170,7 @@ VALUES
 -- -- Group 3: Building Sets
     ('Which building set brand has a theme park in Denmark?', 'LEGO', 'K''NEX', 'Mega Bloks', 'Playmobil', 'LEGO', 'Group 3', 'en'),
     ('Which building set is based on the movies and characters from Star Wars?', 'LEGO Star Wars', 'Mega Bloks Halo', 'K''NEX Mario Kart', 'Playmobil City Life', 'LEGO Star Wars', 'Group 3', 'en'),
-    ('Which building set brand is known for its plastic building bricks with studs?', 'LEGO', 'K''NEX', 'Mega Bloks', 'Lincoln Logs', 'LEGO', 'Group 3', 'en'),
+    ('Which building set brand is known for its plastic building bricks with studs?', 'LEGO', 'K''NEX', 'Mega Bloks', 'Lincoln Logs', 'LEGO', 'Group 3', 'en');
     -- ('Which building set brand offers a variety of sets with themes such as castles, pirates, and space?', 'Playmobil', 'LEGO Technic', 'Mega Bloks First Builders', 'K''NEX Super Mario', 'Playmobil', 'Group 3', 'en'),
     -- ('Which building set brand is known for its magnetic building bricks?', 'Geomag', 'LEGO Classic', 'Mega Bloks Barbie', 'K''NEX Thrill Rides', 'Geomag', 'Group 3', 'en'),
     -- ('Which building set is designed to be connected to an interactive app?', 'LEGO Hidden Side', 'Mega Bloks Power Rangers', 'K''NEX Mario Kart', 'Playmobil City Action', 'LEGO Hidden Side', 'Group 3', 'en'),
