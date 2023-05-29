@@ -18,8 +18,9 @@ document.addEventListener("exportData", (event) => {
 if (groupParameter === endRace) {
   window.location.href = '/highscore';
   return;
-}
+}else{
   selectRandomQuestion(groupParameter);
+}
 });
 
 function selectRandomQuestion(groupParameter) {
@@ -136,18 +137,20 @@ function giveNewChance(question) {
     selectRandomQuestion(question.groupParameter);
   }
 }
+
 function getLanguageFromCookies() {
-  function getCookieValue(cookieName) {
-    var cookies = document.cookie.split(";"); // Get all cookies
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-      if (cookie.startsWith(cookieName + "=")) {
-        return cookie.substring(cookieName.length + 1); // Extract the value
-      }
+  let name = "language=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
     }
-    return null; // Cookie not found
+    if (c.indexOf(name) == 0) {      
+      return c.substring(name.length, c.length);
+    }
   }
-  
-  var languageValue = getCookieValue("language");
-  return languageValue;
+  console.error("No language cookie found! cookies: ",ca);
+  return "";
 }
