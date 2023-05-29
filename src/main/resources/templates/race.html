@@ -20,9 +20,14 @@
       <div class="flex-container-game-right">
         <h1 id="timer">⏱ 00:00</h1>
         <script src="/js/timer.js"></script>
-        <!-- <div class="allScans">Scan 1 --:--</div>
-          <div class="allScans">Scan 2 --:--</div>
-          <div class="allScans">Scan 3 --:--</div> -->
+        <h1>Race Stopwatch</h1>
+        <script src="/js/stopwatch.js"></script>
+        <h2 id="stopwatch">00:00</h2>
+        <button onclick="startStopwatch()">Start</button>
+        <button onclick="stopStopwatch()">Stop</button>
+        <button onclick="resetStopwatch()">Reset</button>
+        <button onclick="recordTime()">Record Time</button>
+        <ul id="timeList"></ul>
       </div>
 
       <!-- Questions -->
@@ -46,6 +51,7 @@
           </div>
         </div>
       </div>
+
       <!-- scripts -->
       <script src="/js/qrScanner.js" type="module"></script>
       <script src="/js/questions.js" type="module"></script>
