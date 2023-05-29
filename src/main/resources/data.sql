@@ -4,6 +4,8 @@ CREATE TABLE if not exists HIGH_SCORES (
     score INT NOT NULL,
     highscore_date DATE NOT NULL);
 CREATE SEQUENCE IF NOT EXISTS HIGHSCORE_SEQ;
+-- use line below to resset the highscore seq to 1 again
+-- ALTER SEQUENCE HIGHSCORE_SEQ RESTART WITH 1;
 
 CREATE TABLE if not exists GAMES (
     raceId  int,
