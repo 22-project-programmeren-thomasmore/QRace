@@ -1,3 +1,5 @@
+const endRace = 'stop';
+
 const MAX_ATTEMPTS = 5;
 const FIRST_ATTEMPT_SCORE_CORRECT = 10;
 const FIRST_ATTEMPT_SCORE_INCORRECT = -5;
@@ -13,6 +15,11 @@ if (!localStorage.getItem(trackProgressKey)) {
 
 document.addEventListener("exportData", (event) => {
   const groupParameter = event.detail;
+if (groupParameter == endRace) {
+  e.preventDefault();
+  window.location.href = '/scoreboard';
+  return;
+}
   selectRandomQuestion(groupParameter);
 });
 
@@ -24,6 +31,7 @@ function selectRandomQuestion(groupParameter) {
       const randomQuestion = getRandomQuestion(filteredQuestions);
       if (!randomQuestion) {
         console.error("No questions available for the selected group and language");
+        alert(" je hebt alle vragen voor deze groep beantwoord. \n Zoek een andere qr code aub. \n \n You have answered all questions for this group. \n Please find another qr code. \n \n Tu as répondu à toutes les questions de ce groupe. \n Veuillez trouver un autre code QR.");
         return;
       }
       displayQuestion(randomQuestion);
