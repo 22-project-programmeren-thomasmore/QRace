@@ -37,10 +37,10 @@
         }
         @PostMapping("/updateHighscore")
         public ResponseEntity<Void> updateHighscore(@RequestBody HighScores updatedHighscore) {
-            System.out.println("Received updatedHighscore: " + updatedHighscore);
-            System.out.println("Updated userName: " + updatedHighscore.getUserName());
-            System.out.println("Updated score: " + updatedHighscore.getScore());
-            System.out.println("Updated highscoreDate: " + updatedHighscore.getHighscoreDate());
+//            System.out.println("Updated ID: " + updatedHighscore.getId());
+//            System.out.println("Updated userName: " + updatedHighscore.getUserName());
+//            System.out.println("Updated score: " + updatedHighscore.getScore());
+//            System.out.println("Updated highscoreDate: " + updatedHighscore.getHighscoreDate());
             HighScores existingHighscore = highScoreRepository.findById(updatedHighscore.getId()).orElse(null);
             if (existingHighscore != null) {
                 existingHighscore.setUserName(updatedHighscore.getUserName());
