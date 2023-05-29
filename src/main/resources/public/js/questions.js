@@ -1,6 +1,6 @@
 const endRace = 'stop';
 
-const MAX_ATTEMPTS = 5;
+const MAX_ATTEMPTS = 2;
 const FIRST_ATTEMPT_SCORE_CORRECT = 10;
 const FIRST_ATTEMPT_SCORE_INCORRECT = -5;
 const SECOND_ATTEMPT_SCORE_CORRECT = 5;
@@ -17,7 +17,7 @@ document.addEventListener("exportData", (event) => {
   const groupParameter = event.detail;
 if (groupParameter == endRace) {
   e.preventDefault();
-  window.location.href = '/scoreboard';
+  window.location.href = '/highscore';
   return;
 }
   selectRandomQuestion(groupParameter);
