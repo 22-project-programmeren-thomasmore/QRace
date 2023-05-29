@@ -16,7 +16,7 @@ CREATE TABLE if not exists GAMES (
 -- VALUES ('test', '1', '2023-05-27');
 
 
-CREATE TABLE if not exists QUESTIONS (
+CREATE TABLE if not exists questions (
     ID  int AUTO_INCREMENT PRIMARY KEY NOT NULL,
     QUESTION_TEXT VARCHAR(100) NOT NULL UNIQUE,
     ANSWER1 VARCHAR(100) NOT NULL,
@@ -28,7 +28,8 @@ CREATE TABLE if not exists QUESTIONS (
     LANGUAGE VARCHAR(2) NOT NULL,
     ARCHIVED BOOLEAN DEFAULT FALSE);
 
-INSERT INTO QUESTIONS (QUESTION_TEXT, ANSWER1, ANSWER2, ANSWER3, ANSWER4, CORRECT_ANSWER, GROUP_PARAMETER, LANGUAGE)
+ALTER TABLE questions ALTER COLUMN archived SET DEFAULT FALSE;
+INSERT INTO questions (QUESTION_TEXT, ANSWER1, ANSWER2, ANSWER3, ANSWER4, CORRECT_ANSWER, GROUP_PARAMETER, LANGUAGE)
 VALUES
 -- nl
 -- Group 1: Auto
@@ -36,7 +37,7 @@ VALUES
     ('Welke autofabrikant produceerde de eerste massaal geproduceerde auto?', 'Ford', 'Mercedes-Benz', 'Volkswagen', 'Toyota', 'Ford', 'Group 1', 'nl'),
     ('Welk automerk staat bekend om zijn sportwagens zoals de 911?', 'Porsche', 'Ferrari', 'Lamborghini', 'Bugatti', 'Porsche', 'Group 1', 'nl'),
     ('Welke auto wordt vaak geassocieerd met James Bond?', 'Aston Martin', 'BMW', 'Lexus', 'Jaguar', 'Aston Martin', 'Group 1', 'nl'),
-    ('Welke auto staat bekend als een icoon van de Amerikaanse auto-industrie?', 'Chevrolet Corvette', 'Ford Mustang', 'Dodge Challenger', 'Cadillac Escalade', 'Ford Mustang', 'AGroup 1uto', 'nl'),
+    ('Welke auto staat bekend als een icoon van de Amerikaanse auto-industrie?', 'Chevrolet Corvette', 'Ford Mustang', 'Dodge Challenger', 'Cadillac Escalade', 'Ford Mustang', 'Group 1', 'nl'),
     ('In welk jaar werd de eerste auto met verbrandingsmotor gebouwd?', '1886', '1901', '1920', '1955', '1886', 'Group 1', 'nl'),
     ('Welke auto wordt vaak geassocieerd met de hippiecultuur in de jaren ''60?', 'Volkswagen Kever', 'Ford Mustang', 'Chevrolet Camaro', 'Mini Cooper', 'Volkswagen Kever', 'Group 1', 'nl'),
     ('Welke autofabrikant staat bekend om zijn luxe en prestigieuze voertuigen?', 'Mercedes-Benz', 'Toyota', 'Honda', 'Hyundai', 'Mercedes-Benz', 'Group 1', 'nl'),
