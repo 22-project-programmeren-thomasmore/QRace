@@ -22,3 +22,5 @@ Commits worden samengevoegd met de master branch na goedkeuring van de pull requ
 ## Rule 4
 
 VRAAG? Stel ze via Discord!
+
+![end race](qrCodes/end%20race.png) ![2](qrCodes/groep%202.png) ![1](qrCodes/group%201.png) ![3](qrCodes/group%203.png) ![4](qrCodes/group%204.png) ![5](qrCodes/group%205.png)
