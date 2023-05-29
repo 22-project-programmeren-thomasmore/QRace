@@ -1,49 +1,60 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-    const translations = window.translations;
-    let currentLanguage = 'nl';
 
-    // Check if a language has been saved in the cookies
-    const savedLanguage = document.cookie.replace(/(?:(?:^|.*;\s*)language\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-    if (savedLanguage) {
-        currentLanguage = savedLanguage;
+document.addEventListener('DOMContentLoaded', (event) => {
+
+    const defaultLanguage = 'nl';
+    const availableLanguages = ['nl', 'fr', 'en'];
+    let currentLanguage = getCookie("language") || defaultLanguage;
+
+    if (!currentLanguage || !availableLanguages.includes(currentLanguage)) {
+        currentLanguage = defaultLanguage;
+        setCookie('language', currentLanguage);
+    }
+    else {
+        setCookie('language', currentLanguage);
     }
 
-    // Get the current page's name
-    let pageName = window.location.pathname.split('/').pop().replace('.html', '');
+    function getCookie(cname) {
+        const name = cname + "=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+            let c = ca[i].trim();
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
 
-    // Als pageName niet overeenkomt met een van de keys in translations, stellen we het in op 'start'
-    if (!translations.hasOwnProperty(pageName)) {
+    function setCookie(cname, cvalue) {
+        document.cookie = cname + "=" + cvalue + ";";
+    }
+
+    const translations = window.translations;
+    let pageName = window.location.pathname.split('/').pop().replace('.html', '') || 'start';
+
+    if (!translations[pageName]) {
         pageName = 'start';
     }
 
     function updateText() {
-        console.log('current Language: ', currentLanguage); // Log the current language
+        const pageTexts = translations[pageName][currentLanguage] || {};
 
-        // Update the text on the page
-        for (const key in translations[pageName][currentLanguage]) {
+        for (const [key, value] of Object.entries(pageTexts)) {
             const element = document.getElementById(key);
             if (element) {
-                element.innerText = translations[pageName][currentLanguage][key];
+                element.innerText = value;
             }
         }
     }
 
-    // Fill in the initial text
     updateText();
 
     document.getElementById('changeLanguage').addEventListener('click', function () {
-        // Cycle through the languages
-        if (currentLanguage === 'nl') {
-            currentLanguage = 'fr';
-        } else if (currentLanguage === 'fr') {
-            currentLanguage = 'en';
-        } else if (currentLanguage === 'en') {
-            currentLanguage = 'nl';
-        }
+        const currentLanguageIndex = availableLanguages.indexOf(currentLanguage);
+        currentLanguage = availableLanguages[(currentLanguageIndex + 1) % availableLanguages.length];
 
-        // Save the selected language in a cookie
-        document.cookie = "language=" + currentLanguage;
-
+        setCookie('language', currentLanguage);
         updateText();
     });
 });

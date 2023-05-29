@@ -22,7 +22,6 @@ const scanner = new QrScanner(
     highlightScanRegion: true,
     highlightCodeOutline: true,
     showCanvas: true,
-    scanRegion: true,
     preferredFacingMode: "environment",
     scanRegion: { top: "25%", left: "25%", width: "50%", height: "50%" },
   }
@@ -32,8 +31,12 @@ const scanner = new QrScanner(
 openScannerBtn.addEventListener("click", () => {
   // start the scanner
   scanner.start();
+  // display the close scanner button
+  closeScannerBtn.style.display = "inline";
   // display the scanner container
   scannerContainer.style.display = "block";
+  // hide the button to open the scanner
+  openScannerBtn.style.display = "none";
 });
 
 // add event listener for the close scanner button
@@ -42,6 +45,8 @@ closeScannerBtn.addEventListener("click", () => {
   scanner.stop();
   // hide the scanner container
   scannerContainer.style.display = "none";
+  // show the button to open the scanner
+  openScannerBtn.style.display = "inline";
 });
 
 // for debugging
@@ -54,19 +59,18 @@ function setResult(label, result) {
   scannerContainer.style.display = "none";
 
   // display the result in console
-  console.log('scan result: ',result.data);
+  // console.log('scan result: ',result.data);
   exportResult(result.data);
 
 }
 
 function exportResult(data) {
   // Create a custom event to export the data to questions.js
-  const exportDataEvent = new CustomEvent("exportData", { detail: { groupParameter: data } });
+  const exportDataEvent = new CustomEvent("exportData", { detail: data });
 
   // Dispatch the custom event
   document.dispatchEvent(exportDataEvent);
 }
-
 
 function promptForNewQRCode() {
   // Hide the answer options container

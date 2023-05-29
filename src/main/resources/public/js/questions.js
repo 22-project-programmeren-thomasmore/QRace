@@ -1,104 +1,156 @@
-// Get a random question from the available non-archived questions in the specified group and language
-function getRandomQuestion(group, questions) {
-  // Get the language from the cookies
-  const language = document.cookie.replace(/(?:(?:^|.*;\s*)language\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-  // console.log('language: ', language);
-  // Filter the questions based on the group, archived status, and language
-  const filteredQuestions = questions.filter(
-    (question) =>
-      question.groupParameter === group &&
-      !question.archived &&
-      question.language === language
-  );
+const endRace = 'stop';
 
-  // Select a random question from the filtered questions
-  const randomIndex = Math.floor(Math.random() * filteredQuestions.length);
-  return filteredQuestions[randomIndex];
+const MAX_ATTEMPTS = 2;
+const FIRST_ATTEMPT_SCORE_CORRECT = 10;
+const FIRST_ATTEMPT_SCORE_INCORRECT = -5;
+const SECOND_ATTEMPT_SCORE_CORRECT = 5;
+const SECOND_ATTEMPT_SCORE_INCORRECT = -10;
+
+const trackProgressKey = 'track progress';
+
+// Initialize local storage
+if (!localStorage.getItem(trackProgressKey)) {
+  localStorage.setItem(trackProgressKey, JSON.stringify({ score: 0, groups: {} }));
 }
 
+document.addEventListener("exportData", (event) => {
+  const groupParameter = event.detail;
+if (groupParameter === endRace) {
+  window.location.href = '/highscore';
+  return;
+}else{
+  selectRandomQuestion(groupParameter);
+}
+});
 
-// Function to handle question selection and UI update
 function selectRandomQuestion(groupParameter) {
-  // Fetch all questions from the server
   fetch('/api/questions')
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("Failed to fetch questions");
+    .then(response => response.ok ? response.json() : Promise.reject("Failed to fetch questions"))
+    .then(questions => getFilteredQuestions(questions, groupParameter))
+    .then(filteredQuestions => {
+      const randomQuestion = getRandomQuestion(filteredQuestions);
+      if (!randomQuestion) {
+        console.error("No questions available for the selected group and language");
+        alert(" je hebt alle vragen voor deze groep beantwoord. \n Zoek een andere qr code aub. \n \n You have answered all questions for this group. \n Please find another qr code. \n \n Tu as répondu à toutes les questions de ce groupe. \n Veuillez trouver un autre code QR.");
+        openScannerBtn.style.display = 'block';
+        return;
       }
+      displayQuestion(randomQuestion);
+      updateTrackProgress(randomQuestion);
     })
-    .then((questions) => {
-      // Get a random question from the available non-archived questions in the specified group and language
-      const randomQuestion = getRandomQuestion(groupParameter, questions);
-
-      // Display the question on the page
-      const questionTextElement = document.getElementById('questionText');
-      questionTextElement.textContent = randomQuestion.questionText;
-
-      // Display the answers on the page
-      const answerContainer = document.getElementById('answerContainer');
-      answerContainer.innerHTML = ''; // Clear previous answers
-
-      // Loop through the answers and add them to the answer container
-      const answerKeys = ['answer1', 'answer2', 'answer3', 'answer4'];
-      for (const key of answerKeys) {
-        const answer = randomQuestion[key];
-        if (answer) {
-          const answerCard = document.createElement('div');
-          answerCard.id = key;
-          answerCard.className = 'answer-card';
-          answerCard.textContent = answer;
-          answerCard.dataset.correctAnswer = randomQuestion.correctAnswer;
-          answerCard.addEventListener('click', () => {
-            handleAnswerClick(key);
-          });
-          answerContainer.appendChild(answerCard);
-        }
-      }
-
-      // Show the question and answers container
-      const questionContainer = document.getElementById('questionContainer');
-      questionContainer.style.display = 'block';
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      // Handle error scenario
-    });
+    .catch(console.error);
 }
 
-// Handle the answer click event
-function handleAnswerClick(selectedAnswer) {
-  const selectedCard = document.getElementById(selectedAnswer);
-  const answerCards = document.getElementsByClassName('answer-card');
-  const correctAnswer = selectedCard.dataset.correctAnswer;
+function getFilteredQuestions(questions, groupParameter) {
+  const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
+  const language = getLanguageFromCookies();
+  const filteredQuestions = questions.filter(question =>
+    question.groupParameter === groupParameter &&
+    question.language === language &&
+    !question.archived &&
+    (!trackProgress.groups[groupParameter] ||
+      (!trackProgress.groups[groupParameter]?.answeredQuestions?.[question.id] &&
+       trackProgress.groups[groupParameter]?.attempts < MAX_ATTEMPTS)));
+  return filteredQuestions;
+}
 
-  // Add CSS classes to indicate selected answer and correctness
-  selectedCard.classList.add('selected');
-  if (selectedCard.textContent === correctAnswer) {
+function getRandomQuestion(questions) {
+  return questions[Math.floor(Math.random() * questions.length)];
+}
+
+function displayQuestion(question) {
+  const questionContainer = document.getElementById('questionContainer');
+  const questionTextElement = document.getElementById('questionText');
+  const answerContainer = document.getElementById('answerContainer');
+
+  questionTextElement.textContent = question.questionText;
+
+  answerContainer.innerHTML = '';
+  const answerKeys = ['answer1', 'answer2', 'answer3', 'answer4'];
+  for (const key of answerKeys) {
+    if (!question[key]) continue;
+
+    const answerCard = document.createElement('div');
+    answerCard.id = key;
+    answerCard.className = 'answer-card';
+    answerCard.textContent = question[key];
+    answerCard.addEventListener('click', () => handleAnswerClick(key, question));
+    answerContainer.appendChild(answerCard);
+  }
+  openScannerBtn.style.display = 'none';
+  questionContainer.style.display = 'block';
+}
+
+function handleAnswerClick(selectedAnswer, question) {
+  const selectedCard = document.getElementById(selectedAnswer);
+  const answerCards = Array.from(document.getElementsByClassName('answer-card'));
+
+  const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
+  const isCorrectAnswer = selectedCard.textContent === question.correctAnswer;
+  if (isCorrectAnswer) {
     selectedCard.classList.add('correct');
-    console.log("Correct answer selected"); // Log to console
+    trackProgress.groups[question.groupParameter].attempts += 2; 
+    trackProgress.groups[question.groupParameter].answeredQuestions[question.id].correct = true; 
+    trackProgress.score += trackProgress.groups[question.groupParameter].attempts >= 2 ? SECOND_ATTEMPT_SCORE_CORRECT : FIRST_ATTEMPT_SCORE_CORRECT;
   } else {
     selectedCard.classList.add('incorrect');
-    console.log("Incorrect answer selected"); // Log to console
+    trackProgress.groups[question.groupParameter].attempts++; 
+    trackProgress.groups[question.groupParameter].answeredQuestions[question.id].correct = false; 
+    trackProgress.score += trackProgress.groups[question.groupParameter].attempts >= 2 ? SECOND_ATTEMPT_SCORE_INCORRECT : FIRST_ATTEMPT_SCORE_INCORRECT;
   }
+  localStorage.setItem(trackProgressKey, JSON.stringify(trackProgress));
 
-  // Hide all answer cards
-  for (const card of answerCards) {
-    card.style.display = 'none';
-  }
-
-  // Hide the question container
-  const questionContainer = document.getElementById('questionContainer');
-  questionContainer.style.display = 'none';
-
+  answerCards.forEach(card => card.style.display = 'none');
+  document.getElementById('questionContainer').style.display = 'none';
+  document.getElementById('openScannerBtn').style.display = 'block';
+  
+  giveNewChance(question);
 }
 
-// Event listener for the custom "exportData" event
-document.addEventListener("exportData", (event) => {
-  const groupParameter = event.detail.groupParameter; // Adjust the property name accordingly
-  // console.log('groupParameter: ', groupParameter);
+function updateTrackProgress(question) {
+  if (!question || question.id === undefined || !question.groupParameter) {
+    console.error("Invalid object:", question);
+    return;
+  }
+    const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
 
-  // Call the function to select a random question and update the UI
-  selectRandomQuestion(groupParameter);
-});
+  if (!trackProgress.groups[question.groupParameter]) {
+    trackProgress.groups[question.groupParameter] = {
+      attempts: 0,
+      answeredQuestions: {}
+    };
+  }
+
+  if (!trackProgress.groups[question.groupParameter].answeredQuestions[question.id]) {
+    trackProgress.groups[question.groupParameter].answeredQuestions[question.id] = {
+      correct: null,
+    };
+  }
+  localStorage.setItem(trackProgressKey, JSON.stringify(trackProgress));
+}
+function giveNewChance(question) {
+  const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
+  console.log('attempts', trackProgress.groups[question.groupParameter]?.attempts)  
+  console.log('answer correct',trackProgress.groups[question.groupParameter]?.answeredQuestions[question.id]?.correct)
+
+  if (trackProgress.groups[question.groupParameter]?.attempts < MAX_ATTEMPTS && trackProgress.groups[question.groupParameter].answeredQuestions[question.id].correct === false) {
+    selectRandomQuestion(question.groupParameter);
+  }
+}
+
+function getLanguageFromCookies() {
+  let name = "language=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {      
+      return c.substring(name.length, c.length);
+    }
+  }
+  console.error("No language cookie found! cookies: ",ca);
+  return "";
+}
