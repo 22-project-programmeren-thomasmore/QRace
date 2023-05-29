@@ -23,4 +23,13 @@ Commits worden samengevoegd met de master branch na goedkeuring van de pull requ
 
 VRAAG? Stel ze via Discord!
 
-![end race](qrCodes/end%20race.png) ![2](qrCodes/groep%202.png) ![1](qrCodes/group%201.png) ![3](qrCodes/group%203.png) ![4](qrCodes/group%204.png) ![5](qrCodes/group%205.png)
+## Play and Scan me!
+
+<div width="100%" align="center">
+  <img width="20%" src="qrCodes/group 1.png" />
+  <img width="20%" src="qrCodes/group 2.png" />
+  <img width="20%" src="qrCodes/group 3.png" />
+  <img width="20%" src="qrCodes/group 4.png" />
+  <img width="20%" src="qrCodes/group 5.png" />
+  <img width="20%" src="qrCodes/end race.png" />
+<div>
