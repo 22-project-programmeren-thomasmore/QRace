@@ -42,5 +42,8 @@ public class Location {
         locations.add(location9);
         locations.add(location10);
 
+        for (Location location : locations) {
+            System.out.println(location.getName());
+        }
     }
 }
