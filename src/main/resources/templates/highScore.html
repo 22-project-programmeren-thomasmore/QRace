@@ -54,12 +54,13 @@
 </form>
 
 <select id="sort-select">
-    <option value="">Default (Date)</option>
-    <option value="Highscore">Highscore</option>
-    <option value="Username">Username</option>
+    <option value="Id">Default (Id)</option>
+    <option value="Username">Username (a-z)</option>
+    <option value="Highscore">Highscore (Descending)</option>
+    <option value="Date">Date</option>
 </select>
 
-<table>
+<table id="highscore-table">
     <tr>
         <th>Id</th>
         <th>User Name</th>
@@ -70,7 +71,7 @@
     <tr th:each="score : ${highscores}">
         <td>
             <span class="form-control-id" data-field="id" th:text="${score.id}"></span>
-<!--            <input type="text" class="form-control-id" style="display: none;">-->
+            <!--            <input type="text" class="form-control-id" style="display: none;">-->
         </td>
         <td>
             <span class="editable" data-field="userName" th:text="${score.userName}"></span>
@@ -91,7 +92,9 @@
             <button class="btn btn-primary edit-button">Edit</button>
             <button class="btn btn-success save-button" style="display: none;">Save</button>
             <button class="btn btn-danger cancel-button" style="display: none;">Cancel</button>
-            <button class="btn btn-danger delete-button" th:data-id="${score.id}" onclick="deleteHighscore(this)">Delete</button>
+            <button class="btn btn-danger delete-button" th:data-id="${score.id}" onclick="deleteHighscore(this)">
+                Delete
+            </button>
 
 
         </td>
@@ -99,6 +102,7 @@
 </table>
 <script th:inline="javascript">
     $(document).ready(function () {
+
         $(".edit-button").click(function () {
             var row = $(this).closest("tr");
             row.find(".editable").hide();
@@ -128,8 +132,6 @@
 
             var dateInput = row.find('.form-control-highscore'); // Find the input field for highscoreDate
             var highscoreDate = dateInput.val(); // Get the value of the input field
-
-
 
             var updatedData = {
                 id: id, // will stay the same
@@ -162,27 +164,81 @@
             });
         });
 
-    });
-    function deleteHighscore(button) {
-        var id = $(button).data("id");
-        var row = $(button).closest("tr");
+        $("#sort-select").change(function () {
+            var sortValue = $(this).val();
+            console.log(sortValue)
 
-        $.ajax({
-            url: "/highscores/" + id,
-            type: "DELETE",
-            success: function () {
-                // Remove the row from the table
-                row.remove();
-                alert("Highscore deleted successfully.");
-            },
-            error: function () {
-                alert("Failed to delete the highscore.");
+            if (sortValue === "Username") {
+                sortTableByUserName();
+            } else if (sortValue === "Highscore") {
+                sortTableByHighscore();
+            } else if (sortValue === "Date") {
+                sortTableByDate();
+            } else {
+                resetTable();
             }
         });
-    }
+
+        function sortTableByUserName() {
+            var sortedRows = $("#highscore-table tbody tr").toArray().sort(function (a, b) {
+                var userNameA = $(a).find('.editable[data-field="userName"]').text();
+                var userNameB = $(b).find('.editable[data-field="userName"]').text();
+                return userNameA.localeCompare(userNameB);
+            });
+
+            $("#highscore-table tbody").empty().append(sortedRows);
+        }
+
+        function sortTableByHighscore() {
+            var sortedRows = $("#highscore-table tbody tr").toArray().sort(function (a, b) {
+                var scoreA = parseInt($(a).find('.editable[data-field="score"]').text());
+                var scoreB = parseInt($(b).find('.editable[data-field="score"]').text());
+                return scoreB - scoreA;
+            });
+
+            $("#highscore-table tbody").empty().append(sortedRows);
+        }
+
+        function sortTableByDate() {
+            var sortedRows = $("#highscore-table tbody tr").toArray().sort(function (a, b) {
+                var dateA = new Date($(a).find('.editable[data-field="highscoreDate"]').text());
+                var dateB = new Date($(b).find('.editable[data-field="highscoreDate"]').text());
+                return dateB - dateA;
+            });
+
+            $("#highscore-table tbody").empty().append(sortedRows);
+        }
+
+        function resetTable() {
+            var originalRows = Array.from($("#highscore-table tbody tr")).sort(function (a, b) {
+                var idA = parseInt($(a).find('.form-control-id[data-field="id"]').text());
+                var idB = parseInt($(b).find('.form-control-id[data-field="id"]').text());
+                return idA - idB;
+            });
+
+            $("#highscore-table tbody").empty().append(originalRows);
+        }
 
 
+        function deleteHighscore(button) {
+            var id = $(button).data("id");
+            var row = $(button).closest("tr");
 
+            $.ajax({
+                url: "/highscores/" + id,
+                type: "DELETE",
+                success: function () {
+                    // Remove the row from the table
+                    row.remove();
+                    alert("Highscore deleted successfully.");
+                },
+                error: function () {
+                    alert("Failed to delete the highscore.");
+                }
+            });
+        }
+
+    });
 </script>
 
 
