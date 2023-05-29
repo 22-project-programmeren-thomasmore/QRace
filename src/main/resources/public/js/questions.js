@@ -103,7 +103,7 @@ function handleAnswerClick(selectedAnswer, question) {
 
   answerCards.forEach(card => card.style.display = 'none');
   document.getElementById('questionContainer').style.display = 'none';
-  document.getElementById('openScannerBtn').style.display = 'none';
+  document.getElementById('openScannerBtn').style.display = 'block';
   
   giveNewChance(question);
 }
