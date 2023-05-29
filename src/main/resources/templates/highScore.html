@@ -76,21 +76,24 @@
             <input type="number" class="form-control" style="display: none;">
         </td>
         <td>
-            <span class="editable" data-field="highscoreDate" data-id="${score.id}"
-                  th:text="${#dates.format(score.highscoreDate, 'yyyy-MM-dd')}"></span>
+        <span class="editable" data-field="highscoreDate" data-id="${score.id}"
+              th:text="${#dates.format(score.highscoreDate, 'yyyy-MM-dd')}"></span>
             <input type="date" class="form-control" style="display: none;">
         </td>
+
 
         <td>
             <button class="btn btn-primary edit-button">Edit</button>
             <button class="btn btn-success save-button" style="display: none;">Save</button>
             <button class="btn btn-danger cancel-button" style="display: none;">Cancel</button>
+            <button class="btn btn-danger delete-button" th:data-id="${score.id}" onclick="deleteHighscore(this)">Delete</button>
+
+
         </td>
     </tr>
 </table>
 <script th:inline="javascript">
     $(document).ready(function () {
-        console.log("JavaScript code executed");
         $(".edit-button").click(function () {
             var row = $(this).closest("tr");
             row.find(".editable").hide();
@@ -113,8 +116,6 @@
             var userName = row.find("input[data-field='userName']").val();
             var score = row.find("input[data-field='score']").val();
             var highscoreDate = row.find("input[data-field='highscoreDate']").val();
-            console.log(userName, score, highscoreDate);
-
             var updatedData = {
                 id: id, // Make sure this is the actual ID value, not "${score.id}"
                 userName: userName,
@@ -141,14 +142,32 @@
                     row.find(".save-button, .cancel-button").hide();
                 },
                 error: function () {
-
-                    console.log(userName, score, highscoreDate);
-                    console.log($.ajax)
                     alert("Failed to update the highscore.");
                 }
             });
         });
+
     });
+    function deleteHighscore(button) {
+        var id = $(button).data("id");
+        var row = $(button).closest("tr");
+
+        $.ajax({
+            url: "/highscores/" + id,
+            type: "DELETE",
+            success: function () {
+                // Remove the row from the table
+                row.remove();
+                alert("Highscore deleted successfully.");
+            },
+            error: function () {
+                alert("Failed to delete the highscore.");
+            }
+        });
+    }
+
+
+
 </script>
 
 
