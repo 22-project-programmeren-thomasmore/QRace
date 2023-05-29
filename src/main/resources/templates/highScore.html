@@ -61,6 +61,7 @@
 
 <table>
     <tr>
+        <th>Id</th>
         <th>User Name</th>
         <th>Score</th>
         <th>Highscore Date</th>
@@ -68,29 +69,36 @@
     </tr>
     <tr th:each="score : ${highscores}">
         <td>
+            <span class="form-control-id" data-field="id" th:text="${score.id}"></span>
+<!--            <input type="text" class="form-control-id" style="display: none;">-->
+        </td>
+        <td>
             <span class="editable" data-field="userName" th:text="${score.userName}"></span>
-            <input type="text" class="form-control" style="display: none;">
+            <input type="text" class="form-control-user-name" style="display: none;">
         </td>
         <td>
             <span class="editable" data-field="score" data-id="${score.id}" th:text="${score.score}"></span>
-            <input type="number" class="form-control" style="display: none;">
+            <input type="number" class="form-control-score" style="display: none;">
         </td>
         <td>
-            <span class="editable" data-field="highscoreDate" data-id="${score.id}"
-                  th:text="${#dates.format(score.highscoreDate, 'yyyy-MM-dd')}"></span>
-            <input type="date" class="form-control" style="display: none;">
+        <span class="editable" data-field="highscoreDate" data-id="${score.id}"
+              th:text="${#dates.format(score.highscoreDate, 'yyyy-MM-dd')}"></span>
+            <input type="date" class="form-control-highscore" style="display: none;">
         </td>
+
 
         <td>
             <button class="btn btn-primary edit-button">Edit</button>
             <button class="btn btn-success save-button" style="display: none;">Save</button>
             <button class="btn btn-danger cancel-button" style="display: none;">Cancel</button>
+            <button class="btn btn-danger delete-button" th:data-id="${score.id}" onclick="deleteHighscore(this)">Delete</button>
+
+
         </td>
     </tr>
 </table>
 <script th:inline="javascript">
     $(document).ready(function () {
-        console.log("JavaScript code executed");
         $(".edit-button").click(function () {
             var row = $(this).closest("tr");
             row.find(".editable").hide();
@@ -109,12 +117,14 @@
 
         $(".save-button").click(function () {
             var row = $(this).closest("tr");
-            var id = row.find(".editable").data("id");
-            var userName = row.find("input[data-field='userName']").val();
-            var score = row.find("input[data-field='score']").val();
-            var highscoreDate = row.find("input[data-field='highscoreDate']").val();
-            console.log(userName, score, highscoreDate);
-
+            // get the span element with class = form-control-id
+            var spanElement = document.querySelector('.form-control-id[data-field="id"]');
+            // get the id from the span element we just found
+            var id = spanElement.innerText || spanElement.textContent;
+            var userName = document.querySelector('.form-control-user-name').value;
+            var score = document.querySelector('.form-control-score').value;
+            var highscoreDate = document.querySelector('.form-control-highscore').value;
+            console.log(document.querySelector('.form-control-id'));
             var updatedData = {
                 id: id, // Make sure this is the actual ID value, not "${score.id}"
                 userName: userName,
@@ -129,9 +139,9 @@
                 data: JSON.stringify(updatedData),
                 success: function () {
                     // Update the row with the new values
-                    row.find(".editable[data-field='userName']").text(userName);
-                    row.find(".editable[data-field='score']").text(score);
-                    row.find(".editable[data-field='highscoreDate']").text(highscoreDate);
+                    // row.find(".editable[data-field='userName']").text(userName);
+                    // row.find(".editable[data-field='score']").text(score);
+                    // row.find(".editable[data-field='highscoreDate']").text(highscoreDate);
 
 
                     // Show the editable fields and hide the input fields and buttons
@@ -141,14 +151,32 @@
                     row.find(".save-button, .cancel-button").hide();
                 },
                 error: function () {
-
-                    console.log(userName, score, highscoreDate);
-                    console.log($.ajax)
                     alert("Failed to update the highscore.");
                 }
             });
         });
+
     });
+    function deleteHighscore(button) {
+        var id = $(button).data("id");
+        var row = $(button).closest("tr");
+
+        $.ajax({
+            url: "/highscores/" + id,
+            type: "DELETE",
+            success: function () {
+                // Remove the row from the table
+                row.remove();
+                alert("Highscore deleted successfully.");
+            },
+            error: function () {
+                alert("Failed to delete the highscore.");
+            }
+        });
+    }
+
+
+
 </script>
 
 
