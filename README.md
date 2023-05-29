@@ -23,13 +23,26 @@ Commits worden samengevoegd met de master branch na goedkeuring van de pull requ
 
 VRAAG? Stel ze via Discord!
 
-## Play and Scan me!
+## Scan me!
 
-<div width="100%" align="center">
-  <img src="qrCodes/group 1.png" />
-  <img src="qrCodes/group 2.png" />
-  <img src="qrCodes/group 3.png" />
-  <img src="qrCodes/group 4.png" />
-  <img src="qrCodes/group 5.png" />
-  <img src="qrCodes/end race.png" />
+<div align="center">
+<img width="75%" align="center" src="qrCodes/QRace.png" />
+</div>
+
+## Play!
+
+<div align="center">
+  <img width="25%" align="left" src="qrCodes/group 1.png" />
+  <img width="25%" align="center" src="qrCodes/group 2.png" />
+  <img width="25%" align="right" src="qrCodes/group 3.png" />
+</div>
+
+##
+
+##
+
+<div align="center">
+  <img width="25%" align="left" src="qrCodes/group 4.png" />
+  <img width="25%" align="center" src="qrCodes/group 5.png" />
+  <img width="25%" align="right" src="qrCodes/end race.png" />
 <div>
