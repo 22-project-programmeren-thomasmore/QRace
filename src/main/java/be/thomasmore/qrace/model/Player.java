@@ -2,7 +2,6 @@ package be.thomasmore.qrace.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import be.thomasmore.qrace.model.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +16,7 @@ public class Player {
     private String name;
     private int score;
     private int currentCheckpoint;
+    private long time;
 
     public Player(int playerID, String name) {
         this.playerID = playerID;
