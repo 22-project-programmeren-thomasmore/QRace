@@ -117,20 +117,27 @@
 
         $(".save-button").click(function () {
             var row = $(this).closest("tr");
-            // get the span element with class = form-control-id
-            var spanElement = document.querySelector('.form-control-id[data-field="id"]');
-            // get the id from the span element we just found
-            var id = spanElement.innerText || spanElement.textContent;
-            var userName = document.querySelector('.form-control-user-name').value;
-            var score = document.querySelector('.form-control-score').value;
-            var highscoreDate = document.querySelector('.form-control-highscore').value;
-            console.log(document.querySelector('.form-control-id'));
+
+            var id = row.find(".form-control-id[data-field='id']").text();
+
+            var userNameInput = row.find('.form-control-user-name'); // Find the input field for userName
+            var userName = userNameInput.val(); // Get the value of the input field
+
+            var scoreInput = row.find('.form-control-score'); // Find the input field for score
+            var score = scoreInput.val(); // Get the value of the input field
+
+            var dateInput = row.find('.form-control-highscore'); // Find the input field for highscoreDate
+            var highscoreDate = dateInput.val(); // Get the value of the input field
+
+
+
             var updatedData = {
-                id: id, // Make sure this is the actual ID value, not "${score.id}"
+                id: id, // will stay the same
                 userName: userName,
                 score: score,
                 highscoreDate: highscoreDate
             };
+            console.log(updatedData);
 
             $.ajax({
                 url: "/updateHighscore",
@@ -139,10 +146,9 @@
                 data: JSON.stringify(updatedData),
                 success: function () {
                     // Update the row with the new values
-                    // row.find(".editable[data-field='userName']").text(userName);
-                    // row.find(".editable[data-field='score']").text(score);
-                    // row.find(".editable[data-field='highscoreDate']").text(highscoreDate);
-
+                    row.find(".editable[data-field='userName']").text(userName);
+                    row.find(".editable[data-field='score']").text(score);
+                    row.find(".editable[data-field='highscoreDate']").text(highscoreDate);
 
                     // Show the editable fields and hide the input fields and buttons
                     row.find("input").hide();
