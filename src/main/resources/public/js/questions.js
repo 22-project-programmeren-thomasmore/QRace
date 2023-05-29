@@ -32,6 +32,7 @@ function selectRandomQuestion(groupParameter) {
       if (!randomQuestion) {
         console.error("No questions available for the selected group and language");
         alert(" je hebt alle vragen voor deze groep beantwoord. \n Zoek een andere qr code aub. \n \n You have answered all questions for this group. \n Please find another qr code. \n \n Tu as répondu à toutes les questions de ce groupe. \n Veuillez trouver un autre code QR.");
+        openScannerBtn.style.display = 'block';
         return;
       }
       displayQuestion(randomQuestion);
@@ -78,7 +79,7 @@ function displayQuestion(question) {
     answerCard.addEventListener('click', () => handleAnswerClick(key, question));
     answerContainer.appendChild(answerCard);
   }
-  openScannerBtn.style.display = 'block';
+  openScannerBtn.style.display = 'none';
   questionContainer.style.display = 'block';
 }
 

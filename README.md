@@ -26,10 +26,10 @@ VRAAG? Stel ze via Discord!
 ## Play and Scan me!
 
 <div width="100%" align="center">
-  <img width="20%" src="qrCodes/group 1.png" />
-  <img width="20%" src="qrCodes/group 2.png" />
-  <img width="20%" src="qrCodes/group 3.png" />
-  <img width="20%" src="qrCodes/group 4.png" />
-  <img width="20%" src="qrCodes/group 5.png" />
-  <img width="20%" src="qrCodes/end race.png" />
+  <img src="qrCodes/group 1.png" />
+  <img src="qrCodes/group 2.png" />
+  <img src="qrCodes/group 3.png" />
+  <img src="qrCodes/group 4.png" />
+  <img src="qrCodes/group 5.png" />
+  <img src="qrCodes/end race.png" />
 <div>
