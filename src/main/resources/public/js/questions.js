@@ -43,10 +43,6 @@ function selectRandomQuestion(groupParameter) {
 function getFilteredQuestions(questions, groupParameter) {
   const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
   const language = getLanguageFromCookies();
-  console.log('trackProgress', trackProgress);
-  console.log('groupParameter', groupParameter);
-  console.log('language', language);
-  console.log('questions',questions);
   const filteredQuestions = questions.filter(question =>
     question.groupParameter === groupParameter &&
     question.language === language &&
@@ -54,8 +50,6 @@ function getFilteredQuestions(questions, groupParameter) {
     (!trackProgress.groups[groupParameter] ||
       (!trackProgress.groups[groupParameter]?.answeredQuestions?.[question.id] &&
        trackProgress.groups[groupParameter]?.attempts < MAX_ATTEMPTS)));
-
-       console.log('filteredQuestions', filteredQuestions);
   return filteredQuestions;
 }
 
@@ -143,5 +137,17 @@ function giveNewChance(question) {
   }
 }
 function getLanguageFromCookies() {
-  return document.cookie.replace(/(?:(?:^|.*;\s*)language\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+  function getCookieValue(cookieName) {
+    var cookies = document.cookie.split(";"); // Get all cookies
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.startsWith(cookieName + "=")) {
+        return cookie.substring(cookieName.length + 1); // Extract the value
+      }
+    }
+    return null; // Cookie not found
+  }
+  
+  var languageValue = getCookieValue("language");
+  return languageValue;
 }
