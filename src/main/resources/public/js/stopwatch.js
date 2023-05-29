@@ -1,25 +1,49 @@
 var startTime;
-var endTime;
+var stopwatchInterval;
+var raceTimes = [];
 
 function startStopwatch() {
-    startTime = new Date();
+    startTime = new Date().getTime();
+    stopwatchInterval = setInterval(updateStopwatch, 1000);
 }
+
 function stopStopwatch() {
-    endTime = new Date();
-}
-function saveTimeToServer(playerID) {
-    var elapsedMilliseconds = endTime - startTime;
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:8080/race", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log("Time saved to Java server successfully.");
-        }
-    };
-    var data = JSON.stringify({ playerID: playerID, time: elapsedMilliseconds });
-    xhr.send(data);
+    clearInterval(stopwatchInterval);
 }
 
+function resetStopwatch() {
+    clearInterval(stopwatchInterval);
+    document.getElementById("stopwatch").innerHTML = "00:00:00";
+    raceTimes = [];
+    document.getElementById("timeList").innerHTML = "";
+}
 
+function updateStopwatch() {
+    var currentTime = new Date().getTime();
+    var elapsedTime = currentTime - startTime;
 
+    var timeString = formatTime(elapsedTime);
+    document.getElementById("stopwatch").innerHTML = timeString;
+}
+
+function recordTime() {
+    var currentTime = new Date().getTime();
+    var elapsedTime = currentTime - startTime;
+
+    var timeString = formatTime(elapsedTime);
+    raceTimes.push(timeString);
+
+    var timeItem = document.createElement("li");
+    timeItem.textContent = timeString;
+    document.getElementById("timeList").appendChild(timeItem);
+}
+
+function formatTime(time) {
+    var minutes = Math.floor((time % 3600000) / 60000);
+    var seconds = Math.floor((time % 60000) / 1000);
+    return pad(minutes) + ":" + pad(seconds);
+}
+
+function pad(number) {
+    return (number < 10 ? "0" : "") + number;
+}

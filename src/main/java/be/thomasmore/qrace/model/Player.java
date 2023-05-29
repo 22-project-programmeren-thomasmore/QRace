@@ -18,13 +18,16 @@ public class Player {
     private int currentCheckpoint;
     private long time;
 
+    public Player(int playerID) {
+        this.playerID = playerID;
+    }
+
     public Player(int playerID, String name) {
         this.playerID = playerID;
         this.name = name;
         this.score = 0;
         this.currentCheckpoint = 0;
     }
-
     public void addScore(int score) {
         this.score += score;
     }
