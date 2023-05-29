@@ -2,45 +2,27 @@ package be.thomasmore.qrace.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import be.thomasmore.qrace.model.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@AllArgsConstructor
-@Data
-@Builder
+@Getter
+@Setter
+@NoArgsConstructor
 public class Player {
     @Id
-    private String playerID;
+    private int playerID;
     private String name;
-    @OneToOne
-    private Mascot chosenMascot;
     private int score;
     private int currentCheckpoint;
 
-
-    public Player() {
-
-    }
-
-    public Player(String playerID, String name, Mascot chosenMascot) {
+    public Player(int playerID, String name) {
         this.playerID = playerID;
         this.name = name;
-        this.chosenMascot = chosenMascot;
         this.score = 0;
         this.currentCheckpoint = 0;
-    }
-
-
-
-    public int getCurrentCheckpoint() {
-        return currentCheckpoint;
-    }
-
-    public void setCurrentCheckpoint(int currentCheckpoint) {
-        this.currentCheckpoint = currentCheckpoint;
     }
 
     public void addScore(int score) {
@@ -55,7 +37,7 @@ public class Player {
         this.currentCheckpoint--;
     }
 
-public void removeScore(int score) {
+    public void removeScore(int score) {
         this.score -= score;
     }
 
@@ -71,40 +53,6 @@ public void removeScore(int score) {
         this.score = 0;
         this.currentCheckpoint = 0;
     }
-
-
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPlayerID() {
-        return playerID;
-    }
-
-    public void setPlayerID(String playerID) {
-        this.playerID = playerID;
-    }
-
-    public Mascot getChosenMascot() {
-        return chosenMascot;
-    }
-
-    public void setChosenMascot(Mascot chosenMascot) {
-        this.chosenMascot = chosenMascot;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
 }
+
 

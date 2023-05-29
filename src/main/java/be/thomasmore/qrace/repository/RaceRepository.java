@@ -1,7 +1,10 @@
 package be.thomasmore.qrace.repository;
 
 import be.thomasmore.qrace.model.Race;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface RaceRepository extends CrudRepository<Race, String> {
+@Repository
+public interface RaceRepository extends JpaRepository<Race, Integer> {
+    <S extends Race> S save(S race);
 }
