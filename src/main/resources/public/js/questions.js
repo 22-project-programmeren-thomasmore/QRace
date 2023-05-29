@@ -78,7 +78,7 @@ function displayQuestion(question) {
     answerCard.addEventListener('click', () => handleAnswerClick(key, question));
     answerContainer.appendChild(answerCard);
   }
-  openScannerBtn.style.visibility = 'hidden';
+  openScannerBtn.style.display = 'block';
   questionContainer.style.display = 'block';
 }
 
@@ -103,7 +103,7 @@ function handleAnswerClick(selectedAnswer, question) {
 
   answerCards.forEach(card => card.style.display = 'none');
   document.getElementById('questionContainer').style.display = 'none';
-  document.getElementById('openScannerBtn').style.visibility = 'visible';
+  document.getElementById('openScannerBtn').style.display = 'none';
   
   giveNewChance(question);
 }
