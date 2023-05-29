@@ -32,17 +32,17 @@
       </div>
 
       <!-- scanner -->
-      <div>
-        <button id="openScannerBtn" class="btn btn-primary">
-          Scan QR Code
+      <div >
+        <button id="openScannerBtn" class="btn btn-primary" style="position: fixed;">
+          <i class="fa fa-qrcode"></i>
         </button>
-        <div id="scannerContainer" style="display: none">
-          <button id="closeScannerBtn" class="btn btn-secondary">
-            Close Scanner
+        <div id="scannerContainer">
+          <button id="closeScannerBtn" class="btn btn-secondary" style="display: none;">
+            <i class="fa fa-times-circle"></i>
           </button>
           <br />
-          <div id="video-container">
-            <video id="qr-video"></video>
+          <div id="video-container" >
+            <video id="qr-video" style="width: 90%;"></video>
           </div>
         </div>
       </div>

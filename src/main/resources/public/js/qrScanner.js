@@ -31,8 +31,12 @@ const scanner = new QrScanner(
 openScannerBtn.addEventListener("click", () => {
   // start the scanner
   scanner.start();
+  // display the close scanner button
+  closeScannerBtn.style.display = "inline";
   // display the scanner container
   scannerContainer.style.display = "block";
+  // hide the button to open the scanner
+  openScannerBtn.style.display = "none";
 });
 
 // add event listener for the close scanner button
@@ -41,6 +45,8 @@ closeScannerBtn.addEventListener("click", () => {
   scanner.stop();
   // hide the scanner container
   scannerContainer.style.display = "none";
+  // show the button to open the scanner
+  openScannerBtn.style.display = "inline";
 });
 
 // for debugging

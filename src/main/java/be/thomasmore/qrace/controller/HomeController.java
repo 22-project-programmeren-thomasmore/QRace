@@ -12,4 +12,9 @@ public class HomeController {
   public String home() {
     return "index";
   }
+
+  @GetMapping({ "/join-pickMascot" })
+  public String joinPickMascot() {
+    return "join-pickMascot";
+  }
 }
