@@ -15,7 +15,6 @@ if (!localStorage.getItem(trackProgressKey)) {
 
 document.addEventListener("exportData", (event) => {
   const groupParameter = event.detail;
-  console.log('groupParameter', groupParameter);
 if (groupParameter === endRace) {
   window.location.href = '/highscore';
   return;
@@ -44,6 +43,9 @@ function selectRandomQuestion(groupParameter) {
 function getFilteredQuestions(questions, groupParameter) {
   const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
   const language = getLanguageFromCookies();
+  console.log('trackProgress', trackProgress);
+  console.log('groupParameter', groupParameter);
+  console.log('language', language);
   console.log('questions',questions);
   const filteredQuestions = questions.filter(question =>
     question.groupParameter === groupParameter &&
