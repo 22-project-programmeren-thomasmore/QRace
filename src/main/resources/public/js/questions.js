@@ -16,7 +16,7 @@ if (!localStorage.getItem(trackProgressKey)) {
 document.addEventListener("exportData", (event) => {
   const groupParameter = event.detail;
 if (groupParameter === endRace) {
-  window.location.href = '/highscore';
+  window.location.href = "/highscore";
   return;
 }else{
   selectRandomQuestion(groupParameter);
