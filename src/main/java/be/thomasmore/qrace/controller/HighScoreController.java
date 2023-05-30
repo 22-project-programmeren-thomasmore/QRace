@@ -25,6 +25,14 @@
             return "highscore";
         }
 
+        @GetMapping("/scoreboard")
+        public String scoreBoard(Model model) {
+            List<HighScores> highscores = highScoreRepository.findAll();
+            // System.out.println(highscores);
+            model.addAttribute("highscores", highScoreRepository.findAll());
+            return "scoreboard";
+        }
+
         @ModelAttribute("highscore")
         public HighScores highScore() {
             return new HighScores();
@@ -37,10 +45,6 @@
         }
         @PostMapping("/updateHighscore")
         public ResponseEntity<Void> updateHighscore(@RequestBody HighScores updatedHighscore) {
-//            System.out.println("Updated ID: " + updatedHighscore.getId());
-//            System.out.println("Updated userName: " + updatedHighscore.getUserName());
-//            System.out.println("Updated score: " + updatedHighscore.getScore());
-//            System.out.println("Updated highscoreDate: " + updatedHighscore.getHighscoreDate());
             HighScores existingHighscore = highScoreRepository.findById(updatedHighscore.getId()).orElse(null);
             if (existingHighscore != null) {
                 existingHighscore.setUserName(updatedHighscore.getUserName());

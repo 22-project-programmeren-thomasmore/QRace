@@ -1,105 +1,96 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="nl-BE" xmlns:th="http://www.thymeleaf.org">
 
+<head th:replace="fragments\head-header-footer :: head"></head>
 <head>
-    <!--meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- stylesheet -->
-    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"/>
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- javascript -->
+    <!-- js library -->
     <script src="/js/translator.js"></script>
     <script src="/js/translations.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- title -->
-    <title>Highscores</title>
+    <!-- Title -->
+    <title>Highscore</title>
 </head>
 
 <body>
-<!-- navbar -->
-<nav class="navbar navbar-expand-xxl navbar-light bg-light">
-    <a class="navbar-brand" href="https://www.speelgoedmuseum.be/"><img src="/img/logo.png" height="50"
-                                                                        class="d-inline-block align-top"
-                                                                        alt="Speelgoedmuseum Mechelen"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><span
-            class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav text-right">
-            <li id="home" class="nav-item active"><a class="nav-link" href="#"><span
-                    class="sr-only">(current)</span></a></li>
-            <li id="inlog" class="nav-item"><a class="nav-link" href="#"></a></li>
-            <li id="info" class="nav-item"><a class="nav-link" href="#"></a></li>
-            <li id="changeLanguage" class="nav-item"><img src="/img/translate.svg" alt="Translate"></li>
-        </ul>
+<header th:replace="fragments\head-header-footer :: header"></header>
+<!-- content -->
+
+<div class="container">
+    <h1 class="my-4">Highscore</h1>
+
+    <form th:action="@{/highscore}" th:object="${highscore}" method="post" class="mb-4">
+        <div class="form-group">
+            <label for="userName">User Name:</label>
+            <input type="text" id="userName" th:field="*{userName}" name="userName" required class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="score">Score:</label>
+            <input type="number" id="score" th:field="*{score}" name="score" required class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="highscoreDate">Highscore Date:</label>
+            <input type="date" id="highscoreDate" th:field="*{highscoreDate}" name="highscoreDate" required
+                   class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <div class="form-group">
+        <select class="form-control" id="sort-select">
+            <option value="Id">Default (Id)</option>
+            <option value="Username">Username (a-z)</option>
+            <option value="Highscore">Highscore (Descending)</option>
+            <option value="Date">Date</option>
+        </select>
     </div>
-</nav>
 
+    <div class="table-responsive">
+        <table class="table" id="highscore-table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>User Name</th>
+                <th>Score</th>
+                <th>Highscore Date</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="score : ${highscores}">
+                <td>
+                    <span class="form-control-id" data-field="id" th:text="${score.id}"></span>
+                </td>
+                <td>
+                    <span class="editable" data-field="userName" th:text="${score.userName}"></span>
+                    <input type="text" class="form-control form-control-user-name" style="display: none;">
+                </td>
+                <td>
+                    <span class="editable" data-field="score" data-id="${score.id}" th:text="${score.score}"></span>
+                    <input type="number" class="form-control form-control-score" style="display: none;">
+                </td>
+                <td>
+                <span class="editable" data-field="highscoreDate" data-id="${score.id}"
+                      th:text="${#dates.format(score.highscoreDate, 'yyyy-MM-dd')}"></span>
+                    <input type="date" class="form-control form-control-highscore" style="display: none;">
+                </td>
 
-<form th:action="@{/highscore}" th:object="${highscore}" method="post">
-    <label for="userName">User Name:</label><br>
-    <input type="text" id="userName" th:field="*{userName}" name="userName" required><br>
-
-    <label for="score">Score:</label><br>
-    <input type="number" id="score" th:field="*{score}" name="score" required><br>
-
-    <label for="highscoreDate">Highscore Date:</label><br>
-    <input type="date" id="highscoreDate" th:field="*{highscoreDate}" name="highscoreDate" required><br>
-
-    <input type="submit" value="Submit">
-</form>
-
-<select id="sort-select">
-    <option value="Id">Default (Id)</option>
-    <option value="Username">Username (a-z)</option>
-    <option value="Highscore">Highscore (Descending)</option>
-    <option value="Date">Date</option>
-</select>
-
-<table id="highscore-table">
-    <tr>
-        <th>Id</th>
-        <th>User Name</th>
-        <th>Score</th>
-        <th>Highscore Date</th>
-        <th>Actions</th>
-    </tr>
-    <tr th:each="score : ${highscores}">
-        <td>
-            <span class="form-control-id" data-field="id" th:text="${score.id}"></span>
-            <!--            <input type="text" class="form-control-id" style="display: none;">-->
-        </td>
-        <td>
-            <span class="editable" data-field="userName" th:text="${score.userName}"></span>
-            <input type="text" class="form-control-user-name" style="display: none;">
-        </td>
-        <td>
-            <span class="editable" data-field="score" data-id="${score.id}" th:text="${score.score}"></span>
-            <input type="number" class="form-control-score" style="display: none;">
-        </td>
-        <td>
-        <span class="editable" data-field="highscoreDate" data-id="${score.id}"
-              th:text="${#dates.format(score.highscoreDate, 'yyyy-MM-dd')}"></span>
-            <input type="date" class="form-control-highscore" style="display: none;">
-        </td>
-
-
-        <td>
-            <button class="btn btn-primary edit-button">Edit</button>
-            <button class="btn btn-success save-button" style="display: none;">Save</button>
-            <button class="btn btn-danger cancel-button" style="display: none;">Cancel</button>
-            <button class="btn btn-danger delete-button" th:data-id="${score.id}" onclick="deleteHighscore(this)">
-                Delete
-            </button>
-
-
-        </td>
-    </tr>
-</table>
+                <td>
+                    <button class="btn btn-primary edit-button">Edit</button>
+                    <button class="btn btn-success save-button" style="display: none;">Save</button>
+                    <button class="btn btn-danger cancel-button" style="display: none;">Cancel</button>
+                    <button class="btn btn-danger delete-button" th:data-id="${score.id}"
+                            onclick="deleteHighscore(this)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 <script th:inline="javascript">
     $(document).ready(function () {
 
@@ -109,6 +100,23 @@
             row.find("input").show();
             row.find(".edit-button").hide();
             row.find(".save-button, .cancel-button").show();
+
+            // Find the corresponding elements within the row
+            var userNameSpan = row.find('.editable[data-field="userName"]');
+            var userNameInput = row.find('.form-control-user-name');
+            var scoreSpan = row.find('.editable[data-field="score"]');
+            var scoreInput = row.find('.form-control-score');
+            var dateSpan = row.find('.editable[data-field="highscoreDate"]');
+            var dateInput = row.find('.form-control-highscore');
+            // Get the text from the span element
+            var userName = userNameSpan.text();
+            var scoreText = scoreSpan.text();
+            var dateText = dateSpan.text();
+
+            // Set the text to the input element
+            userNameInput.val(userName);
+            scoreInput.val(scoreText);
+            dateInput.val(dateText);
         });
 
         $(".cancel-button").click(function () {
@@ -139,7 +147,6 @@
                 score: score,
                 highscoreDate: highscoreDate
             };
-            console.log(updatedData);
 
             $.ajax({
                 url: "/updateHighscore",
@@ -219,28 +226,33 @@
             $("#highscore-table tbody").empty().append(originalRows);
         }
 
-
-        function deleteHighscore(button) {
-            var id = $(button).data("id");
-            var row = $(button).closest("tr");
-
-            $.ajax({
-                url: "/highscores/" + id,
-                type: "DELETE",
-                success: function () {
-                    // Remove the row from the table
-                    row.remove();
-                    alert("Highscore deleted successfully.");
-                },
-                error: function () {
-                    alert("Failed to delete the highscore.");
-                }
-            });
-        }
-
     });
+
+    function deleteHighscore(button) {
+        var id = $(button).data("id");
+        var row = $(button).closest("tr");
+
+        $.ajax({
+            url: "/highscores/" + id,
+            type: "DELETE",
+            success: function () {
+                // Remove the row from the table
+                row.remove();
+                alert("Highscore deleted successfully.");
+            },
+            error: function () {
+                alert("Failed to delete the highscore.");
+            }
+        });
+    }
 </script>
 
 
+<div th:replace="fragments\head-header-footer :: footer"></div>
+
+<!-- JS library -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 </body>
+
 </html>
