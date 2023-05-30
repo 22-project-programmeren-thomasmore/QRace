@@ -59,7 +59,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="score : ${highscores}">
+            <tr th:each="score : ${highscores}" th:if="${!score.archive}">
                 <td>
                     <span class="form-control-id" data-field="id" th:text="${score.id}"></span>
                 </td>
@@ -251,6 +251,50 @@
             },
             error: function () {
                 alert("Failed to delete the highscore.");
+            }
+        });
+    }
+
+    function archiveScore(button) {
+        var confirmation = confirm("Are you sure you want to archive this highscore?");
+        if (!confirmation) {
+            return;  // If user clicked "Cancel", stop the function here
+        }
+
+        var row = $(button).closest("tr");
+        var id = $(button).data("id");
+        var userName = row.find(".editable[data-field='userName']").text();
+        var score = row.find(".editable[data-field='score']").text();
+        var highscoreDate = row.find(".editable[data-field='highscoreDate']").text();
+
+
+
+        var updatedData = {
+            id: id, // will stay the same
+            userName: userName,
+            score: score,
+            highscoreDate: highscoreDate,
+            archive: true
+        };
+        console.log(updatedData)
+
+        $.ajax({
+            url: "/updateHighscore",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(updatedData),
+            success: function () {
+                // Update the row with the new values
+                console.log("success");
+
+                // Show the editable fields and hide the input fields and buttons
+                row.find("input").hide();
+                row.find(".editable").show();
+                row.find(".edit-button").show();
+                row.find(".save-button, .cancel-button").hide();
+            },
+            error: function () {
+                alert("Failed to update the highscore.");
             }
         });
     }

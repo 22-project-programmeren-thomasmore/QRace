@@ -60,7 +60,7 @@ public class HighScores {
         this.highscoreDate = highscoreDate;
     }
 
-    public boolean isArchive() {
+    public boolean getArchive() {
         return archive;
     }
 
