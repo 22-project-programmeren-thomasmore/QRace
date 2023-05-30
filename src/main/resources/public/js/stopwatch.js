@@ -33,9 +33,9 @@ function recordTime() {
     var timeString = formatTime(elapsedTime);
     raceTimes.push(timeString);
 
-    var timeItem = document.createElement("li");
-    timeItem.textContent = timeString;
-    document.getElementById("timeList").appendChild(timeItem);
+    // var timeItem = document.createElement("li");
+    // timeItem.textContent = timeString;
+    // document.getElementById("timeList").appendChild(timeItem);
 }
 
 function formatTime(time) {
@@ -46,4 +46,21 @@ function formatTime(time) {
 
 function pad(number) {
     return (number < 10 ? "0" : "") + number;
+}
+
+function getCurrentStopwatchTime() {
+    var currentTime = new Date().getTime();
+    var elapsedTime = currentTime - startTime;
+
+    var timeString = formatTime(elapsedTime);
+    raceTimes.push(timeString);
+
+    // var timeItem = document.createElement("li");
+    // timeItem.textContent = timeString;
+    
+    return timeString;
+}
+
+window.onload = function () {
+    startStopwatch();
 }
