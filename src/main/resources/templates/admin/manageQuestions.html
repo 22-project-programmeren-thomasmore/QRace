@@ -1,44 +1,17 @@
 <!DOCTYPE html>
-<html lang="nl-BE">
+<html lang="nl-BE" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments\head-header-footer :: head"></head>
 
 <head>
-  <!--meta tags -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- stylesheet -->
-  <link rel="stylesheet" type="text/css" href="/css/stylesheet.css" />
-  <!-- bootstrap -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
-  <!-- javascript -->
-  <script src="/js/translator.js"></script>
-  <script src="/js/translations.js"></script>
-  <!-- title -->
-  <title>manage questions</title>
+  <!-- Title -->
+  <title>Manage Questions</title>
 </head>
 
 <body>
-  <!-- navbar -->
-  <nav class="navbar navbar-expand-xxl navbar-light bg-light">
-    <a class="navbar-brand" href="https://www.speelgoedmuseum.be/"><img src="/img/logo.png" height="50"
-        class="d-inline-block align-top" alt="Speelgoedmuseum Mechelen" /></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav text-right">
-        <li id="home" class="nav-item active">
-          <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
-        </li>
-        <li id="inlog" class="nav-item"><a class="nav-link" href="#"></a></li>
-        <li id="info" class="nav-item"><a class="nav-link" href="#"></a></li>
-        <li id="changeLanguage" class="nav-item">
-          <img src="/img/translate.svg" alt="Translate" />
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <header th:replace="fragments\head-header-footer :: header"></header>
+
+  <!-- content -->
 
   <form id="question-form">
     <input type="text" id="group-parameter" placeholder="group" />
@@ -96,6 +69,9 @@
     <option value="language">Language</option>
     <option value="archived">active</option>
   </select>
+
+  <input type="text" id="search-bar" placeholder="Search...">
+
   <table id="questions">
     <thead>
       <tr>
@@ -118,7 +94,12 @@
   </table>
   <script src="/js/manageQuestions.js"></script>
 
-  <!-- jQuery, popper.js, bootstrap js -->
+  <!-- end content -->
+
+  <div th:replace="fragments\head-header-footer :: footer"></div>
+  <!-- general scrips -->
+  <script src="/js/translator.js"></script>
+  <script src="/js/translations.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
