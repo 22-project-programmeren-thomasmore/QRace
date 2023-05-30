@@ -1,10 +1,9 @@
 package be.thomasmore.qrace.controller;
 
-import be.thomasmore.qrace.dto.JoinRequest;
-import be.thomasmore.qrace.exception.RaceException;
-import be.thomasmore.qrace.model.Player;
-import be.thomasmore.qrace.model.Race;
-import be.thomasmore.qrace.service.RaceService;
+import be.thomasmore.qrace.dto.*;
+import be.thomasmore.qrace.exception.*;
+import be.thomasmore.qrace.model.*;
+import be.thomasmore.qrace.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -57,13 +56,10 @@ public class LobbyController{
     public ResponseEntity<Race> join(@RequestBody JoinRequest request)
             throws RaceException {
         log.info("connect request: {}", request);
-        return ResponseEntity.ok(
-                raceService.connectToRace(request.getPlayer(), request.getRaceID())
-        );
+        return ResponseEntity.ok(raceService.connectToRace(request.getPlayer(), Integer.valueOf(request.getRaceID())));
     }
-
-    @GetMapping({ "/join/pickMascot" })
-    public String pickMascotAsMember() {
+    @GetMapping({ "/join-pickMascot" })
+    public String joinPickMascot() {
         return "join-pickMascot";
     }
 

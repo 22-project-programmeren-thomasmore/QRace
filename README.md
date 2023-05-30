@@ -22,3 +22,27 @@ Commits worden samengevoegd met de master branch na goedkeuring van de pull requ
 ## Rule 4
 
 VRAAG? Stel ze via Discord!
+
+## Scan me!
+
+<div align="center">
+<img width="75%" align="center" src="qrCodes/QRace.png" />
+</div>
+
+## Play!
+
+<div align="center">
+  <img width="25%" align="left" src="qrCodes/group 1.png" />
+  <img width="25%" align="center" src="qrCodes/group 2.png" />
+  <img width="25%" align="right" src="qrCodes/group 3.png" />
+</div>
+
+##
+
+##
+
+<div align="center">
+  <img width="25%" align="left" src="qrCodes/group 4.png" />
+  <img width="25%" align="center" src="qrCodes/group 5.png" />
+  <img width="25%" align="right" src="qrCodes/end race.png" />
+<div>

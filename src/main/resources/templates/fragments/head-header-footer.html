@@ -2,39 +2,59 @@
 
 <head th:fragment="head">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 </head>
 
 <!-- header -->
 <header th:fragment="header">
-
     <nav class="navbar navbar-default">
-        <div class="container-fluid" style="justify-content: space-between;">
+        <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="home"><img src="/img/logo.png" height="100%"></a>
+                <a class="navbar-brand" th:href="@{/home}">
+                    <img src="/img/logo.png" height="100%" alt="Logo"  >
+                </a>
             </div>
-            <ul class="nav navbar-nav">
-                <button class="btn btn-default" onclick="location.href='profile'">
-                    <i class="fa fa-user-circle"></i>
+            <div class="navbar-title">
+                <span class="navbar-brand site-title">QRace</span>
+            </div>
+            <div class="navbar-right">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
-                <button class="btn btn-default" id="tooltip">
-                    <i class="fa fa-question-circle"></i>
-                </button>
-                <button class="btn btn-default" id="changeLanguage">
-                    <i class="fa fa-globe"></i>
-                </button>
-            </ul>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="login">
+                            <i class="fa fa-user-circle"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" id="tooltip">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" id="changeLanguage">
+                            <i class="fa fa-globe"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 </header>
 
 <!-- footer -->
-<footer th:fragment="footer" class="footer mt-5">
+<footer th:fragment="footer" class="footer mt-5" style="position: absolute; bottom: 0;">
     <p>© Aberzak, Ahalli, Diop, Ekkart & Rousseaux 2023</p>
 </footer>

@@ -44,7 +44,6 @@ public class Question {
   @Column(name = "language")
   private String language;
 
-  @NotNull
   @Column(name = "archived")
   private boolean archived = false;
 
