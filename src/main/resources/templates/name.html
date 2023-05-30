@@ -56,9 +56,13 @@
             e.preventDefault();
             var name = document.getElementById('nameInput').value;
             localStorage.setItem('userName', name);
+
+            var raceId = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000; // generate random number between 100000 and 999999 (6 digits)
+            localStorage.setItem('raceID', raceId); // store the raceID into the local storage
             window.location.href = '/host-join';
         });
     });
+
 </script>
 </body>
 </html>
