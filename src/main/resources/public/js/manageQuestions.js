@@ -56,9 +56,9 @@ function createQuestionRow(question) {
   });
 
   // Create the cell for the "Archived" property
-  var archivedCell = document.createElement("td");
-  archivedCell.textContent = question.archived ? "Yes" : "No";
-  row.appendChild(archivedCell);
+  // var archivedCell = document.createElement("td");
+  // archivedCell.textContent = question.archived ? "Yes" : "No";
+  // row.appendChild(archivedCell);
 
   // Create the "Archive" button and add event listener
   var archiveButton = document.createElement("button");
