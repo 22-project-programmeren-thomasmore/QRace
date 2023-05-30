@@ -1,4 +1,4 @@
-package be.thomasmore.qrace.controller.admin;
+package be.thomasmore.qrace.B_registration;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
