@@ -48,12 +48,13 @@
 <div class="container-fluid">
     <div class="row" style="text-align: center">
 
-        <h1 id="lobbyheading" class="font-weight-bold"></h1>
+<!--        <h1 id="lobbyheading" class="font-weight-bold"></h1>-->
         <h1 id="raceID"></h1>
 
         <script>
-            var username = localStorage.getItem("raceID");
-            document.getElementById("raceID").textContent = username;
+            var gameID = localStorage.getItem("raceID");
+            gameID = "Race ID: #" + gameID + " ";
+            document.getElementById("raceID").textContent = gameID;
         </script>
         <h4 id="lobbysubheading"></h4> <!-- eventueel vervangen door laadbutton  -->
         <div>
