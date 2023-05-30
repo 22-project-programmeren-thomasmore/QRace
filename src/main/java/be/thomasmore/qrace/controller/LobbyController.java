@@ -41,23 +41,11 @@ public class LobbyController{
         return "host-pickMascot";
     }
 
-    @PostMapping("/host")
-    public ResponseEntity<Race> host(@RequestBody Player hostPlayer) {
-        log.info("host game request: {}", hostPlayer);
-        return ResponseEntity.ok(raceService.createNewRace(hostPlayer));
-    }
-
     @GetMapping({ "/join"})
     public String seeAvailableRaces() {
         return "join-availableRaces";
     }
 
-    @PostMapping("/join")
-    public ResponseEntity<Race> join(@RequestBody JoinRequest request)
-            throws RaceException {
-        log.info("connect request: {}", request);
-        return ResponseEntity.ok(raceService.connectToRace(request.getPlayer(), Integer.valueOf(request.getRaceID())));
-    }
     @GetMapping({ "/join-pickMascot" })
     public String joinPickMascot() {
         return "join-pickMascot";

@@ -49,7 +49,7 @@ public class RaceService {
         return raceRepository.save(race);
     }
 
-    public Race race(int raceID, Player participant) {
+    public Race joinRace(int raceID, Player participant) {
         Race race = raceRepository.findById(raceID).orElse(null);
         if (race != null) {
             race.addParticipant(participant);
