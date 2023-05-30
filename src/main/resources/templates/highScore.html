@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl-BE" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="fragments\head-header-footer :: head"></head>
 <head>
     <!-- js library -->
@@ -12,67 +13,84 @@
 
 <body>
 <header th:replace="fragments\head-header-footer :: header"></header>
+<!-- content -->
 
-<form th:action="@{/highscore}" th:object="${highscore}" method="post">
-    <label for="userName">User Name:</label><br>
-    <input type="text" id="userName" th:field="*{userName}" name="userName" required><br>
+<div class="container">
+    <h1 class="my-4">Highscore</h1>
 
-    <label for="score">Score:</label><br>
-    <input type="number" id="score" th:field="*{score}" name="score" required><br>
+    <form th:action="@{/highscore}" th:object="${highscore}" method="post" class="mb-4">
+        <div class="form-group">
+            <label for="userName">User Name:</label>
+            <input type="text" id="userName" th:field="*{userName}" name="userName" required class="form-control">
+        </div>
 
-    <label for="highscoreDate">Highscore Date:</label><br>
-    <input type="date" id="highscoreDate" th:field="*{highscoreDate}" name="highscoreDate" required><br>
+        <div class="form-group">
+            <label for="score">Score:</label>
+            <input type="number" id="score" th:field="*{score}" name="score" required class="form-control">
+        </div>
 
-    <input type="submit" value="Submit">
-</form>
+        <div class="form-group">
+            <label for="highscoreDate">Highscore Date:</label>
+            <input type="date" id="highscoreDate" th:field="*{highscoreDate}" name="highscoreDate" required
+                   class="form-control">
+        </div>
 
-<select id="sort-select">
-    <option value="Id">Default (Id)</option>
-    <option value="Username">Username (a-z)</option>
-    <option value="Highscore">Highscore (Descending)</option>
-    <option value="Date">Date</option>
-</select>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 
-<table id="highscore-table">
-    <tr>
-        <th>Id</th>
-        <th>User Name</th>
-        <th>Score</th>
-        <th>Highscore Date</th>
-        <th>Actions</th>
-    </tr>
-    <tr th:each="score : ${highscores}">
-        <td>
-            <span class="form-control-id" data-field="id" th:text="${score.id}"></span>
-            <!--            <input type="text" class="form-control-id" style="display: none;">-->
-        </td>
-        <td>
-            <span class="editable" data-field="userName" th:text="${score.userName}"></span>
-            <input type="text" class="form-control-user-name" style="display: none;">
-        </td>
-        <td>
-            <span class="editable" data-field="score" data-id="${score.id}" th:text="${score.score}"></span>
-            <input type="number" class="form-control-score" style="display: none;">
-        </td>
-        <td>
-        <span class="editable" data-field="highscoreDate" data-id="${score.id}"
-              th:text="${#dates.format(score.highscoreDate, 'yyyy-MM-dd')}"></span>
-            <input type="date" class="form-control-highscore" style="display: none;">
-        </td>
+    <div class="form-group">
+        <select class="form-control" id="sort-select">
+            <option value="Id">Default (Id)</option>
+            <option value="Username">Username (a-z)</option>
+            <option value="Highscore">Highscore (Descending)</option>
+            <option value="Date">Date</option>
+        </select>
+    </div>
 
+    <div class="table-responsive">
+        <table class="table" id="highscore-table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>User Name</th>
+                <th>Score</th>
+                <th>Highscore Date</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="score : ${highscores}">
+                <td>
+                    <span class="form-control-id" data-field="id" th:text="${score.id}"></span>
+                </td>
+                <td>
+                    <span class="editable" data-field="userName" th:text="${score.userName}"></span>
+                    <input type="text" class="form-control form-control-user-name" style="display: none;">
+                </td>
+                <td>
+                    <span class="editable" data-field="score" data-id="${score.id}" th:text="${score.score}"></span>
+                    <input type="number" class="form-control form-control-score" style="display: none;">
+                </td>
+                <td>
+                <span class="editable" data-field="highscoreDate" data-id="${score.id}"
+                      th:text="${#dates.format(score.highscoreDate, 'yyyy-MM-dd')}"></span>
+                    <input type="date" class="form-control form-control-highscore" style="display: none;">
+                </td>
 
-        <td>
-            <button class="btn btn-primary edit-button">Edit</button>
-            <button class="btn btn-success save-button" style="display: none;">Save</button>
-            <button class="btn btn-danger cancel-button" style="display: none;">Cancel</button>
-            <button class="btn btn-danger delete-button" th:data-id="${score.id}" onclick="deleteHighscore(this)">
-                Delete
-            </button>
-
-
-        </td>
-    </tr>
-</table>
+                <td>
+                    <button class="btn btn-primary edit-button">Edit</button>
+                    <button class="btn btn-success save-button" style="display: none;">Save</button>
+                    <button class="btn btn-danger cancel-button" style="display: none;">Cancel</button>
+                    <button class="btn btn-danger delete-button" th:data-id="${score.id}"
+                            onclick="deleteHighscore(this)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 <script th:inline="javascript">
     $(document).ready(function () {
 
@@ -129,7 +147,6 @@
                 score: score,
                 highscoreDate: highscoreDate
             };
-            console.log(updatedData);
 
             $.ajax({
                 url: "/updateHighscore",
@@ -228,10 +245,13 @@
             }
         });
     }
-
 </script>
 
+
 <div th:replace="fragments\head-header-footer :: footer"></div>
+
+<!-- JS library -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
 
