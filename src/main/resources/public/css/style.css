@@ -1,19 +1,18 @@
-.navbar-default {
-  position: relative;
-}
-
 .navbar-right {
-  position: absolute;
-  right: 0;
+  right: 10px; 
 }
 
 .navbar-toggle {
   margin-top: 10px; /* Adjust this value to align the hamburger vertically */
+  position: relative;
+  z-index: 1;
 }
+
 .navbar-header {
   position: absolute;
-  left: 10px; /* Adjust this value to set the desired space between the left edge and the logo */
+  left: 10px;
 }
+
 .navbar-title {
   position: absolute;
   left: 50%;
@@ -23,6 +22,9 @@
 .navbar-brand,
 .navbar-title {
   display: block;
+}
+.navbar-right .fa {
+  margin-right: 10px; /* Adjust this value to set the desired space between the icons and the right edge */
 }
 
 /* Hide title and logo on smaller screens */
