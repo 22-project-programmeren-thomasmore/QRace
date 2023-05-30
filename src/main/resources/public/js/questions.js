@@ -18,6 +18,14 @@ if (!localStorage.getItem(trackProgressKey)) {
 document.addEventListener("exportData", (event) => {
   const groupParameter = event.detail;
   if (groupParameter === endRace) {
+    // Get the current time
+    const currentTime = getCurrentStopwatchTime();
+    // Get the track progress from localStorage
+    let trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
+    // Update the track progress to include the current time
+    trackProgress.totalTime = currentTime;
+    // Save the updated track progress back to localStorage
+    localStorage.setItem(trackProgressKey, JSON.stringify(trackProgress));
 
     window.location.href = "/scoreboard";
     return;
@@ -98,7 +106,7 @@ function handleAnswerClick(selectedAnswer, question) {
     selectedCard.classList.add('correct');
     trackProgress.groups[question.groupParameter].attempts += 2;
     trackProgress.groups[question.groupParameter].answeredQuestions[question.id].correct = true;
-    trackProgress.score += trackProgress.groups[question.groupParameter].attempts >= 2 ? SECOND_ATTEMPT_SCORE_CORRECT : FIRST_ATTEMPT_SCORE_CORRECT;
+    trackProgress.score += trackProgress.groups[question.groupParameter].attempts > 2 ? SECOND_ATTEMPT_SCORE_CORRECT : FIRST_ATTEMPT_SCORE_CORRECT;
   } else {
     selectedCard.classList.add('incorrect');
     trackProgress.groups[question.groupParameter].attempts++;
