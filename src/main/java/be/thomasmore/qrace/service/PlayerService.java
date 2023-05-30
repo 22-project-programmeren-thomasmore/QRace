@@ -13,7 +13,7 @@ public class PlayerService {
     public Race startRace (Player player1, Integer raceID) {
         Optional<Race> optionalRace = raceRepository.findById(raceID);
         Race race = optionalRace.get();
-        race.setStatus(RaceStatusEnum.IN_PROGRESS);
+        race.setStatus(RaceStatusEnum.STARTED);
         raceRepository.save(race);
         return race;
     }

@@ -31,36 +31,28 @@ public class RaceService {
     }
 
     public int generateRaceID() {
-        int randomPlayerID = new Random().nextInt(9000) + 1000;
-        String sql = "INSERT INTO RACES values (" + randomPlayerID + ", 1, 2, 3, 4)";
+        int randomRaceID = new Random().nextInt(9000) + 1000;
+        String sql = "INSERT INTO RACES values (" + randomRaceID + ", 1, 2, 3, 4)";
         entityManager.createNativeQuery(sql).executeUpdate();
-        return randomPlayerID;
-    }
-    @Transactional
-    public Race createNewRace (Player player1) {
-        Race race = new Race(generateRaceID());
-        races.put(Integer.toString(race.getRaceID()), race);
-        race.setStatus(RaceStatusEnum.NEW);
-        return race;
+        return randomRaceID;
     }
 
-    public Race connectToRace (Player player, Integer raceID) {
-        Optional<Race> optionalRace = raceRepository.findById(raceID);
-        optionalRace.orElseThrow(() -> new RaceException("Race with provided ID doesn't exist"));
-        Race race = optionalRace.get();
-        if (race.getPlayer4() != null) {
-            throw new RaceException("Race is not valid anymore");
-        }
-        else if (race.getPlayer1() != null) {
-            race.setPlayer2(player);
-        }
-        else if (race.getPlayer2() != null) {
-            race.setPlayer3(player);
-        }
-        else if (race.getPlayer3() != null) {
-            race.setPlayer4(player);
-        }
-        return race;
+    public Race createRace(int raceID, Player host) {
+        Race race = new Race(generateRaceID(), host);
+        return raceRepository.save(race);
     }
+
+    public Race race(int raceID, Player participant) {
+        Race race = raceRepository.findById(raceID).orElse(null);
+        if (race != null) {
+            race.addParticipant(participant);
+            return raceRepository.save(race);
+        }
+        return null; // add throw exception indicating session not found
+    }
+
+
+
+
 
 }

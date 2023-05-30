@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Race demo</title>
+</head>
+<body>
+<script>
+    const webSocket = new WebSocket("ws://localhost:8080/demo");
+
+    webSocket.onopen = function(event) {
+        console.log("Connected to server");
+    };
+
+    webSocket.onmessage = function(event) {
+        console.log("Message received: " + event.data);
+
+        if (event.data.startsWith("race_created:")) {
+            const raceID = event.data.split(":")[1];
+            console.log("Race created with ID: " + raceID);
+            // Allow the host to start the race
+            document.getElementById("startButton").disabled = false;
+        } else if (event.data.startsWith("race_joined:")) {
+            const raceID = event.data.split(":")[1];
+            console.log("Joined race with ID: " + raceID);
+        } else if (event.data === "race_started") {
+            console.log("Race started!");
+            // Implement race logic here
+        }
+    };
+
+    webSocket.onclose = function(event) {
+        console.log("Connection closed");
+    };
+
+    function createRace() {
+        const raceID = document.getElementById("raceIDInput").value;
+        if (raceID.trim() !== "") {
+            webSocket.send("create_race:" + raceID);
+        }
+    }
+
+    function joinRace() {
+        const raceID = document.getElementById("raceIDInput").value;
+        const playerName = document.getElementById("playerNameInput").value;
+        if (raceID.trim() !== "" && playerName.trim() !== "") {
+            webSocket.send("join_race:" + raceID + ":" + playerName);
+        }
+    }
+
+    function startRace() {
+        const raceID = document.getElementById("raceIDInput").value;
+        webSocket.send("start_race:" + raceID);
+    }
+</script>
+
+<h2>Create or Join a Race</h2>
+<label for="raceIDInput">Race ID:</label>
+<input type="text" id="raceIDInput" required><br>
+
+<label for="playerNameInput">Your Name:</label>
+<input type="text" id="playerNameInput" required><br>
+
+<button onclick="createRace()">Create Race</button>
+<button onclick="joinRace()">Join Race</button>
+<button id="startButton" onclick="startRace()" disabled>Start Race</button>
+</body>
+</html>

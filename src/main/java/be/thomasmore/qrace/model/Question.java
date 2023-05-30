@@ -1,11 +1,6 @@
 package be.thomasmore.qrace.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -15,6 +10,9 @@ public class Question {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @ManyToOne
+  private Race race;
 
   @NotNull
   @Column(name = "question_text")
@@ -127,5 +125,13 @@ public class Question {
 
   public void setLanguage(String language) {
     this.language = language;
+  }
+
+  public Race getRace() {
+    return race;
+  }
+
+  public void setRace(Race race) {
+    this.race = race;
   }
 }
