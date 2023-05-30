@@ -2,7 +2,8 @@ CREATE TABLE if not exists HIGH_SCORES (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_name VARCHAR(255) NOT NULL,
     score INT NOT NULL,
-    highscore_date DATE NOT NULL);
+    highscore_date DATE NOT NULL,
+    archive boolean DEFAULT FALSE);
 CREATE SEQUENCE IF NOT EXISTS HIGHSCORE_SEQ;
 -- use line below to resset the highscore seq to 1 again
 -- ALTER SEQUENCE HIGHSCORE_SEQ RESTART WITH 1;

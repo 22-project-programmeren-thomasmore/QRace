@@ -45,6 +45,10 @@
             <option value="Highscore">Highscore (Descending)</option>
             <option value="Date">Date</option>
         </select>
+        <select class="form-control" id="sort-select-archived">
+            <option value="UnArchived">Not Archived</option>
+            <option value="Archived">Archived</option>
+        </select>
     </div>
 
     <div class="table-responsive">
@@ -59,7 +63,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="score : ${highscores}">
+            <tr th:each="score : ${highscores}" th:if="${!score.archive}">
                 <td>
                     <span class="form-control-id" data-field="id" th:text="${score.id}"></span>
                 </td>
@@ -72,21 +76,57 @@
                     <input type="number" class="form-control form-control-score" style="display: none;">
                 </td>
                 <td>
-                <span class="editable" data-field="highscoreDate" data-id="${score.id}"
-                      th:text="${#dates.format(score.highscoreDate, 'yyyy-MM-dd')}"></span>
+        <span class="editable" data-field="highscoreDate" data-id="${score.id}"
+              th:text="${#dates.format(score.highscoreDate, 'yyyy-MM-dd')}"></span>
                     <input type="date" class="form-control form-control-highscore" style="display: none;">
                 </td>
-
                 <td>
+                    <span class="form-control-archive" style="display: none;">false</span>
                     <button class="btn btn-primary edit-button">Edit</button>
                     <button class="btn btn-success save-button" style="display: none;">Save</button>
                     <button class="btn btn-danger cancel-button" style="display: none;">Cancel</button>
-                    <button class="btn btn-danger delete-button" th:data-id="${score.id}"
-                            onclick="deleteHighscore(this)">
+                    <button class="btn btn-danger archive-button" th:data-id="${score.id}" onclick="archiveScore(this)">
+                        Archive
+                    </button>
+                    <button class="btn btn-danger delete-button" th:data-id="${score.id}" onclick="deleteHighscore(this)">
                         Delete
                     </button>
                 </td>
             </tr>
+            <tr th:each="score : ${highscores}" th:if="${score.archive}" style="display: none;">
+                <td>
+                    <span class="form-control-id" data-field="id" th:text="${score.id}"></span>
+                </td>
+                <td>
+                    <span class="editable" data-field="userName" th:text="${score.userName}"></span>
+                    <input type="text" class="form-control form-control-user-name" style="display: none;">
+                </td>
+                <td>
+                    <span class="editable" data-field="score" data-id="${score.id}" th:text="${score.score}"></span>
+                    <input type="number" class="form-control form-control-score" style="display: none;">
+                </td>
+                <td>
+        <span class="editable" data-field="highscoreDate" data-id="${score.id}"
+              th:text="${#dates.format(score.highscoreDate, 'yyyy-MM-dd')}"></span>
+                    <input type="date" class="form-control form-control-highscore" style="display: none;">
+                </td>
+                <td>
+                    <span class="form-control-archive" style="display: none;">true</span>
+                    <button class="btn btn-primary edit-button">Edit</button>
+                    <button class="btn btn-success save-button" style="display: none;">Save</button>
+                    <button class="btn btn-danger cancel-button" style="display: none;">Cancel</button>
+                    <button class="btn btn-danger unarchive-button" th:data-id="${score.id}" onclick="unArchiveScore(this)" style="display: none;">
+                    Un archive
+                </button>
+                    <button class="btn btn-danger archive-button" th:data-id="${score.id}" onclick="archiveScore(this)">
+                        Archive
+                    </button>
+                    <button class="btn btn-danger delete-button" th:data-id="${score.id}" onclick="deleteHighscore(this)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+
             </tbody>
         </table>
     </div>
@@ -173,7 +213,6 @@
 
         $("#sort-select").change(function () {
             var sortValue = $(this).val();
-            console.log(sortValue)
 
             if (sortValue === "Username") {
                 sortTableByUserName();
@@ -181,8 +220,19 @@
                 sortTableByHighscore();
             } else if (sortValue === "Date") {
                 sortTableByDate();
+            } else if (sortValue === "Archived") {
+                filterTableByArchive();
             } else {
                 resetTable();
+            }
+        });
+        $("#sort-select-archived").change(function () {
+            var sortValue = $(this).val();
+
+            if (sortValue === "Archived") {
+                filterTableByArchive();
+            } else {
+                filterTableByUnarchive();
             }
         });
 
@@ -215,6 +265,41 @@
 
             $("#highscore-table tbody").empty().append(sortedRows);
         }
+        function filterTableByArchive() {
+            var rows = $("#highscore-table tbody tr").toArray();
+
+            rows.forEach(function (row) {
+                var archiveCell = $(row).find('.form-control-archive');
+                var isArchived = archiveCell.text().trim() === "true";
+
+                if (isArchived) {
+                    $(row).show();
+                    $(row).find(".unarchive-button").show();
+                    $(row).find(".archive-button").hide();
+                } else {
+                    $(row).hide(); // Hide non-archived rows
+                }
+            });
+        }
+
+        function filterTableByUnarchive() {
+            var rows = $("#highscore-table tbody tr").toArray();
+
+            rows.forEach(function (row) {
+                var archiveCell = $(row).find('.form-control-archive');
+                var isArchived = archiveCell.text().trim() === "false";
+
+                if (isArchived) {
+                    $(row).show(); // Show archived rows
+
+                    $(row).find(".unarchive-button").hide();
+                    $(row).find(".archive-button").show();
+                } else {
+                    $(row).hide(); // Hide non-archived rows
+                }
+            });
+        }
+
 
         function resetTable() {
             var originalRows = Array.from($("#highscore-table tbody tr")).sort(function (a, b) {
@@ -229,6 +314,11 @@
     });
 
     function deleteHighscore(button) {
+        var confirmation = confirm("Are you sure you want to delete this highscore?");
+        if (!confirmation) {
+            return;  // If user clicked "Cancel", stop the function here
+        }
+
         var id = $(button).data("id");
         var row = $(button).closest("tr");
 
@@ -245,6 +335,96 @@
             }
         });
     }
+
+    function archiveScore(button) {
+        var confirmation = confirm("Are you sure you want to archive this highscore?");
+        if (!confirmation) {
+            return;  // If user clicked "Cancel", stop the function here
+        }
+
+        var row = $(button).closest("tr");
+        var id = $(button).data("id");
+        var userName = row.find(".editable[data-field='userName']").text();
+        var score = row.find(".editable[data-field='score']").text();
+        var highscoreDate = row.find(".editable[data-field='highscoreDate']").text();
+
+
+
+        var updatedData = {
+            id: id,
+            userName: userName,
+            score: score,
+            highscoreDate: highscoreDate,
+            archive: true
+        };
+        console.log(updatedData)
+
+        $.ajax({
+            url: "/updateHighscore",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(updatedData),
+            success: function () {
+
+                // Show the editable fields and hide the input fields and buttons
+                row.find("input").hide();
+                row.find(".editable").show();
+                row.find(".edit-button").show();
+                row.find(".save-button, .cancel-button").hide();
+
+                location.reload(); // reload the page
+            },
+            error: function () {
+                alert("Failed to update the highscore.");
+            }
+        });
+    }
+
+    function unArchiveScore(button) {
+        var confirmation = confirm("Are you sure you want to unarchive this highscore?");
+        if (!confirmation) {
+            return;  // If user clicked "Cancel", stop the function here
+        }
+
+        var row = $(button).closest("tr");
+        var id = $(button).data("id");
+        var userName = row.find(".editable[data-field='userName']").text();
+        var score = row.find(".editable[data-field='score']").text();
+        var highscoreDate = row.find(".editable[data-field='highscoreDate']").text();
+
+
+
+        var updatedData = {
+            id: id,
+            userName: userName,
+            score: score,
+            highscoreDate: highscoreDate,
+            archive: false
+        };
+        console.log(updatedData)
+
+        $.ajax({
+            url: "/updateHighscore",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(updatedData),
+            success: function () {
+
+                // Show the editable fields and hide the input fields and buttons
+                row.find("input").hide();
+                row.find(".editable").show();
+                row.find(".edit-button").show();
+                row.find(".save-button, .cancel-button").hide();
+                location.reload(); // reload the page
+            },
+            error: function () {
+                alert("Failed to update the highscore.");
+            }
+        });
+    }
+
+
+
 </script>
 
 

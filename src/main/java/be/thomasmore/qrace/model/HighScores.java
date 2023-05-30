@@ -24,6 +24,9 @@ public class HighScores {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date highscoreDate;
 
+    @Column(name = "archive")
+    private boolean archive;
+
 
     public void setId(int id) {
         this.id = id;
@@ -55,5 +58,13 @@ public class HighScores {
 
     public void setHighscoreDate(Date highscoreDate) {
         this.highscoreDate = highscoreDate;
+    }
+
+    public boolean getArchive() {
+        return archive;
+    }
+
+    public void setArchive(boolean archive) {
+        this.archive = archive;
     }
 }

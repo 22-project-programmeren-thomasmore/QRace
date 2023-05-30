@@ -50,6 +50,7 @@
                 existingHighscore.setUserName(updatedHighscore.getUserName());
                 existingHighscore.setScore(updatedHighscore.getScore());
                 existingHighscore.setHighscoreDate(updatedHighscore.getHighscoreDate());
+                existingHighscore.setArchive(updatedHighscore.getArchive());
                 highScoreRepository.save(existingHighscore);
                 return ResponseEntity.ok().build();
             }
