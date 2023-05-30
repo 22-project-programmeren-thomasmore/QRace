@@ -1,7 +1,24 @@
 .navbar-right {
   right: 10px; 
 }
+.navbar-collapse {
+  display: flex;
+  justify-content: flex-end;
+  position: relative; /* Add this line */
+}
 
+.navbar-nav {
+  float: none; /* Add this line */
+  margin: 0; /* Add this line */
+}
+
+.navbar-nav > li {
+  float: left; /* Add this line */
+}
+
+.navbar-right {
+  float: right; /* Add this line */
+}
 .navbar-toggle {
   margin-top: 10px; /* Adjust this value to align the hamburger vertically */
   position: relative;
