@@ -57,3 +57,10 @@
     display: none;
   }
 }
+
+@media (max-width: 200px) {
+  .navbar-nav > li {
+    display: block;
+    float: none;
+  }
+}
