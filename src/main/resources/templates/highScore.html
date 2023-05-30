@@ -81,6 +81,10 @@
                     <button class="btn btn-primary edit-button">Edit</button>
                     <button class="btn btn-success save-button" style="display: none;">Save</button>
                     <button class="btn btn-danger cancel-button" style="display: none;">Cancel</button>
+                    <button class="btn btn-danger archive-button" th:data-id="${score.id}"
+                            onclick="archiveScore(this)">
+                        Archive
+                    </button>
                     <button class="btn btn-danger delete-button" th:data-id="${score.id}"
                             onclick="deleteHighscore(this)">
                         Delete
@@ -229,6 +233,11 @@
     });
 
     function deleteHighscore(button) {
+        var confirmation = confirm("Are you sure you want to delete this highscore?");
+        if (!confirmation) {
+            return;  // If user clicked "Cancel", stop the function here
+        }
+
         var id = $(button).data("id");
         var row = $(button).closest("tr");
 
@@ -245,6 +254,7 @@
             }
         });
     }
+
 </script>
 
 
