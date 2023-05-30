@@ -1,9 +1,8 @@
+/*
 package be.thomasmore.qrace.service;
 
-import be.thomasmore.qrace.model.AppUser;
-import be.thomasmore.qrace.repository.AppUserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+//import be.thomasmore.qrace.model.AppUser;
+//import be.thomasmore.qrace.repository.AppUserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -46,4 +45,4 @@ public class AppUserDetailService implements UserDetailsService {
                 authorities
         );
     }
-}
+}*/

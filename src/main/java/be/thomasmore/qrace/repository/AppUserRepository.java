@@ -1,3 +1,4 @@
+/*
 package be.thomasmore.qrace.repository;
 
 import be.thomasmore.qrace.model.AppUser;
@@ -17,13 +18,13 @@ public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
 //    Iterable<AppUser> findByRole(Role role);
 
 
-    @Query("SELECT u FROM AppUser u WHERE u.role = :role ORDER BY u.id ASC")
+    @Query("SELECT u FROM AppUsers u WHERE u.role = :role ORDER BY u.id ASC")
     AppUser findByRole(@Param("role") Role role);
 
-    @Query("SELECT u FROM AppUser u WHERE u.role = :role ORDER BY u.id ASC")
+    @Query("SELECT u FROM AppUsers u WHERE u.role = :role ORDER BY u.id ASC")
     List<AppUser> findByRoleList(@Param("role") Role role);
 
-    @Query("SELECT u FROM AppUser u " +
+    @Query("SELECT u FROM AppUsers u " +
             "WHERE ?1 IS NULL OR LOWER (u.firstName) LIKE LOWER(CONCAT('%',?1,'%'))" +
             "AND  (?2 IS NULL OR u.role = ?2)" +
             "AND (?3 IS NULL OR u.speciality = ?3)"
@@ -32,7 +33,7 @@ public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
 
 
 
-    @Query("SELECT u FROM AppUser u WHERE u.role = :role AND u.username = :username")
+    @Query("SELECT u FROM AppUsers u WHERE u.role = :role AND u.username = :username")
     AppUser findByRoleAndUsername(@Param("role") Role role, @Param("username") String username);
 
     Optional<AppUser> findFirstByIdLessThanOrderByIdDesc(Integer id);
@@ -50,4 +51,4 @@ public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
     List<AppUser> findbyusername(String firstName);
 
 
-}
+}*/

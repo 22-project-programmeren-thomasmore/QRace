@@ -1,3 +1,4 @@
+/*
 package be.thomasmore.qrace.model;
 
 import jakarta.persistence.*;
@@ -324,6 +325,10 @@ public class AppUser implements UserDetails {
     public void setJob(String job) {
         this.job = job;
     }
+
+    public UserDetails orElseThrow(Object o) {
+    }
 }
 
 
+*/

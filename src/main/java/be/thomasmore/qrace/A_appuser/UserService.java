@@ -1,7 +1,7 @@
-package be.thomasmore.qrace.service;
+package be.thomasmore.qrace.A_appuser;
 
 import be.thomasmore.qrace.model.User;
-import be.thomasmore.qrace.repository.UserRepository;
+import be.thomasmore.qrace.A_appuser.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

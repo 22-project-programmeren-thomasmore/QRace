@@ -75,8 +75,10 @@ body {
     font-size: 14px;
     color: #222;
 }
-.popup .form .form-element input[type="text"],
-.popup .form .form-element input[type="password"] {
+.popup .form .form-element input[type="username"],
+.popup .form .form-element input[type="email"],
+.popup .form .form-element input[type="password"],
+.popup .form .form-element input[type="password"]{
     margin:5px;
     display:block;
     width:90%;
@@ -89,6 +91,10 @@ body {
     margin-right:5px;
 }
 .popup .form .form-element button {
+    margin:5px;
+    display:block;
+    padding:10px;
+    border-radius: 5px;
     width:90%;
     height:40px;
     border:none;
