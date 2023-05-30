@@ -1,3 +1,20 @@
+document.getElementById("search-bar").addEventListener("keyup", function () {
+  // Get the search term (in lowercase)
+  var searchTerm = this.value.toLowerCase();
+
+  // Get all the rows in the table
+  var rows = document.getElementById("questions").getElementsByTagName("tr");
+
+  // Iterate over each row
+  for (var i = 0; i < rows.length; i++) {
+    // If the row's text includes the search term, show the row, otherwise hide it
+    if (rows[i].textContent.toLowerCase().includes(searchTerm)) {
+      rows[i].style.display = "";
+    } else {
+      rows[i].style.display = "none";
+    }
+  }
+});
 
 function populateTable(questions) {
   var tbody = document
