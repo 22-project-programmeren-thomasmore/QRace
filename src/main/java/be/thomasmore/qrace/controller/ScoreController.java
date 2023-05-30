@@ -16,7 +16,7 @@ public class ScoreController {
 
     @PostMapping("/race")
     public ResponseEntity<String> saveScore(@RequestParam int playerID, @RequestParam Long time) {
-        Player player = playerRepository.findById(playerID).orElse(null);
+        Player player = playerRepository.findById(Long.valueOf(playerID)).orElse(null);
         if (player == null) {
             return ResponseEntity.badRequest().body("Player not found");
         }
