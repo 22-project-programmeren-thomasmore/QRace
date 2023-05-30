@@ -56,9 +56,12 @@
             e.preventDefault();
             var name = document.getElementById('nameInput').value;
             localStorage.setItem('userName', name);
+            var raceId = Math.floor(Math.random() * (999999 - 100000 + 1)) + 1000;
+            localStorage.setItem('raceID', raceId);
             window.location.href = '/host-join';
         });
     });
+
 </script>
 </body>
 </html>
