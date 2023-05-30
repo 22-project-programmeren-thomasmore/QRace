@@ -19,13 +19,17 @@
   <div class="container-fluid">
     <div class="row d-block" style="text-align: center">
       <!-- <h1>Game</h1> -->
-      <div class="flex-container-game-right">
-        <i class="fa fa-star"></i>
-        <h3 id="score">0</h3>
-        <i class="fa fa-hourglass-half"></i>
-        <h3 id="stopwatch">00:00</h3>
+<div style="display: flex; justify-content: space-evenly;">
+  <div class="scoreDisplay">
+    <i class="fa fa-star"></i>
+    <h3 id="score">0</h3>
+  </div>
+  <div class="timeDisplay">
+    <i class="fa fa-hourglass-half"></i>
+    <h3 id="stopwatch">00:00</h3>
+  </div>
+</div>
 
-      </div>
 
       <!-- Questions -->
       <div id="questionContainer" class="my-5">
@@ -36,7 +40,7 @@
       <!-- scanner -->
       <div>
         <button id="openScannerBtn" class="btn btn-primary" style="position: fixed;">
-          <i class="fa fa-qrcode"></i>
+          <i class="fa fa-camera"></i>
         </button>
         <div id="scannerContainer">
           <button id="closeScannerBtn" class="btn btn-secondary" style="display: none;">
