@@ -14,6 +14,22 @@
 <header th:replace="fragments\head-header-footer :: header"></header>
 <!-- content -->
 
+<h1>Your Score</h1>
+<tr>
+    <th>Id</th>
+    <th>User Name</th>
+    <th>Score</th>
+    <th>Highscore Date</th>
+    </br>
+</tr>
+<tr>
+    <th><span id="localId"></span></th>
+    <th><span id="localUser"></span></th>
+    <th><span id="localScore"></span></th>
+    <th><span id="localDate"></span></th>
+
+    </br>
+</tr>
 
 
 <select id="sort-select">
@@ -104,16 +120,40 @@
 
             $("#highscore-table tbody").empty().append(originalRows);
         }
+
+
+
+
     });
+    var username = localStorage.getItem("userName");
+    $("#localUser").text(username);
+
+    var rows = $("#highscore-table tbody tr");
+    var foundRow = null;
+
+    rows.each(function () {
+        var row = $(this);
+        var userName = row.find('.editable[data-field="userName"]').text();
+
+        if (userName === username) {
+            foundRow = row;
+            return false; // Exit the loop early if the row is found
+        }
+    });
+
+    if (foundRow) {
+        var id = foundRow.find('.form-control-id').text();
+        var score = foundRow.find('.editable[data-field="score"]').text();
+        var highscoreDate = foundRow.find('.editable[data-field="highscoreDate"]').text();
+
+        $("#localId").text(id);
+        $("#localScore").text(score);
+        $("#localDate").text(highscoreDate);
+    } else {
+        console.log("Row not found for username:", username);
+    }
+
 </script>
-
-
-
-
-
-
-
-
 
 <div th:replace="fragments\head-header-footer :: footer"></div>
 <!-- general scrips -->
