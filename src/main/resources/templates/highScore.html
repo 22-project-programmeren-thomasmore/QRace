@@ -1,44 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="nl-BE" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments\head-header-footer :: head"></head>
 <head>
-    <!--meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- stylesheet -->
-    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"/>
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- javascript -->
+    <!-- js library -->
     <script src="/js/translator.js"></script>
     <script src="/js/translations.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- title -->
-    <title>Highscores</title>
+    <!-- Title -->
+    <title>Highscore</title>
 </head>
 
 <body>
-<!-- navbar -->
-<nav class="navbar navbar-expand-xxl navbar-light bg-light">
-    <a class="navbar-brand" href="https://www.speelgoedmuseum.be/"><img src="/img/logo.png" height="50"
-                                                                        class="d-inline-block align-top"
-                                                                        alt="Speelgoedmuseum Mechelen"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><span
-            class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav text-right">
-            <li id="home" class="nav-item active"><a class="nav-link" href="#"><span
-                    class="sr-only">(current)</span></a></li>
-            <li id="inlog" class="nav-item"><a class="nav-link" href="#"></a></li>
-            <li id="info" class="nav-item"><a class="nav-link" href="#"></a></li>
-            <li id="changeLanguage" class="nav-item"><img src="/img/translate.svg" alt="Translate"></li>
-        </ul>
-    </div>
-</nav>
-
+<header th:replace="fragments\head-header-footer :: header"></header>
 
 <form th:action="@{/highscore}" th:object="${highscore}" method="post">
     <label for="userName">User Name:</label><br>
@@ -109,6 +82,23 @@
             row.find("input").show();
             row.find(".edit-button").hide();
             row.find(".save-button, .cancel-button").show();
+
+            // Find the corresponding elements within the row
+            var userNameSpan = row.find('.editable[data-field="userName"]');
+            var userNameInput = row.find('.form-control-user-name');
+            var scoreSpan = row.find('.editable[data-field="score"]');
+            var scoreInput = row.find('.form-control-score');
+            var dateSpan = row.find('.editable[data-field="highscoreDate"]');
+            var dateInput = row.find('.form-control-highscore');
+            // Get the text from the span element
+            var userName = userNameSpan.text();
+            var scoreText = scoreSpan.text();
+            var dateText = dateSpan.text();
+
+            // Set the text to the input element
+            userNameInput.val(userName);
+            scoreInput.val(scoreText);
+            dateInput.val(dateText);
         });
 
         $(".cancel-button").click(function () {
@@ -219,28 +209,30 @@
             $("#highscore-table tbody").empty().append(originalRows);
         }
 
-
-        function deleteHighscore(button) {
-            var id = $(button).data("id");
-            var row = $(button).closest("tr");
-
-            $.ajax({
-                url: "/highscores/" + id,
-                type: "DELETE",
-                success: function () {
-                    // Remove the row from the table
-                    row.remove();
-                    alert("Highscore deleted successfully.");
-                },
-                error: function () {
-                    alert("Failed to delete the highscore.");
-                }
-            });
-        }
-
     });
+
+    function deleteHighscore(button) {
+        var id = $(button).data("id");
+        var row = $(button).closest("tr");
+
+        $.ajax({
+            url: "/highscores/" + id,
+            type: "DELETE",
+            success: function () {
+                // Remove the row from the table
+                row.remove();
+                alert("Highscore deleted successfully.");
+            },
+            error: function () {
+                alert("Failed to delete the highscore.");
+            }
+        });
+    }
+
 </script>
 
+<div th:replace="fragments\head-header-footer :: footer"></div>
 
 </body>
+
 </html>

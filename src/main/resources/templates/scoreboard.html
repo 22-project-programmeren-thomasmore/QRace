@@ -1,47 +1,134 @@
 <!DOCTYPE html>
-<html lang="nl-BE">
-<head>
-    <!--meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- stylesheet -->
-    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"/>
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-    <!-- util -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" integrity="sha512-oHBLR38hkpOtf4dW75gdfO7VhEKg2fsitvHZYHZjObc4BPKou2PGenyxA5ZJ8CCqWytBx5wpiSqwVEBy84b7tw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/util@0.12.5/util.min.js"></script>
-    <!-- data for translations -->
-    <script src="/js/translator.js"></script>
-    <script src="/js/translations.js"></script>
-    <!-- title -->
-    <title>QRace: Scoreboard</title>
-</head>
-<body>
-<!-- navbar -->
-<nav class="navbar navbar-expand-xxl navbar-light bg-light">
-    <a class="navbar-brand" href="https://www.speelgoedmuseum.be/"><img src="/img/logo.png" height="50" class="d-inline-block align-top" alt="Speelgoedmuseum Mechelen"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav text-right">
-            <li id="home" class="nav-item active"><a class="nav-link" href="#"><span class="sr-only">(current)</span></a></li>
-            <li id="inlog" class="nav-item"><a class="nav-link" href="#"></a></li>
-            <li id="info" class="nav-item"><a class="nav-link" href="#"></a></li>
-            <li id="changeLanguage" class="nav-item"><img src="/img/translate.svg" alt="Translate"></li>
-        </ul>
-    </div>
-</nav>
-<!-- content  -->
-<div class="container-fluid">
-    <div class = "row d-block" style="text-align: center;">
+<html lang="nl-BE" xmlns:th="http://www.thymeleaf.org">
 
-        <!-- jQuery, popper.js, bootstrap js -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    </div>
-</div>
+<head th:replace="fragments\head-header-footer :: head"></head>
+
+<head>
+    <!-- js library -->
+    <script src="https://unpkg.com/qr-scanner"></script>
+    <!-- Title -->
+    <title>Race</title>
+</head>
+
+<body>
+<header th:replace="fragments\head-header-footer :: header"></header>
+<!-- content -->
+
+
+
+<select id="sort-select">
+    <option value="Id">Default (Id)</option>
+    <option value="Username">Username (a-z)</option>
+    <option value="Highscore">Highscore (Descending)</option>
+    <option value="Date">Date</option>
+</select>
+
+<table id="highscore-table">
+    <tr>
+        <th>Id</th>
+        <th>User Name</th>
+        <th>Score</th>
+        <th>Highscore Date</th>
+    </tr>
+    <tr th:each="score : ${highscores}">
+        <td>
+            <span class="form-control-id" data-field="id" th:text="${score.id}"></span>
+        </td>
+        <td>
+            <span class="editable" data-field="userName" th:text="${score.userName}"></span>
+        </td>
+        <td>
+            <span class="editable" data-field="score" data-id="${score.id}" th:text="${score.score}"></span>
+        </td>
+        <td>
+        <span class="editable" data-field="highscoreDate" data-id="${score.id}"
+              th:text="${#dates.format(score.highscoreDate, 'yyyy-MM-dd')}"></span>
+        </td>
+    </tr>
+</table>
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+
+        $("#sort-select").change(function () {
+            var sortValue = $(this).val();
+            console.log(sortValue)
+
+            if (sortValue === "Username") {
+                sortTableByUserName();
+            } else if (sortValue === "Highscore") {
+                sortTableByHighscore();
+            } else if (sortValue === "Date") {
+                sortTableByDate();
+            } else {
+                resetTable();
+            }
+        });
+
+        function sortTableByUserName() {
+            var sortedRows = $("#highscore-table tbody tr").toArray().sort(function (a, b) {
+                var userNameA = $(a).find('.editable[data-field="userName"]').text();
+                var userNameB = $(b).find('.editable[data-field="userName"]').text();
+                return userNameA.localeCompare(userNameB);
+            });
+
+            $("#highscore-table tbody").empty().append(sortedRows);
+        }
+
+        function sortTableByHighscore() {
+            var sortedRows = $("#highscore-table tbody tr").toArray().sort(function (a, b) {
+                var scoreA = parseInt($(a).find('.editable[data-field="score"]').text());
+                var scoreB = parseInt($(b).find('.editable[data-field="score"]').text());
+                return scoreB - scoreA;
+            });
+
+            $("#highscore-table tbody").empty().append(sortedRows);
+        }
+
+        function sortTableByDate() {
+            var sortedRows = $("#highscore-table tbody tr").toArray().sort(function (a, b) {
+                var dateA = new Date($(a).find('.editable[data-field="highscoreDate"]').text());
+                var dateB = new Date($(b).find('.editable[data-field="highscoreDate"]').text());
+                return dateB - dateA;
+            });
+
+            $("#highscore-table tbody").empty().append(sortedRows);
+        }
+
+        function resetTable() {
+            var originalRows = Array.from($("#highscore-table tbody tr")).sort(function (a, b) {
+                var idA = parseInt($(a).find('.form-control-id[data-field="id"]').text());
+                var idB = parseInt($(b).find('.form-control-id[data-field="id"]').text());
+                return idA - idB;
+            });
+
+            $("#highscore-table tbody").empty().append(originalRows);
+        }
+    });
+</script>
+
+
+
+
+
+
+
+
+
+<div th:replace="fragments\head-header-footer :: footer"></div>
+<!-- general scrips -->
+<script src="/js/translator.js"></script>
+<script src="/js/translations.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
 </body>
+
 </html>
