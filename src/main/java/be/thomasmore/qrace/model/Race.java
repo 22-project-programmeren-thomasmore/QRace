@@ -1,67 +1,34 @@
 package be.thomasmore.qrace.model;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Random;
+import java.util.ArrayList;
 
-@Entity // Add this annotation
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
-@Data
-@Builder
+@Table(name = "RACES")
 public class Race {
     @Id
-    private String raceID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int raceID;
     private RaceStatusEnum status;
     @ManyToOne
-    private Player hostPlayer;
+    private Player player1;
     @ManyToOne
-    private Player secondPlayer;
+    private Player player2;
     @ManyToOne
-    private Player thirdPlayer;
+    private Player player3;
     @ManyToOne
-    private Player fourthPlayer;
-    @ManyToOne
-    private Player winner;
+    private Player player4;
 
-    public Race(String raceID) {
+
+    public Race(int raceID) {
         this.raceID = raceID;
-    }
-
-    public Race() {
-
-    }
-
-    public String getRaceID() {
-        return raceID;
-    }
-
-    public void setRaceID(String raceID) {
-        this.raceID = raceID;
-    }
-
-    public Race(Player hostPlayer) {
-        this.hostPlayer = hostPlayer;
-    }
-
-    public Race(Player hostPlayer, Player secondPlayer) {
-        this.hostPlayer = hostPlayer;
-        this.secondPlayer = secondPlayer;
-    }
-
-    public Race(Player hostPlayer, Player secondPlayer, Player thirdPlayer) {
-        this.hostPlayer = hostPlayer;
-        this.secondPlayer = secondPlayer;
-    }
-
-    public Race(Player hostPlayer, Player secondPlayer, Player thirdPlayer, Player fourthPlayer) {
-        this.hostPlayer = hostPlayer;
-        this.secondPlayer = secondPlayer;
-        this.thirdPlayer = thirdPlayer;
-        this.fourthPlayer = fourthPlayer;
     }
 }

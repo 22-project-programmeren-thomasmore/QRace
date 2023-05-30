@@ -1,4 +1,6 @@
-const MAX_ATTEMPTS = 5;
+const endRace = 'stop';
+
+const MAX_ATTEMPTS = 2;
 const FIRST_ATTEMPT_SCORE_CORRECT = 10;
 const FIRST_ATTEMPT_SCORE_INCORRECT = -5;
 const SECOND_ATTEMPT_SCORE_CORRECT = 5;
@@ -13,7 +15,12 @@ if (!localStorage.getItem(trackProgressKey)) {
 
 document.addEventListener("exportData", (event) => {
   const groupParameter = event.detail;
+if (groupParameter === endRace) {
+  window.location.href = "/scoreboard";
+  return;
+}else{
   selectRandomQuestion(groupParameter);
+}
 });
 
 function selectRandomQuestion(groupParameter) {
@@ -24,6 +31,8 @@ function selectRandomQuestion(groupParameter) {
       const randomQuestion = getRandomQuestion(filteredQuestions);
       if (!randomQuestion) {
         console.error("No questions available for the selected group and language");
+        alert(" je hebt alle vragen voor deze groep beantwoord. \n Zoek een andere qr code aub. \n \n You have answered all questions for this group. \n Please find another qr code. \n \n Tu as répondu à toutes les questions de ce groupe. \n Veuillez trouver un autre code QR.");
+        openScannerBtn.style.display = 'block';
         return;
       }
       displayQuestion(randomQuestion);
@@ -35,20 +44,13 @@ function selectRandomQuestion(groupParameter) {
 function getFilteredQuestions(questions, groupParameter) {
   const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
   const language = getLanguageFromCookies();
-
-  console.log("Before filtering: ", questions);
-  console.log("Group Parameter: ", groupParameter);
-  console.log("Language: ", language);
-  console.log("Track Progress: ", trackProgress);
-
   const filteredQuestions = questions.filter(question =>
     question.groupParameter === groupParameter &&
     question.language === language &&
     !question.archived &&
-    (!(trackProgress.groups[groupParameter]?.answeredQuestions?.[question.id]) && trackProgress.groups[groupParameter]?.attempts < MAX_ATTEMPTS)
-  );
-  console.log("After filtering: ", filteredQuestions);
-
+    (!trackProgress.groups[groupParameter] ||
+      (!trackProgress.groups[groupParameter]?.answeredQuestions?.[question.id] &&
+       trackProgress.groups[groupParameter]?.attempts < MAX_ATTEMPTS)));
   return filteredQuestions;
 }
 
@@ -75,7 +77,7 @@ function displayQuestion(question) {
     answerCard.addEventListener('click', () => handleAnswerClick(key, question));
     answerContainer.appendChild(answerCard);
   }
-  openScannerBtn.style.visibility = 'hidden';
+  openScannerBtn.style.display = 'none';
   questionContainer.style.display = 'block';
 }
 
@@ -84,7 +86,6 @@ function handleAnswerClick(selectedAnswer, question) {
   const answerCards = Array.from(document.getElementsByClassName('answer-card'));
 
   const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
-  const currentScore = Number(localStorage.getItem(trackProgressKey.score));
   const isCorrectAnswer = selectedCard.textContent === question.correctAnswer;
   if (isCorrectAnswer) {
     selectedCard.classList.add('correct');
@@ -97,16 +98,16 @@ function handleAnswerClick(selectedAnswer, question) {
     trackProgress.groups[question.groupParameter].answeredQuestions[question.id].correct = false; 
     trackProgress.score += trackProgress.groups[question.groupParameter].attempts >= 2 ? SECOND_ATTEMPT_SCORE_INCORRECT : FIRST_ATTEMPT_SCORE_INCORRECT;
   }
-
   localStorage.setItem(trackProgressKey, JSON.stringify(trackProgress));
 
   answerCards.forEach(card => card.style.display = 'none');
   document.getElementById('questionContainer').style.display = 'none';
-  document.getElementById('openScannerBtn').style.visibility = 'visible';
+  document.getElementById('openScannerBtn').style.display = 'block';
+  
+  giveNewChance(question);
 }
 
 function updateTrackProgress(question) {
-  console.log('question', question)
   if (!question || question.id === undefined || !question.groupParameter) {
     console.error("Invalid object:", question);
     return;
@@ -126,12 +127,30 @@ function updateTrackProgress(question) {
     };
   }
   localStorage.setItem(trackProgressKey, JSON.stringify(trackProgress));
+}
+function giveNewChance(question) {
+  const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
+  console.log('attempts', trackProgress.groups[question.groupParameter]?.attempts)  
+  console.log('answer correct',trackProgress.groups[question.groupParameter]?.answeredQuestions[question.id]?.correct)
 
-  // if (trackProgress.groups[question.groupParameter.group].attempts < MAX_ATTEMPTS) {
-  //   selectRandomQuestion(question.groupParameter);
-  // }
+  if (trackProgress.groups[question.groupParameter]?.attempts < MAX_ATTEMPTS && trackProgress.groups[question.groupParameter].answeredQuestions[question.id].correct === false) {
+    selectRandomQuestion(question.groupParameter);
+  }
 }
 
 function getLanguageFromCookies() {
-  return document.cookie.replace(/(?:(?:^|.*;\s*)language\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+  let name = "language=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {      
+      return c.substring(name.length, c.length);
+    }
+  }
+  console.error("No language cookie found! cookies: ",ca);
+  return "";
 }
