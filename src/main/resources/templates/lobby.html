@@ -65,6 +65,28 @@
         <button id="lobbybtn" type="button" class="btn mx-auto d-block" onclick="location.href='/race'"></button>
 
         <!-- jQuery, popper.js, bootstrap js -->
+
+        <script>
+            // WebSocket code goes here
+            const socket = new WebSocket('ws://localhost:8080/ws');
+
+            socket.onopen = function() {
+                console.log('WebSocket connection established.');
+
+                // Send a message to the server
+                socket.send('Hello, server!');
+            };
+
+            socket.onmessage = function(event) {
+                const message = event.data;
+                console.log('Received message from server:', message);
+            };
+
+            socket.onclose = function() {
+                console.log('WebSocket connection closed.');
+            };
+        </script>
+        <script src="/js/websocket.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
                 integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
                 crossorigin="anonymous"></script>
