@@ -1,12 +1,27 @@
 package be.thomasmore.qrace.config.websocket;
 
 import be.thomasmore.qrace.model.RaceUpdate;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 public class WebSocketHandler extends TextWebSocketHandler {
+
+    private SimpMessagingTemplate messagingTemplate;
+
+    public WebSocketHandler(SimpMessagingTemplate messagingTemplate) {
+        this.messagingTemplate = messagingTemplate;
+    }
+
+    public WebSocketHandler() {
+
+    }
+
+    public void sendRaceUpdate(RaceUpdate gameUpdate, String destination) {
+        messagingTemplate.convertAndSend(destination, gameUpdate);
+    }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
