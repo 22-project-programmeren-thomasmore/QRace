@@ -10,13 +10,16 @@ const closeScannerBtn = document.getElementById("closeScannerBtn");
 const scannerContainer = document.getElementById("scannerContainer");
 // get the element that displays the scan result
 const scanResult = document.getElementById("scanResult");
+let resultSent = false; // Flag variable to track if a result has already been sent
+let scannerRunning = false; // Flag variable to track if the scanner is running
 
 // create a new scanner
 const scanner = new QrScanner(
   video,
   (result) => setResult(scanResult, result),
   {
-    returnDetailedScanResult: true,
+    maxScansPerSecond: 25,
+    returnDetailedScanResult: false,
     onDecodeContinuouslyStop: true,
     scanBoth: true,
     highlightScanRegion: true,
@@ -29,30 +32,29 @@ const scanner = new QrScanner(
 
 // add event listener for the open scanner button
 openScannerBtn.addEventListener("click", () => {
-  // start the scanner
+resultSent = false; // Reset the flag variable
   scanner.start();
-  // display the close scanner button
+    scannerRunning = true; // Set the scannerRunning flag to true
   closeScannerBtn.style.display = "inline";
-  // display the scanner container
   scannerContainer.style.display = "block";
-  // hide the button to open the scanner
   openScannerBtn.style.display = "none";
 });
 
-// add event listener for the close scanner button
 closeScannerBtn.addEventListener("click", () => {
-  // stop the scanner
-  scanner.stop();
-  // hide the scanner container
-  scannerContainer.style.display = "none";
-  // show the button to open the scanner
-  openScannerBtn.style.display = "inline";
+  // stop the scanner after a 1-second delay
+    scanner.stop();
+    scannerRunning = false; // Set the scannerRunning flag to true
+    // hide the scanner container
+    scannerContainer.style.display = "none";
+    // show the button to open the scanner
+    openScannerBtn.style.display = "inline";
 });
 
 // for debugging
 window.scanner = scanner;
 
 function setResult(label, result) {
+
     // Stop the scanner
     scanner.stop();
     // Hide the scanner container
@@ -81,6 +83,20 @@ function setResult(label, result) {
 
     // Hide the answer options container (if applicable)
     answerOptionsContainer.style.display = "none";
+
+  if (!resultSent) {
+    resultSent = true; // Set the flag to true to indicate that a result has been sent
+    // send the result after a 1-second delay if the scanner is still running
+    setTimeout(() => {
+      if (scannerRunning) {
+        scanner.stop();
+        // hide the scanner container
+        scannerContainer.style.display = "none";
+        // send the result
+        exportResult(result.data);
+      }
+    }, 1000);
+  }
 }
 
 
