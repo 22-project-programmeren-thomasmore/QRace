@@ -166,16 +166,7 @@
                         }
                     });
             }
-            function createTableRow(correct, questionText, correctAnswer, answer, recordTime) {
-                var newRow = $("<tr>");
-                newRow.append($("<td>").text(correct ? "Yes" : "No"));
-                newRow.append($("<td>").text(questionText));
-                newRow.append($("<td>").text(correctAnswer));
-                newRow.append($("<td>").text(answer));
-                newRow.append($("<td>").text(recordTime));
 
-                $("#race-details-table tbody").append(newRow);
-            }
 
             var localScoreData = localStorage.getItem("track progress");
             var data = JSON.parse(localScoreData);
@@ -188,23 +179,35 @@
                     var answeredQuestions = groups[group].answeredQuestions;
                     // console.log(answeredQuestions);
 
-                    for (var [questionId, answeredQuestion] of Object.entries(answeredQuestions)) {
-                        var recordTime = answeredQuestion.recordTime;
-                        var correct = answeredQuestion.correct;
-                        var answer = answeredQuestion.answer;
+                    for (var questionId in answeredQuestions) {
+                        if (answeredQuestions.hasOwnProperty(questionId)) {
+                            var answeredQuestion = answeredQuestions[parseInt(questionId)];
 
-                        fetchQuestion(parseInt(questionId))
-                            .then(question => {
-                                var questionText = question.questionText;
-                                var correctAnswer = question.correctAnswer;
+                            var recordTime = answeredQuestion.recordTime;
+                            var correct = answeredQuestion.correct;
+                            var answer = answeredQuestion.answer;
+                            console.log(answer)
 
-                                createTableRow(correct, questionText, correctAnswer, answer, recordTime);
-                            })
-                            .catch(error => {
-                                console.error(error);
-                            });
+                            // Retrieve the question details using fetchQuestion
+                            fetchQuestion(parseInt(questionId))
+                                .then(question => {
+                                    console.log(question);  // Log the fetched question
+                                    var newRow = $("<tr>");
+                                    newRow.append($("<td>").text(correct ? "Yes" : "No"));
+                                    newRow.append($("<td>").text(question.questionText));
+                                    newRow.append($("<td>").text(question.correctAnswer));
+                                    newRow.append($("<td>").text(answer));
+                                    newRow.append($("<td>").text(recordTime));
+
+                                    $("#race-details-table tbody").append(newRow);
+                                })
+                                .catch(error => {
+                                    console.error(error);
+                                    console.log('Error fetching question with ID:', questionId);  // Log error message
+                                });
+
+                        }
                     }
-
                 }
             }
 
