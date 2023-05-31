@@ -18,7 +18,6 @@ import java.util.Optional;
 
 @Slf4j
 @Controller
-@SessionAttributes("name")
 public class LobbyController{
     private RaceRepository raceRepository;
 
@@ -33,11 +32,12 @@ public class LobbyController{
     public String name() {
         return "name";
     }
-
     @PostMapping("/name")
-    public String handleNameSubmit(@RequestParam("name") String name, Model model) {
-        model.addAttribute("name", name);
-        return "redirect:/host-join";
+    public String handleNameSubmit(@RequestParam("name") String name, HttpSession session) {
+        Player player = new Player(name); // Create a new Player object with the inputted name
+        // Store the player object in the session or database
+        session.setAttribute("player", player); // Store in the session for simplicity
+        return "redirect:/host-join"; // Redirect to the lobby page or any other appropriate page
     }
     @GetMapping({ "/host-join" })
     public String hostOrJoin() {

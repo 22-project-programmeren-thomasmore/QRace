@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Random;
+
 
 @Entity
 @Getter
@@ -26,13 +28,24 @@ public class Player {
         this.playerID = playerID;
     }
 
+    public Player(String name) {
+        this.name = name;
+        this.playerID = generatePlayerID(); // Generate a unique player ID
+    }
+
     public Player(int playerID, String name) {
         this.playerID = playerID;
         this.name = name;
         this.score = 0;
         this.currentCheckpoint = 0;
     }
-    public void addScore(int score) {
+
+    private int generatePlayerID() {
+        Random random = new Random();
+        return random.nextInt(900000) + 100000; // generate random 6-digit number
+    }
+
+        public void addScore(int score) {
         this.score += score;
     }
 
