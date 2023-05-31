@@ -9,7 +9,6 @@ import jakarta.persistence.PersistenceContext;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.Optional;
@@ -24,43 +23,41 @@ public class RaceService {
     @PersistenceContext
     private EntityManager entityManager;
 
-
     @Autowired
     public RaceService(RaceRepository raceRepository) {
         this.raceRepository = raceRepository;
     }
 
     public int generateRaceID() {
-        int randomPlayerID = new Random().nextInt(9000) + 1000;
-        String sql = "INSERT INTO RACES values (" + randomPlayerID + ", 1, 2, 3, 4)";
+        int randomRaceID = new Random().nextInt(9000) + 1000;
+        String sql = "INSERT INTO RACES values (" + randomRaceID + ", 1, 2, 3, 4)";
         entityManager.createNativeQuery(sql).executeUpdate();
-        return randomPlayerID;
+        return randomRaceID;
     }
-    @Transactional
-    public Race createNewRace (Player player1) {
-        Race race = new Race(generateRaceID());
+
+    public Race createRace(int raceID, Player host) {
+        Race race = new Race(generateRaceID(), host);
         races.put(Integer.toString(race.getRaceID()), race);
         race.setStatus(RaceStatusEnum.NEW);
+        raceRepository.save(race);
         return race;
     }
 
-    public Race connectToRace (Player player, Integer raceID) {
+    public Race joinRace(int raceID, Player participant) {
+        Race race = raceRepository.findById(raceID).orElse(null);
+        if (race != null) {
+            race.addParticipant(participant);
+            return raceRepository.save(race);
+        }
+        return null; // add throw exception indicating session not found
+    }
+    public Race findRaceById(int raceID) {
         Optional<Race> optionalRace = raceRepository.findById(raceID);
-        optionalRace.orElseThrow(() -> new RaceException("Race with provided ID doesn't exist"));
-        Race race = optionalRace.get();
-        if (race.getPlayer4() != null) {
-            throw new RaceException("Race is not valid anymore");
-        }
-        else if (race.getPlayer1() != null) {
-            race.setPlayer2(player);
-        }
-        else if (race.getPlayer2() != null) {
-            race.setPlayer3(player);
-        }
-        else if (race.getPlayer3() != null) {
-            race.setPlayer4(player);
-        }
-        return race;
-    }
 
+        if (optionalRace.isPresent()) {
+            return optionalRace.get();
+        } else {
+            throw new IllegalArgumentException("Race with ID " + raceID + " not found");
+        }
+    }
 }

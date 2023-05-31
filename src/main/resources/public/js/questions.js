@@ -43,11 +43,14 @@ function selectRandomQuestion(groupParameter) {
       if (!randomQuestion) {
         console.error("No questions available for the selected group and language");
         alert(" je hebt alle vragen voor deze groep beantwoord. \n Zoek een andere qr code aub. \n \n You have answered all questions for this group. \n Please find another qr code. \n \n Tu as répondu à toutes les questions de ce groupe. \n Veuillez trouver un autre code QR.");
-        openScannerBtn.style.display = 'block';
+         
+          openScannerBtn.style.display = 'inline';
         return;
       }
+        
       displayQuestion(randomQuestion);
-      updateTrackProgress(randomQuestion);
+        updateTrackProgress(randomQuestion);
+      
     })
     .catch(console.error);
 }
