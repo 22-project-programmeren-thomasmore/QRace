@@ -263,7 +263,7 @@ for (let group in groups) {
             // console.log('questionId',questionId);
             if (answeredQuestions.hasOwnProperty(questionId)) {
                 let answeredQuestion = answeredQuestions[questionId];
-                console.log(answeredQuestion);
+                // console.log(answeredQuestion);
 
                 let correct = answeredQuestion.correct;
                 let userAnswer = answeredQuestion.userAnswer;
@@ -279,7 +279,7 @@ for (let group in groups) {
                       newRow.append($("<td>").text(question.correctAnswer));
                       newRow.append($("<td>").text(userAnswer));
                       newRow.append($("<td>").text(recordTime));
-console.log('correct',correct, 'questionText',question.questionText, 'correctAnswer',question.correctAnswer, 'userAnswer',userAnswer, 'recordTime',recordTime);
+// console.log('correct',correct, 'questionText',question.questionText, 'correctAnswer',question.correctAnswer, 'userAnswer',userAnswer, 'recordTime',recordTime);
 
                       $("#race-details-table tbody").append(newRow);
                     })
