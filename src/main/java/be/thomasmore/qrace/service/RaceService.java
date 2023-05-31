@@ -51,5 +51,13 @@ public class RaceService {
         }
         return null; // add throw exception indicating session not found
     }
+    public Race findRaceById(int raceID) {
+        Optional<Race> optionalRace = raceRepository.findById(raceID);
 
+        if (optionalRace.isPresent()) {
+            return optionalRace.get();
+        } else {
+            throw new IllegalArgumentException("Race with ID " + raceID + " not found");
+        }
+    }
 }

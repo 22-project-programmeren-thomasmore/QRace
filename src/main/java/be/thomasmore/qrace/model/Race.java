@@ -36,7 +36,6 @@ public class Race {
         this.raceID = raceID;
         this.host = host;
         this.participants = new ArrayList<>();
-        this.participants.add(host);
     }
 
     public void addParticipant(Player participant) {
