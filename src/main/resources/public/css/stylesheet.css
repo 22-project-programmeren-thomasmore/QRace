@@ -137,3 +137,99 @@ footer {
     text-decoration: none;
     font-weight: 600;
 }
+
+/*loginCSS*/
+
+.bodyLogin {
+    background-color: #ece3d7;
+}
+
+.main {
+    background-color: #202020;
+    width: 400px;
+    height: 400px;
+    margin: 7em auto;
+    border-radius: 1.5em;
+    box-shadow: 0 11px 35px 2px rgba(0, 0, 0, 0.14);
+
+}
+
+.sign {
+    padding-top: 40px;
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+    font-size: 23px;
+    text-align: center;
+}
+
+
+form.form1 {
+    padding-top: 40px;
+
+}
+
+.pass, .un {
+    width: 76%;
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: rgba(136, 126, 126, 0.5);
+    padding: 10px 20px;
+    border-radius: 20px;
+    outline: none;
+    box-sizing: border-box;
+    margin-left: 46px;
+    text-align: center;
+    margin-bottom: 27px;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+
+.un:focus, .pass:focus {
+    border: 2px solid rgba(0, 0, 0, 0.18) !important;
+
+}
+
+.submit {
+    cursor: pointer;
+    border-radius: 1em;
+    color: #fff;
+    background: #6f6f6f;
+    border: 0;
+    padding: 10px 40px;
+    font-family: 'Ubuntu', sans-serif;
+    margin-left: 115px;
+    font-size: 13px;
+    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+    margin-top: 25px;
+    width: 169px;
+}
+
+.forgot {
+    text-shadow: 0 0 3px rgba(117, 117, 117, 0.12);
+    color: #0000;
+    padding-top: 15px;
+}
+
+
+@media (max-width: 600px) {
+    .main {
+        border-radius: 0;
+    }
+}
+
+.logout-form {
+    margin-top: 250px;
+}
+
+.logout-form > h4 {
+    text-align: center;
+}
+
+
+.buttonLogout {
+    display: block;
+    margin: auto;
+}

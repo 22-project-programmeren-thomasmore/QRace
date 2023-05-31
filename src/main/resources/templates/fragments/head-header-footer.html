@@ -1,14 +1,15 @@
-<!-- head -->
+/* 2de deel */
 
-<head th:fragment="head">
+<!-- head -->
+<head th:fragment="head" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 </head>
 
 <!-- header -->
@@ -17,7 +18,7 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" th:href="@{/home}">
-                    <img src="/img/logo.png" height="100%" alt="Logo"  >
+                    <img src="/img/logo.png" height="100%" alt="Logo">
                 </a>
             </div>
             <div class="navbar-title">
@@ -40,13 +41,31 @@
                     </li>
                     <li>
                         <a href="#" id="tooltip">
-                            <i class="fa fa-question-circle"></i>
+                            <i class="fa fa-info-circle"></i>
                         </a>
                     </li>
                     <li>
                         <a href="#" id="changeLanguage">
                             <i class="fa fa-globe"></i>
                         </a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_USER')">
+                        <a class="nav-link" th:href="@{/user/scorebord}">Scoreboard</a>
+                    </li>
+                    <li sec:authorize="isAnonymous()">
+                        <a class="nav-link" th:href="@{/registration}"> <i class="fa fa-user-circle"></i></a>
+                    </li>
+                    <li sec:authorize="isAnonymous()">
+                        <a class="nav-link" th:href="@{/login}">Login</a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="nav-link" th:href="@{/admin/questions}"><i class="fa fa-question-circle"></i></a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="nav-link" th:href="@{/admin/score}">Score</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <a class="nav-link" th:href="@{/logout}">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -58,3 +77,6 @@
 <footer th:fragment="footer" class="footer mt-5" style="position: absolute; bottom: 0;">
     <p>© Aberzak, Ahalli, Diop, Ekkart & Rousseaux 2023</p>
 </footer>
+
+
+/* 3de deel */

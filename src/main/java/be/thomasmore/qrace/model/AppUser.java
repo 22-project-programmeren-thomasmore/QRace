@@ -17,7 +17,6 @@ public class AppUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer id;
-    private String email;
     private String username;
     private String password;
     private Role role;
@@ -37,15 +36,14 @@ public class AppUser implements UserDetails {
     }
 
 
-    public AppUser(String username, String email, String password) {
+    public AppUser(String username, String password) {
         setUsername(username);
         setPassword(password);
-        setEmail(email);
+
     }
 
 
-    public AppUser(String email, String username, String password, String firstName, String lastName, Integer age, String phone, String address, String city, String postalCode, String country, String speciality, Role role) {
-        setEmail(email);
+    public AppUser(String email, String username, String password, Role role) {
         setUsername(username);
         setPassword(password);
         setRole(role);
@@ -61,13 +59,9 @@ public class AppUser implements UserDetails {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+
+
 
 
     @Override
