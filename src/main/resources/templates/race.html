@@ -40,7 +40,10 @@
           <i class="fa fa-star"></i>
           <h3 id="score">0</h3>
         </div>
-        <div class="timeDisplay">
+        <div>
+          <img id="user-avatar" alt="userAvatar" style="width: 100px; border-radius: 50%;" />
+        </div>
+        <div>
           <i class="fa fa-hourglass-half"></i>
           <h3 id="stopwatch">00:00</h3>
         </div>
@@ -116,8 +119,17 @@
           // Dispatch the custom event
           document.dispatchEvent(exportDataEvent);
         });
+        
       </script>
-
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    var userAvatar = localStorage.getItem('userAvatar');
+    if (userAvatar) {
+        var avatarImg = document.getElementById('user-avatar');
+        avatarImg.src = "/img/" + userAvatar + ".png";
+    }
+});
+</script>
 
 </body>
 
