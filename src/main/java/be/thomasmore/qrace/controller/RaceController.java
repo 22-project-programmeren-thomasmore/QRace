@@ -21,7 +21,7 @@ public class RaceController {
         this.raceRepository = raceRepository;
     }
 
-    @GetMapping
+    @GetMapping("/race")
     public String racePage() {
         return "race";
     }
