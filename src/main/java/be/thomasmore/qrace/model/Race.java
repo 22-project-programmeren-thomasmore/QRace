@@ -22,7 +22,7 @@ public class Race {
     private Player player1;
     @ManyToOne
     private Player host;
-    @OneToMany(mappedBy = "race", cascade = CascadeType.ALL)
+    @OneToMany
     private List<Player> participants;
 
     public Race(int raceID) {
