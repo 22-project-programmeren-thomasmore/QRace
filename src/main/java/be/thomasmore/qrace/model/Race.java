@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "RACES")
 public class Race {
@@ -21,14 +21,25 @@ public class Race {
     @ManyToOne
     private Player player1;
     @ManyToOne
-    private Player player2;
-    @ManyToOne
-    private Player player3;
-    @ManyToOne
-    private Player player4;
-
+    private Player host;
+    @OneToMany
+    private List<Player> participants;
 
     public Race(int raceID) {
         this.raceID = raceID;
+    }
+
+    public Race() {
+    }
+
+    public Race(int raceID, Player host) {
+        this.raceID = raceID;
+        this.host = host;
+        this.participants = new ArrayList<>();
+        this.participants.add(host);
+    }
+
+    public void addParticipant(Player participant) {
+        this.participants.add(participant);
     }
 }
