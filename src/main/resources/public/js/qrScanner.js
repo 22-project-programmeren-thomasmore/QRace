@@ -54,6 +54,36 @@ closeScannerBtn.addEventListener("click", () => {
 window.scanner = scanner;
 
 function setResult(label, result) {
+
+    // Stop the scanner
+    scanner.stop();
+    // Hide the scanner container
+    scannerContainer.style.display = "none";
+
+    // Get the scanned data
+    const scannedData = result.data;
+
+    // Create a RaceAction object with the scanned data
+    const raceAction = {
+        actionType: "SCAN",
+        scannedData: scannedData,
+    };
+
+    // Convert the RaceAction object to JSON string
+    const raceActionJson = JSON.stringify(raceAction);
+
+    // Send the RaceAction object via WebSocket
+    websocket.send(raceActionJson);
+
+    // Display the scanned data in the UI
+    scanResult.textContent = scannedData;
+
+    // You can also perform other actions based on the scanned data
+    // ...
+
+    // Hide the answer options container (if applicable)
+    answerOptionsContainer.style.display = "none";
+
   if (!resultSent) {
     resultSent = true; // Set the flag to true to indicate that a result has been sent
     // send the result after a 1-second delay if the scanner is still running
