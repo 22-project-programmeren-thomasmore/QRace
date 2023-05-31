@@ -266,7 +266,7 @@ for (let group in groups) {
                 // console.log(answeredQuestion);
 
                 let correct = answeredQuestion.correct;
-                let userAnswer = answeredQuestion.userAnswer;
+                let answer = answeredQuestion.answer;
                 let recordTime = answeredQuestion.recordTime;
                 
                   // Retrieve the question details using fetchQuestion
@@ -277,7 +277,7 @@ for (let group in groups) {
                       newRow.append($("<td>").text(correct ? "Yes" : "No"));
                       newRow.append($("<td><>").text(question.questionText));
                       newRow.append($("<td>").text(question.correctAnswer));
-                      newRow.append($("<td>").text(userAnswer));
+                      newRow.append($("<td>").text(answer));
                       newRow.append($("<td>").text(recordTime));
 // console.log('correct',correct, 'questionText',question.questionText, 'correctAnswer',question.correctAnswer, 'userAnswer',userAnswer, 'recordTime',recordTime);
 
