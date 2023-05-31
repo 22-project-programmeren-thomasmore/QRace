@@ -3,9 +3,13 @@ package be.thomasmore.qrace.config.websocket;
 import be.thomasmore.qrace.model.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class RaceUpdate {
-        private int raceId;
+        private int raceID;
         private RaceStatusEnum status;
         // Other properties of RaceUpdate
 
@@ -23,4 +27,5 @@ public class RaceUpdate {
             return null;
         }
     }
+
 }
