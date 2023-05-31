@@ -15,3 +15,23 @@ socket.onmessage = function(event) {
 socket.onclose = function() {
     console.log('WebSocket connection closed.');
 };
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the "Start Race" button element
+    var startRaceBtn = document.getElementById('startRaceBtn');
+
+    // Add click event listener to the "Start Race" button
+    startRaceBtn.addEventListener('click', function() {
+        // Redirect to the Java endpoint for starting the race
+        window.location.href = '/host';
+    });
+
+    // Get the "Join Race" button element
+    var joinRaceBtn = document.getElementById('joinRaceBtn');
+
+    // Add click event listener to the "Join Race" button
+    joinRaceBtn.addEventListener('click', function() {
+        // Redirect to the Java endpoint for joining the race
+        window.location.href = '/join';
+    });
+});
