@@ -69,7 +69,7 @@
                 </td>
                 <td>
                     <span class="editable" data-field="userName" th:text="${score.userName}"></span>
-                    <input type="text" class="form-control form-control-user-name" style="display: none;">
+                    <input type="text" class="form-control form-control-users-name" style="display: none;">
                 </td>
                 <td>
                     <span class="editable" data-field="score" data-id="${score.id}" th:text="${score.score}"></span>
@@ -99,7 +99,7 @@
                 </td>
                 <td>
                     <span class="editable" data-field="userName" th:text="${score.userName}"></span>
-                    <input type="text" class="form-control form-control-user-name" style="display: none;">
+                    <input type="text" class="form-control form-control-users-name" style="display: none;">
                 </td>
                 <td>
                     <span class="editable" data-field="score" data-id="${score.id}" th:text="${score.score}"></span>
@@ -143,7 +143,7 @@
 
             // Find the corresponding elements within the row
             var userNameSpan = row.find('.editable[data-field="userName"]');
-            var userNameInput = row.find('.form-control-user-name');
+            var userNameInput = row.find('.form-control-users-name');
             var scoreSpan = row.find('.editable[data-field="score"]');
             var scoreInput = row.find('.form-control-score');
             var dateSpan = row.find('.editable[data-field="highscoreDate"]');
@@ -172,7 +172,7 @@
 
             var id = row.find(".form-control-id[data-field='id']").text();
 
-            var userNameInput = row.find('.form-control-user-name'); // Find the input field for userName
+            var userNameInput = row.find('.form-control-users-name'); // Find the input field for userName
             var userName = userNameInput.val(); // Get the value of the input field
 
             var scoreInput = row.find('.form-control-score'); // Find the input field for score
@@ -316,7 +316,7 @@
     function deleteHighscore(button) {
         var confirmation = confirm("Are you sure you want to delete this highscore?");
         if (!confirmation) {
-            return;  // If user clicked "Cancel", stop the function here
+            return;  // If users clicked "Cancel", stop the function here
         }
 
         var id = $(button).data("id");
@@ -339,7 +339,7 @@
     function archiveScore(button) {
         var confirmation = confirm("Are you sure you want to archive this highscore?");
         if (!confirmation) {
-            return;  // If user clicked "Cancel", stop the function here
+            return;  // If users clicked "Cancel", stop the function here
         }
 
         var row = $(button).closest("tr");
@@ -383,7 +383,7 @@
     function unArchiveScore(button) {
         var confirmation = confirm("Are you sure you want to unarchive this highscore?");
         if (!confirmation) {
-            return;  // If user clicked "Cancel", stop the function here
+            return;  // If users clicked "Cancel", stop the function here
         }
 
         var row = $(button).closest("tr");

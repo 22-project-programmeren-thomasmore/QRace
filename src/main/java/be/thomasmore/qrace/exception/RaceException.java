@@ -6,4 +6,4 @@ public class RaceException extends RuntimeException {
         super(message);
     }
 }
-// Compare this snippet from src/main/java/be/thomasmore/qrace/model/User.java:
+// Compare this snippet from src/main/java/be/thomasmore/qrace/model/Users.java:

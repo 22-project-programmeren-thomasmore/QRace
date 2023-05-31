@@ -23,4 +23,4 @@ race
 
 accounts
 - login.html
-- dashboard.html (user vs admin)
+- dashboard.html (users vs admin)

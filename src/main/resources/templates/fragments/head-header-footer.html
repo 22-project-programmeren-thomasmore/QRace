@@ -1,6 +1,5 @@
-/* 2de deel */
-
-<!-- head -->
+<!DOCTYPE html>
+<html lang="nl-BE" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:fragment="head" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.w3.org/1999/xhtml">
     <meta charset="utf-8">
@@ -36,7 +35,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="login">
-                            <i class="fa fa-user-circle"></i>
+                            <i class="fa fa-users-circle"></i>
                         </a>
                     </li>
                     <li>
@@ -50,10 +49,10 @@
                         </a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_USER')">
-                        <a class="nav-link" th:href="@{/user/scorebord}">Scoreboard</a>
+                        <a class="nav-link" th:href="@{users/scoreboard}">Scoreboard</a>
                     </li>
                     <li sec:authorize="isAnonymous()">
-                        <a class="nav-link" th:href="@{/registration}"> <i class="fa fa-user-circle"></i></a>
+                        <a class="nav-link" th:href="@{/registration}"> <i class="fa fa-users-circle"></i></a>
                     </li>
                     <li sec:authorize="isAnonymous()">
                         <a class="nav-link" th:href="@{/login}">Login</a>
@@ -65,7 +64,10 @@
                         <a class="nav-link" th:href="@{/admin/score}">Score</a>
                     </li>
                     <li sec:authorize="isAuthenticated()">
-                        <a class="nav-link" th:href="@{/logout}">Logout</a>
+                        <a class="nav-link" th:href="@{admin/logout}">Logout</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <a class="nav-link" th:href="@{users/logout}">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -77,6 +79,3 @@
 <footer th:fragment="footer" class="footer mt-5" style="position: absolute; bottom: 0; background-color: whitesmoke;">
     <p>© Aberzak, Ahalli, Diop, Ekkart & Rousseaux 2023</p>
 </footer>
-
-
-/* 3de deel */
