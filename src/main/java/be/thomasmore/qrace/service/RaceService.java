@@ -44,13 +44,16 @@ public class RaceService {
     }
 
     public Race joinRace(int raceID, Player participant) {
-        Race race = raceRepository.findById(raceID).orElse(null);
-        if (race != null) {
+        Optional<Race> raceOptional = raceRepository.findById(raceID);
+        if (raceOptional.isPresent()) {
+            Race race = raceOptional.get();
             race.addParticipant(participant);
             return raceRepository.save(race);
         }
-        return null; // add throw exception indicating session not found
+        // Throw an exception indicating that the race was not found
+        throw new RuntimeException("Race not found");
     }
+
     public Race findRaceById(int raceID) {
         Optional<Race> optionalRace = raceRepository.findById(raceID);
 

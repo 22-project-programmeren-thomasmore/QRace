@@ -49,14 +49,16 @@ public class RaceController {
         return ResponseEntity.status(HttpStatus.CREATED).body(race);
     }
 
-    @PostMapping("/{raceId}/join")
-    public ResponseEntity<Race> joinRace(@PathVariable int raceId) {
-        Race race = raceRepository.findById(raceId);
+    @PostMapping("/{raceID}/join")
+    public ResponseEntity<Race> joinRace(@PathVariable int raceID) {
+        Optional<Race> optionalRace = raceRepository.findById(raceID);
 
-        if (race == null) {
+        if (optionalRace.isEmpty()) {
             // Race not found, return 404 Not Found status
             return ResponseEntity.notFound().build();
         }
+
+        Race race = optionalRace.get();
 
         // Perform any necessary logic to join the race
         // For example, add the current user to the race participants
@@ -69,4 +71,5 @@ public class RaceController {
         // Return the updated race with a 200 OK status
         return ResponseEntity.ok(race);
     }
+
 }
