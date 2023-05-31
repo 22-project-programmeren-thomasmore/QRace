@@ -104,14 +104,14 @@ function handleAnswerClick(selectedAnswer, question) {
   const isCorrectAnswer = selectedCard.textContent === question.correctAnswer;
   if (isCorrectAnswer) {
     selectedCard.classList.add('correct');
-    trackProgress.groups[question.groupParameter].attempts += 2;
     trackProgress.groups[question.groupParameter].answeredQuestions[question.id].correct = true;
-    trackProgress.score += trackProgress.groups[question.groupParameter].attempts >= 2 ? SECOND_ATTEMPT_SCORE_CORRECT : FIRST_ATTEMPT_SCORE_CORRECT;
+    trackProgress.score += trackProgress.groups[question.groupParameter].attempts < 1 ? FIRST_ATTEMPT_SCORE_CORRECT : SECOND_ATTEMPT_SCORE_CORRECT ;
+    trackProgress.groups[question.groupParameter].attempts += 2;
   } else {
     selectedCard.classList.add('incorrect');
-    trackProgress.groups[question.groupParameter].attempts++;
     trackProgress.groups[question.groupParameter].answeredQuestions[question.id].correct = false;
-    trackProgress.score += trackProgress.groups[question.groupParameter].attempts >= 2 ? SECOND_ATTEMPT_SCORE_INCORRECT : FIRST_ATTEMPT_SCORE_INCORRECT;
+    trackProgress.score += trackProgress.groups[question.groupParameter].attempts < 2 ? FIRST_ATTEMPT_SCORE_INCORRECT : SECOND_ATTEMPT_SCORE_INCORRECT;
+    trackProgress.groups[question.groupParameter].attempts++;
   }
   
   // Increment question number and display the result

@@ -7,6 +7,10 @@ CREATE TABLE if not exists HIGH_SCORES (
 CREATE SEQUENCE IF NOT EXISTS HIGHSCORE_SEQ;
 -- use line below to resset the highscore seq to 1 again
 -- ALTER SEQUENCE HIGHSCORE_SEQ RESTART WITH 1;
+-- INSERT INTO HIGH_SCORES (user_name, score, highscore_date, archive)
+-- VALUES
+-- ();
+
 
 CREATE TABLE if not exists GAMES (
     raceId  int,
