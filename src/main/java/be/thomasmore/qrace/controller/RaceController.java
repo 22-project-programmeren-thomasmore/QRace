@@ -2,11 +2,11 @@ package be.thomasmore.qrace.controller;
 import be.thomasmore.qrace.model.Player;
 import be.thomasmore.qrace.model.Race;
 import be.thomasmore.qrace.repository.RaceRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @Slf4j
 @Controller
-@RequestMapping("/race")
 public class RaceController {
     private final RaceRepository raceRepository;
 
@@ -22,13 +21,26 @@ public class RaceController {
         this.raceRepository = raceRepository;
     }
 
-    private Player getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof Player) {
-            return (Player) authentication.getPrincipal();
+    public String getCurrentUserName(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (session != null) {
+            Player player = (Player) session.getAttribute("currentUser");
+            if (player != null) {
+                return player.getName();
+            }
         }
-        // Return null or handle the case when the current user is not available
         return null;
+    }
+
+    public int getCurrentPlayerId(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (session != null) {
+            Player player = (Player) session.getAttribute("currentUser");
+            if (player != null) {
+                return player.getPlayerID();
+            }
+        }
+        return 0;
     }
 
     @GetMapping
@@ -50,7 +62,7 @@ public class RaceController {
     }
 
     @PostMapping("/{raceID}/join")
-    public ResponseEntity<Race> joinRace(@PathVariable int raceID) {
+    public ResponseEntity<Race> joinRace(@PathVariable int raceID, HttpServletRequest request) {
         Optional<Race> optionalRace = raceRepository.findById(raceID);
 
         if (optionalRace.isEmpty()) {
@@ -62,8 +74,13 @@ public class RaceController {
 
         // Perform any necessary logic to join the race
         // For example, add the current user to the race participants
-        Player currentUser = getCurrentUser(); // Replace with your logic to get the current user
-        race.addParticipant(currentUser);
+        String currentUserName = getCurrentUserName(request);
+        int currentPlayerId = getCurrentPlayerId(request);
+
+        if (currentUserName != null && currentPlayerId != 0) {
+            Player currentUser = new Player(currentPlayerId, currentUserName);
+            race.addParticipant(currentUser);
+        }
 
         // Save the updated race in the repository
         raceRepository.save(race);
@@ -71,5 +88,4 @@ public class RaceController {
         // Return the updated race with a 200 OK status
         return ResponseEntity.ok(race);
     }
-
 }
