@@ -126,7 +126,7 @@
     var userAvatar = localStorage.getItem('userAvatar');
     if (userAvatar) {
         var avatarImg = document.getElementById('user-avatar');
-        avatarImg.src = "/img/" + userAvatar + ".png";
+        avatarImg.src = "/img/" + userAvatar.toLowerCase() + ".png";
     }
 });
 </script>
