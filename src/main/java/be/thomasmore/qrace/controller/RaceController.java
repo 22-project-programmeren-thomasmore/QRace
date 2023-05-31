@@ -1,16 +1,20 @@
 package be.thomasmore.qrace.controller;
-
+import be.thomasmore.qrace.model.Player;
 import be.thomasmore.qrace.model.Race;
 import be.thomasmore.qrace.repository.RaceRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Optional;
 
 @Slf4j
 @Controller
+@RequestMapping("/race")
 public class RaceController {
     private final RaceRepository raceRepository;
 
@@ -18,7 +22,16 @@ public class RaceController {
         this.raceRepository = raceRepository;
     }
 
-    @GetMapping("/race")
+    private Player getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof Player) {
+            return (Player) authentication.getPrincipal();
+        }
+        // Return null or handle the case when the current user is not available
+        return null;
+    }
+
+    @GetMapping
     public String racePage() {
         return "race";
     }
@@ -34,5 +47,26 @@ public class RaceController {
 
         // Return the created race with a 201 Created status
         return ResponseEntity.status(HttpStatus.CREATED).body(race);
+    }
+
+    @PostMapping("/{raceId}/join")
+    public ResponseEntity<Race> joinRace(@PathVariable int raceId) {
+        Race race = raceRepository.findById(raceId);
+
+        if (race == null) {
+            // Race not found, return 404 Not Found status
+            return ResponseEntity.notFound().build();
+        }
+
+        // Perform any necessary logic to join the race
+        // For example, add the current user to the race participants
+        Player currentUser = getCurrentUser(); // Replace with your logic to get the current user
+        race.addParticipant(currentUser);
+
+        // Save the updated race in the repository
+        raceRepository.save(race);
+
+        // Return the updated race with a 200 OK status
+        return ResponseEntity.ok(race);
     }
 }
