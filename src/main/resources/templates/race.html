@@ -23,7 +23,7 @@
         <i class="fa fa-star"></i>
         <h3 id="score">0</h3>
         <i class="fa fa-hourglass-half"></i>
-        <h3 id="stopwatch">00:00</h2>
+        <h3 id="stopwatch">00:00</h3>
 
       </div>
 
@@ -64,6 +64,36 @@
       <!-- general scrips -->
       <script src="/js/translator.js"></script>
       <script src="/js/translations.js"></script>
+
+      <!-- send qr data for test -->
+      <button id="stopButton">Stop race</button>
+      <script>
+        document.getElementById('stopButton').addEventListener('click', function () {
+          // Create a custom event
+          const exportDataEvent = new CustomEvent("exportData", { detail: 'stop' });
+
+          // Dispatch the custom event
+          document.dispatchEvent(exportDataEvent);
+        });
+      </script>
+
+      <form id="myForm">
+        <input type="text" id="myInput" />
+        <button type="submit">Submit</button>
+      </form>
+      <script>
+        document.getElementById('myForm').addEventListener('submit', function (e) {
+          e.preventDefault();
+          const input = document.getElementById('myInput').value;
+
+          // Create a custom event
+          const exportDataEvent = new CustomEvent("exportData", { detail: input });
+
+          // Dispatch the custom event
+          document.dispatchEvent(exportDataEvent);
+        });
+      </script>
+
 
 </body>
 

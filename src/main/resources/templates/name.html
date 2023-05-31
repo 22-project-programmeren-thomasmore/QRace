@@ -50,13 +50,19 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
      <!-- save username in localStorage -->
-     <script>
-        document.getElementById('userForm').addEventListener('submit', function(e) {
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('userForm').addEventListener('submit', function (e) {
             e.preventDefault();
             var name = document.getElementById('nameInput').value;
             localStorage.setItem('userName', name);
+
+            var raceId = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000; // generate random number between 100000 and 999999 (6 digits)
+            localStorage.setItem('raceID', raceId); // store the raceID into the local storage
             window.location.href = '/host-join';
-            });
-    </script>
+        });
+    });
+
+</script>
 </body>
 </html>

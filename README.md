@@ -44,5 +44,16 @@ VRAAG? Stel ze via Discord!
 <div align="center">
   <img width="25%" align="left" src="qrCodes/group 4.png" />
   <img width="25%" align="center" src="qrCodes/group 5.png" />
-  <img width="25%" align="right" src="qrCodes/end race.png" />
 <div>
+  
+##
+
+##
+
+<div align="left">
+  <img width="25%" align="center" src="qrCodes/end race.png" />
+  <p>end me.</p>
+<div>
+  
+  
+  
