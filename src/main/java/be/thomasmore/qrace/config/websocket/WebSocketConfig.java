@@ -1,8 +1,6 @@
-package be.thomasmore.qrace.config;
+package be.thomasmore.qrace.config.websocket;
 
-import be.thomasmore.qrace.controller.YourWebSocketHandler;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
@@ -16,8 +14,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
         registry.addHandler(yourWebSocketHandler(), "/game-ws").setAllowedOrigins("*");
     }
 
-    public YourWebSocketHandler yourWebSocketHandler() {
-        return new YourWebSocketHandler();
+    public WebSocketHandler yourWebSocketHandler() {
+        return new WebSocketHandler();
     }
 }
 

@@ -1,13 +1,12 @@
-package be.thomasmore.qrace.controller;
+package be.thomasmore.qrace.config.websocket;
 
-import be.thomasmore.qrace.model.RaceStatusEnum;
 import be.thomasmore.qrace.model.RaceUpdate;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-public class YourWebSocketHandler extends TextWebSocketHandler {
+public class WebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
