@@ -4,7 +4,24 @@
 <head th:replace="fragments\head-header-footer :: head"></head>
 
 <head>
+  <style>
+    .scoreDisplay,
+    .timeDisplay {
+      display: inline-block;
+      margin-right: 20px;
+    }
 
+    .scoreDisplay h3,
+    .timeDisplay h3 {
+      display: inline-block;
+      margin-bottom: 0;
+    }
+
+    #openScannerBtn {
+      position: fixed;
+    }
+
+  </style>
   <!-- js library -->
   <script src="https://unpkg.com/qr-scanner"></script>
   <!-- Title -->
@@ -14,20 +31,21 @@
 <body>
   <header th:replace="fragments\head-header-footer :: header"></header>
 
-  <!-- Content -->
+<!-- Content -->
 
   <div class="container-fluid">
     <div class="row d-block" style="text-align: center">
-      <!-- <h1>Game</h1> -->
-      <div class="flex-container-game-right">
-        <i class="fa fa-star"></i>
-        <h3 id="score">0</h3>
-        <i class="fa fa-hourglass-half"></i>
-        <h3 id="stopwatch">00:00</h3>
-
+      <div style="display: flex; justify-content: space-evenly;">
+        <div class="scoreDisplay">
+          <i class="fa fa-star"></i>
+          <h3 id="score">0</h3>
+        </div>
+        <div class="timeDisplay">
+          <i class="fa fa-hourglass-half"></i>
+          <h3 id="stopwatch">00:00</h3>
+        </div>
       </div>
 
-      <!-- Questions -->
       <div id="questionContainer" class="my-5">
         <h2 id="questionText"></h2>
         <div id="answerContainer" class="row justify-content-center mt-4 card"></div>
@@ -36,7 +54,7 @@
       <!-- scanner -->
       <div>
         <button id="openScannerBtn" class="btn btn-primary" style="position: fixed;">
-          <i class="fa fa-qrcode"></i>
+          <i class="fa fa-camera"></i>
         </button>
         <div id="scannerContainer">
           <button id="closeScannerBtn" class="btn btn-secondary" style="display: none;">
@@ -49,7 +67,7 @@
         </div>
       </div>
 
-      <ul id="timeList" style="list-style-type: none;"></ul>
+           <ul id="timeList" style="list-style-type: none;"></ul>
 
       <!-- scripts -->
       <!-- <script src="/js/timer.js"></script> -->
@@ -57,7 +75,7 @@
       <script src="/js/qrScanner.js" type="module"></script>
       <script src="/js/questions.js" type="module"></script>
 
-      <!-- end content -->
+<!-- end content -->
 
       <!-- footer -->
       <div th:replace="fragments\head-header-footer :: footer"></div>
@@ -66,7 +84,18 @@
       <script src="/js/translations.js"></script>
 
       <!-- send qr data for test -->
-      <button id="stopButton">Stop race</button>
+<div style="position: fixed; bottom: 20px; right: 20px;">
+  <button id="stopButton" style="display: block;">Stop race</button>
+  <br>
+  <form id="myForm" style="display: inline-block;">
+    <input type="text" id="myInput" class="form-control" style="display: inline-block;" />
+    <br>
+    
+    <button type="submit" class="btn btn-primary" style="display: inline-block;">Submit</button>
+  </form>
+</div>
+
+
       <script>
         document.getElementById('stopButton').addEventListener('click', function () {
           // Create a custom event
@@ -76,11 +105,6 @@
           document.dispatchEvent(exportDataEvent);
         });
       </script>
-
-      <form id="myForm">
-        <input type="text" id="myInput" />
-        <button type="submit">Submit</button>
-      </form>
       <script>
         document.getElementById('myForm').addEventListener('submit', function (e) {
           e.preventDefault();

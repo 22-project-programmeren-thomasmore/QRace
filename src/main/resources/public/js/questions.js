@@ -1,10 +1,10 @@
 const endRace = 'stop';
 
 const MAX_ATTEMPTS = 2;
-const FIRST_ATTEMPT_SCORE_CORRECT = 10;
-const FIRST_ATTEMPT_SCORE_INCORRECT = -5;
-const SECOND_ATTEMPT_SCORE_CORRECT = 5;
-const SECOND_ATTEMPT_SCORE_INCORRECT = -10;
+const FIRST_ATTEMPT_SCORE_CORRECT = 3;
+const SECOND_ATTEMPT_SCORE_CORRECT = 1;
+const FIRST_ATTEMPT_SCORE_INCORRECT = 0;
+const SECOND_ATTEMPT_SCORE_INCORRECT = -1;
 
 const trackProgressKey = 'track progress';
 
@@ -99,20 +99,21 @@ function displayQuestion(question) {
 function handleAnswerClick(selectedAnswer, question) {
   const selectedCard = document.getElementById(selectedAnswer);
   const answerCards = Array.from(document.getElementsByClassName('answer-card'));
-
   const trackProgress = JSON.parse(localStorage.getItem(trackProgressKey));
+  trackProgress.groups[question.groupParameter].answeredQuestions[question.id].answer = selectedCard.textContent; // Storing user's answer
   const isCorrectAnswer = selectedCard.textContent === question.correctAnswer;
   if (isCorrectAnswer) {
     selectedCard.classList.add('correct');
-    trackProgress.groups[question.groupParameter].attempts += 2;
     trackProgress.groups[question.groupParameter].answeredQuestions[question.id].correct = true;
-    trackProgress.score += trackProgress.groups[question.groupParameter].attempts > 2 ? SECOND_ATTEMPT_SCORE_CORRECT : FIRST_ATTEMPT_SCORE_CORRECT;
+    trackProgress.score += trackProgress.groups[question.groupParameter].attempts < 1 ? FIRST_ATTEMPT_SCORE_CORRECT : SECOND_ATTEMPT_SCORE_CORRECT ;
+    trackProgress.groups[question.groupParameter].attempts += 2;
   } else {
     selectedCard.classList.add('incorrect');
-    trackProgress.groups[question.groupParameter].attempts++;
     trackProgress.groups[question.groupParameter].answeredQuestions[question.id].correct = false;
-    trackProgress.score += trackProgress.groups[question.groupParameter].attempts >= 2 ? SECOND_ATTEMPT_SCORE_INCORRECT : FIRST_ATTEMPT_SCORE_INCORRECT;
+    trackProgress.score += trackProgress.groups[question.groupParameter].attempts < 2 ? FIRST_ATTEMPT_SCORE_INCORRECT : SECOND_ATTEMPT_SCORE_INCORRECT;
+    trackProgress.groups[question.groupParameter].attempts++;
   }
+  
   // Increment question number and display the result
   questionNumber++;
   displayQuestionResult(questionNumber, isCorrectAnswer, getCurrentStopwatchTime());
@@ -150,7 +151,8 @@ function updateTrackProgress(question, currentTime) {
   if (!trackProgress.groups[question.groupParameter].answeredQuestions[question.id]) {
     trackProgress.groups[question.groupParameter].answeredQuestions[question.id] = {
       recordTime: currentTime,
-      correct: null
+      correct: null,
+      answer: null   
     };
   }
   localStorage.setItem(trackProgressKey, JSON.stringify(trackProgress));
