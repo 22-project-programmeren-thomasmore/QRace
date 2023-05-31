@@ -118,5 +118,48 @@ window.translations = {
       nextbtn:"Open scanner",
     },
   },
-  // ...
+race: {
+nl: {
+info: "Druk op de cameraknop om de QR-code te scannen.\nScan de QR-code en beantwoord een vraag.\nDe eerste keer correct? 3 punten! De tweede keer correct is 1 punt.\nFout is 0 punten, maar je krijgt een herkansing. De tweede keer fout is een minpunt!\nScan de eind-QR-code om te stoppen met racen."
+},
+en: {
+info: "Press the camera button to scan the QR code.\nScan the QR code and answer a question.\nFirst time correct? 3 points! Second time is 1 point.\nWrong answer gives you 0 points, but you get a chance to try again. Second wrong answer deducts a point!\nScan the end QR code to stop racing."
+},
+fr: {
+info: "Appuyez sur le bouton de la caméra pour scanner le code QR.\nScannez le code QR et répondez à une question.\nLa première fois, c'est juste ? 3 points ! La deuxième fois, c'est 1 point.\nMauvaise réponse donne 0 point, mais vous avez une chance de réessayer. La deuxième mauvaise réponse enlève un point !\nScannez le code QR de fin pour arrêter la course."
+}
+},
+highscore: {
+nl: {
+info: "Bekijk je hoogste score en de details van je race, evenals de scores van anderen."
+},
+en: {
+info: "View your highest score and race details, as well as scores of others."
+},
+fr: {
+info: "Consultez votre meilleur score et les détails de votre course, ainsi que les scores des autres participants."
+}
+},
+scoreboard: {
+nl: {
+info: "Bekijk alle scores en bewerk de scorelijst."
+},
+en: {
+info: "View all scores and edit the scoreboard."
+},
+fr: {
+info: "Consultez tous les scores et modifiez le classement."
+}
+},
+manageQuestions: {
+nl: {
+info: "Voeg nieuwe vragen toe of bewerk bestaande vragen voor de race."
+},
+en: {
+info: "Add new questions or edit existing questions for the race."
+},
+fr: {
+info: "Ajoutez de nouvelles questions ou modifiez les questions existantes pour la course."
+}
+}
 };
