@@ -7,11 +7,11 @@
 }
     return response.json();
 })
-    .then(game => {
-    if (game && game.raceId) {
-    document.getElementById('raceId').textContent = game.raceId;
+    .then(race => {
+    if (race && race.raceId) {
+    document.getElementById('raceId').textContent = race.raceId;
 } else {
-    console.error('Error: Response does not include raceId', game);
+    console.error('Error: Response does not include raceId', race);
 }
 })
     .catch(e => {
