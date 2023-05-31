@@ -37,6 +37,15 @@ function clearTable() {
   });
 }
 
+var languageMap = {
+  'nl': 'Nederlands',
+  'fr': 'French',
+  'en': 'English',
+  'de': 'German',
+  'es': 'Spanish',
+  // ... add more languages here
+};
+
 function createQuestionRow(question) {
   // Create the row and cells for the question properties
   var row = document.createElement("tr");
@@ -48,17 +57,22 @@ function createQuestionRow(question) {
     "answer3",
     "answer4",
     "groupParameter",
-    "language",
+    // "language",
   ].forEach(function (property) {
     var cell = document.createElement("td");
     cell.textContent = question[property];
     row.appendChild(cell);
   });
+// Create the cell for the "Language" property
+  var languageCell = document.createElement("td");
+  languageCell.textContent = languageMap[question.language] || question.language;
+  row.appendChild(languageCell);
 
   // Create the cell for the "Archived" property
-  // var archivedCell = document.createElement("td");
-  // archivedCell.textContent = question.archived ? "Yes" : "No";
-  // row.appendChild(archivedCell);
+  var archivedCell = document.createElement("td");
+  archivedCell.textContent = question.archived ? "Yes" : "No";
+  archivedCell.style.display = 'none'; // Hide this cell
+  row.appendChild(archivedCell);
 
   // Create the "Archive" button and add event listener
   var archiveButton = document.createElement("button");

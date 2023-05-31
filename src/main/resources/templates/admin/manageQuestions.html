@@ -1,115 +1,129 @@
 <!DOCTYPE html>
 <html lang="nl-BE" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="fragments\head-header-footer :: head"></head>
 
-<head th:replace="fragments\head-header-footer :: head"></head>
+  <head>
+    <!-- Title -->
+    <title>Manage Questions</title>
+  </head>
 
-<head>
-  <!-- Title -->
-  <title>Manage Questions</title>
-</head>
+  <body>
+    <header th:replace="fragments\head-header-footer :: header"></header>
 
-<body>
-  <header th:replace="fragments\head-header-footer :: header"></header>
+    <!-- content -->
 
-  <!-- content -->
+    <form id="question-form">
+      <input type="text" id="group-parameter" placeholder="group" />
+      <input
+        type="text"
+        id="question-text"
+        placeholder="Question text"
+        required
+      />
+      <input type="text" id="answer1" placeholder="Answer 1" required />
+      <input type="text" id="answer2" placeholder="Answer 2" />
+      <input type="text" id="answer3" placeholder="Answer 3" />
+      <input type="text" id="answer4" placeholder="Answer 4" />
+      <select id="correct-answer" required>
+        <option value="">Select correct answer</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+      <select id="language" required>
+        <option value="">Select language</option>
+        <option value="nl">NL</option>
+        <option value="fr">FR</option>
+        <option value="en">EN</option>
+      </select>
+      <button type="submit">Create Question</button>
+    </form>
 
-  <form id="question-form">
-    <input type="text" id="group-parameter" placeholder="group" />
-    <input type="text" id="question-text" placeholder="Question text" required />
-    <input type="text" id="answer1" placeholder="Answer 1" required />
-    <input type="text" id="answer2" placeholder="Answer 2" />
-    <input type="text" id="answer3" placeholder="Answer 3" />
-    <input type="text" id="answer4" placeholder="Answer 4" />
-    <select id="correct-answer" required>
-      <option value="">Select correct answer</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
+    <div id="feedback"></div>
+
+    <form id="edit-form" style="display: none">
+      <input type="text" id="edit-group-parameter" placeholder="group" />
+      <input
+        type="text"
+        id="edit-question-text"
+        placeholder="Question text"
+        required
+      />
+      <input type="text" id="edit-answer1" placeholder="Answer 1" required />
+      <input type="text" id="edit-answer2" placeholder="Answer 2" />
+      <input type="text" id="edit-answer3" placeholder="Answer 3" />
+      <input type="text" id="edit-answer4" placeholder="Answer 4" />
+      <select id="edit-correct-answer" required>
+        <option value="">Select correct answer</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+      <select id="edit-language" required>
+        <option value="">Select language</option>
+        <option value="nl">NL</option>
+        <option value="fr">FR</option>
+        <option value="en">EN</option>
+      </select>
+      <button type="submit">Update Question</button>
+    </form>
+
+    <select id="sort-select">
+      <option value="">Sort by...</option>
+      <option value="id">Time Created</option>
+      <option value="groupParameter">Group</option>
+      <option value="questionText">Question</option>
+      <option value="language">Language</option>
+      <option value="archived">active</option>
     </select>
-    <select id="language" required>
-      <option value="">Select language</option>
-      <option value="nl">NL</option>
-      <option value="fr">FR</option>
-      <option value="en">EN</option>
-    </select>
-    <button type="submit">Create Question</button>
-  </form>
 
-  <div id="feedback"></div>
+    <input type="text" id="search-bar" placeholder="Search..." />
 
-  <form id="edit-form" style="display: none">
-    <input type="text" id="edit-group-parameter" placeholder="group" />
-    <input type="text" id="edit-question-text" placeholder="Question text" required />
-    <input type="text" id="edit-answer1" placeholder="Answer 1" required />
-    <input type="text" id="edit-answer2" placeholder="Answer 2" />
-    <input type="text" id="edit-answer3" placeholder="Answer 3" />
-    <input type="text" id="edit-answer4" placeholder="Answer 4" />
-    <select id="edit-correct-answer" required>
-      <option value="">Select correct answer</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-    </select>
-    <select id="edit-language" required>
-      <option value="">Select language</option>
-      <option value="nl">NL</option>
-      <option value="fr">FR</option>
-      <option value="en">EN</option>
-    </select>
-    <button type="submit">Update Question</button>
-  </form>
+    <table id="questions" class="table table-striped table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th>Question</th>
+          <th>Correct Answer</th>
+          <th>Answer 1</th>
+          <th>Answer 2</th>
+          <th>Answer 3</th>
+          <th>Answer 4</th>
+          <th>Group</th>
+          <th>Language</th>
+          <th style="display: none">Archived</th>
+          <th>Archive</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be added here by the script -->
+      </tbody>
+    </table>
 
-  <select id="sort-select">
-    <option value="">Sort by...</option>
-    <option value="id">Time Created</option>
-    <option value="groupParameter">Group</option>
-    <option value="questionText">Question</option>
-    <option value="language">Language</option>
-    <option value="archived">active</option>
-  </select>
+    <script src="/js/manageQuestions.js"></script>
 
-  <input type="text" id="search-bar" placeholder="Search...">
+    <!-- end content -->
 
-  <table id="questions">
-    <thead>
-      <tr>
-        <th>Question</th>
-        <th>Correct Answer</th>
-        <th>Answer 1</th>
-        <th>Answer 2</th>
-        <th>Answer 3</th>
-        <th>Answer 4</th>
-        <th>Group</th>
-        <th>Language</th>
-        <!-- <th>Archived</th> -->
-        <th>Archive</th>
-        <th>Edit</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Rows will be added here by the script -->
-    </tbody>
-  </table>
-  <script src="/js/manageQuestions.js"></script>
-
-  <!-- end content -->
-
-  <div th:replace="fragments\head-header-footer :: footer"></div>
-  <!-- general scrips -->
-  <script src="/js/translator.js"></script>
-  <script src="/js/translations.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-
-</body>
-
+    <div th:replace="fragments\head-header-footer :: footer"></div>
+    <!-- general scrips -->
+    <script src="/js/translator.js"></script>
+    <script src="/js/translations.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
