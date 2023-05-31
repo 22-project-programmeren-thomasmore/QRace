@@ -12,13 +12,9 @@ import java.util.Map;
 public class WebSocketController {
     private Map<String, WebSocketSession> playerSessions = new HashMap<>();
 
-    private WebSocketSession getPlayerSession(String sessionId) {
-        return playerSessions.get(sessionId);
-    }
-
     private void sendGameUpdateToUser(WebSocketSession userSession, RaceUpdate raceUpdate) {
         try {
-            if (userSession.isOpen()) {
+            if (userSession != null && userSession.isOpen()) {
                 userSession.sendMessage(new TextMessage(raceUpdate.toJson()));
             }
         } catch (IOException e) {
@@ -29,13 +25,13 @@ public class WebSocketController {
     @MessageMapping("/game/{sessionId}")
     public void handleGameAction(@DestinationVariable String sessionId, RaceAction raceAction) {
         RaceUpdate raceUpdate = new RaceUpdate();
-        // Populate other properties of the raceUpdate object based on your game logic
+        raceUpdate.setRaceID(raceAction.getRaceId());
+        // Set other properties of the RaceUpdate as needed
 
         // Retrieve the specific user's WebSocket session based on the session ID
-        WebSocketSession userSession = getPlayerSession(sessionId);
+        WebSocketSession userSession = playerSessions.get(sessionId);
 
         // Send the game update to the specific user
         sendGameUpdateToUser(userSession, raceUpdate);
     }
-
 }
