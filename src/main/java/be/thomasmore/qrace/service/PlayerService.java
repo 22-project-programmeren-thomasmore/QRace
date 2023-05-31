@@ -10,7 +10,7 @@ import java.util.Optional;
 public class PlayerService {
     private RaceRepository raceRepository;
 
-    public Race startRace (Player player1, Integer raceID) {
+    public Race startRace (Player host, Integer raceID) {
         Optional<Race> optionalRace = raceRepository.findById(raceID);
         Race race = optionalRace.get();
         race.setStatus(RaceStatusEnum.IN_PROGRESS);
