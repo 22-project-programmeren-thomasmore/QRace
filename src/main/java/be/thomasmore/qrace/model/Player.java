@@ -56,6 +56,8 @@ public class Player {
         this.score = 0;
         this.currentCheckpoint = 0;
     }
+
+
 }
 
 
