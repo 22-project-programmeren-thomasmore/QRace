@@ -1,10 +1,7 @@
 package be.thomasmore.qrace.service;
 
 import be.thomasmore.qrace.model.Player;
-import be.thomasmore.qrace.model.Race;
-import be.thomasmore.qrace.model.RaceStatusEnum;
 import be.thomasmore.qrace.repository.PlayerRepository;
-import be.thomasmore.qrace.repository.RaceRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,4 +37,6 @@ public class PlayerService {
         playerRepository.save(player);
         return player;
     }
+
+
 }
