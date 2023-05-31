@@ -1,6 +1,5 @@
 package be.thomasmore.qrace.config.websocket;
 
-import be.thomasmore.qrace.model.RaceUpdate;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;

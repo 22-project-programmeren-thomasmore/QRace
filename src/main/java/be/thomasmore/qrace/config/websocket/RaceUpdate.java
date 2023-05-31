@@ -1,4 +1,4 @@
-package be.thomasmore.qrace.model;
+package be.thomasmore.qrace.config.websocket;
 
 import be.thomasmore.qrace.model.*;
 import com.fasterxml.jackson.core.JsonProcessingException;

@@ -1,8 +1,5 @@
 package be.thomasmore.qrace.config.websocket;
 
-import be.thomasmore.qrace.config.model.RaceAction;
-import be.thomasmore.qrace.model.Race;
-import be.thomasmore.qrace.model.RaceUpdate;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.socket.TextMessage;
